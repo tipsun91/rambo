@@ -7,10 +7,6 @@ client/node_modules
 client/build
 *package-lock.json
 
-# custom
-.vscode
-*package-lock.json
-
 # <client>
 # dependencies
 client/node_modules
