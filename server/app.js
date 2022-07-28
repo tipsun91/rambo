@@ -21,9 +21,9 @@ require('./middlewares/routes')(app);
 
 const { sequelize } = require('./db/models');
 
-// app.locals.settings.SERVER_PORT & etc.
-app.listen(process.env.SERVER_PORT, async () => {
-  console.log(`Server started at port: ${process.env.SERVER_PORT}`);
+// app.locals.settings.PORT & etc.
+app.listen(process.env.PORT, async () => {
+  console.log(`Server started at port: ${process.env.PORT}`);
   try {
     await sequelize.authenticate();
     console.log('Connection to the database has been established successfully.');
