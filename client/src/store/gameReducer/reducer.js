@@ -62,7 +62,12 @@ const gameSlice = createSlice({
       }
       function calcEnemies(arr, hero) {
         arr.forEach((el) => {
-          el.x -= 1;
+          if (hero.x >= el.x) {
+            el.x += 1;
+          }
+          if (hero.x <= el.x) {
+            el.x -= 1;
+          }
           if (hero.y > el.y) {
             el.y += 0.35;
           }
