@@ -7,6 +7,7 @@ import Hero from '../Hero/Hero';
 import Enemy from '../Enemy/Enemy';
 import './App.css';
 import { updateFrame } from '../../store/gameReducer/reducer';
+import GameBar from '../GameBar/GameBar';
 
 function App() {
   const { enemies } = useSelector((state) => state.game);
@@ -81,6 +82,7 @@ function App() {
   }, [timeoutFlag]);
   return (
     <div className="App">
+      <GameBar />
       <Hero />
       {enemies.map((enemy) => <Enemy key={enemy.id} enemy={enemy} />)}
     </div>
