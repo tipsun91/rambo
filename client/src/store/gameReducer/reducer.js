@@ -47,7 +47,7 @@ const gameSlice = createSlice({
   },
   reducers: {
     updateFrame(state, action) {
-      function calePlayer() {
+      function calcPlayer() {
         if (action.payload.player.includes('ArrowRight')) {
           state.player.x += state.player.speed; // идем вправо
         }
@@ -61,9 +61,14 @@ const gameSlice = createSlice({
           state.player.y += state.player.speed; // идем вниз
         }
       }
-      function calcEeemies(arr, hero) {
+      function calcEnemies(arr, hero) {
         arr.forEach((el) => {
-          el.x -= 1;
+          if (hero.x >= el.x) {
+            el.x += 1;
+          }
+          if (hero.x <= el.x) {
+            el.x -= 1;
+          }
           if (hero.y > el.y) {
             el.y += 0.35;
           }
@@ -72,8 +77,8 @@ const gameSlice = createSlice({
           }
         });
       }
-      calcEeemies(state.enemies, state.player);
-      calePlayer();
+      calcEnemies(state.enemies, state.player);
+      calcPlayer();
     },
   },
   extraReducers: {},
