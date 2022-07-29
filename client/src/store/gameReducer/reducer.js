@@ -6,20 +6,44 @@ const gameSlice = createSlice({
   name: 'game',
   initialState: {
     player: {
-      playerSkin: '/img/222.gif',
-      x: 0,
-      y: 0,
-      speed: 10,
-      hp: 100,
+
+      x: 0, // горизонталь
+      y: 0, // вертикаль
+      w: 20, // высота
+      h: 20, // ширина
+      speed: 1, // скорость передвижения
+      hp: 1000, // здоровье
+      weapon: ['trunk'],
+      ammunition: [{ // боезапас
+        trunk: 0,
+      }],
     },
-    enemies: [
-      {
-        x: 100,
-        y: 50,
-        speed: 10,
-        hp: 100,
-      },
-    ],
+    enemies: [{
+      id: 1,
+      on: false,
+      x: 600, // горизонталь
+      y: 30, // вертикаль
+      hp: 100, // здоровье
+    }, {
+      id: 2,
+      on: false,
+      x: 600, // горизонталь
+      y: 80, // вертикаль
+      hp: 100, // здоровье
+    }, {
+      id: 3,
+      on: false,
+      x: 600, // горизонталь
+      y: 150, // вертикаль
+      hp: 100, // здоровье
+    }],
+    weapon: [{
+      name: 'trunk', // название
+      damage: 50, // урон
+      clip: 30, // обойма
+      rateOfFire: 0.5, // скорострельность
+      recharge: 1500, // время перезарядки
+    }],
   },
   reducers: {
     updateFrame(state, action) {
@@ -37,6 +61,18 @@ const gameSlice = createSlice({
           state.player.y += state.player.speed; // идем вниз
         }
       }
+      function calcEeemies(arr, hero) {
+        arr.forEach((el) => {
+          el.x -= 1;
+          if (hero.y > el.y) {
+            el.y += 0.35;
+          }
+          if (hero.y < el.y) {
+            el.y -= 0.35;
+          }
+        });
+      }
+      calcEeemies(state.enemies, state.player);
       calePlayer();
     },
   },
