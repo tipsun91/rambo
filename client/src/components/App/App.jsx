@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import Hero from '../Hero/Hero';
 import './App.css';
 import { updateFrame } from '../../store/gameReducer/reducer';
+import GameBar from '../GameBar/GameBar';
 
 function App() {
   const dispatch = useDispatch();
@@ -80,6 +81,7 @@ function App() {
   return (
     <div className="App">
       <Hero />
+      <GameBar />
     </div>
   );
 }
