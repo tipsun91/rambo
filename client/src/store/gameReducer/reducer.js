@@ -6,13 +6,12 @@ const gameSlice = createSlice({
   name: 'game',
   initialState: {
     player: {
-
       x: 0, // горизонталь
       y: 0, // вертикаль
       w: 20, // высота
       h: 20, // ширина
       speed: 1, // скорость передвижения
-      hp: 1000, // здоровье
+      hp: 100, // здоровье
       weapon: ['trunk'],
       ammunition: [{ // боезапас
         trunk: 0,
