@@ -18,9 +18,23 @@ const gameSlice = createSlice({
       }],
     },
     enemies: [{
-      x: 100,
-      y: 50,
-      hp: 100,
+      id: 1,
+      on: false,
+      x: 600, // горизонталь
+      y: 30, // вертикаль
+      hp: 100, // здоровье
+    }, {
+      id: 2,
+      on: false,
+      x: 600, // горизонталь
+      y: 80, // вертикаль
+      hp: 100, // здоровье
+    }, {
+      id: 3,
+      on: false,
+      x: 600, // горизонталь
+      y: 150, // вертикаль
+      hp: 100, // здоровье
     }],
     weapon: [{
       name: 'trunk', // название
@@ -46,6 +60,18 @@ const gameSlice = createSlice({
           state.player.y += state.player.speed;// идем вниз
         }
       }
+      function calcEeemies(arr, hero) {
+        arr.forEach((el) => {
+          el.x -= 1;
+          if (hero.y > el.y) {
+            el.y += 0.35;
+          }
+          if (hero.y < el.y) {
+            el.y -= 0.35;
+          }
+        });
+      }
+      calcEeemies(state.enemies, state.player);
       calePlayer();
     },
 
