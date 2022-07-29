@@ -6,15 +6,26 @@ const gameSlice = createSlice({
   name: 'game',
   initialState: {
     player: {
-      playerSkin: '/img/222.gif',
-      x: 0,
-      y: 0,
-      speed: 1,
+      x: 0, // горизонталь
+      y: 0, // вертикаль
+      speed: 1, // скорость передвижения
+      hp: 1000, // здоровье
+      weapon: ['trunk'],
+      ammunition: [{ // боезапас
+        trunk: 0,
+      }],
     },
     enemies: [{
       x: 100,
       y: 50,
       hp: 100,
+    }],
+    weapon: [{
+      name: 'trunk', // название
+      damage: 50, // урон
+      clip: 30, // обойма
+      rateOfFire: 0.5, // скорострельность
+      recharge: 1500, // время перезарядки
     }],
   },
   reducers: {
