@@ -3,7 +3,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import Hero from './hero';
+import Hero from './Hero';
 import './App.css';
 import { updateFrame } from './store/gameReducer/reducer';
 
