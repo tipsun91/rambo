@@ -11,7 +11,7 @@ const gameSlice = createSlice({
       w: 20, // высота
       h: 20, // ширина
       speed: 1, // скорость передвижения
-      hp: 1000, // здоровье
+      hp: 100, // здоровье
       weapon: ['trunk'],
       ammunition: [{ // боезапас
         trunk: 0,
