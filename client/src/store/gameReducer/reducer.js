@@ -6,6 +6,7 @@ const gameSlice = createSlice({
   name: 'game',
   initialState: {
     player: {
+
       x: 0, // горизонталь
       y: 0, // вертикаль
       w: 20, // высота
@@ -48,16 +49,16 @@ const gameSlice = createSlice({
     updateFrame(state, action) {
       function calcPlayer() {
         if (action.payload.player.includes('ArrowRight')) {
-          state.player.x += state.player.speed;// идем вправо
+          state.player.x += state.player.speed; // идем вправо
         }
         if (action.payload.player.includes('ArrowLeft')) {
-          state.player.x -= state.player.speed;// идем влево
+          state.player.x -= state.player.speed; // идем влево
         }
         if (action.payload.player.includes('ArrowUp')) {
-          state.player.y -= state.player.speed;// идем вверх
+          state.player.y -= state.player.speed; // идем вверх
         }
         if (action.payload.player.includes('ArrowDown')) {
-          state.player.y += state.player.speed;// идем вниз
+          state.player.y += state.player.speed; // идем вниз
         }
       }
       function calcEnemies(arr, hero) {
@@ -79,15 +80,10 @@ const gameSlice = createSlice({
       calcEnemies(state.enemies, state.player);
       calcPlayer();
     },
-
   },
-  extraReducers: {
-
-  },
+  extraReducers: {},
 });
 
-export const {
-  updateFrame,
-} = gameSlice.actions;
+export const { updateFrame } = gameSlice.actions;
 
 export default gameSlice.reducer;
