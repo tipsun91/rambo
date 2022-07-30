@@ -105,13 +105,12 @@ const gameSlice = createSlice({
 
         if ((playerPosX >= enemyPosX - 30 - 30) && (playerPosX <= enemyPosX + 30 + 30)
         && (playerPosY <= enemyPosY + 120) && (playerPosY >= enemyPosY)) { // PVP Collision model
+        }
       }
-    }
       calcEnemies(state.enemies, state.player);
       calcPlayer();
       calcBullets();
       calcCollision();
-    
     },
   },
   extraReducers: {},
