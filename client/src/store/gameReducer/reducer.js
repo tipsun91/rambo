@@ -76,8 +76,23 @@ const gameSlice = createSlice({
           }
         });
       }
+
+      function calcCollision() {
+        const playerPosX = state.player.x;
+        const enemyPosX = state.enemies.x;
+        const playerPosY = state.player.y;
+        const enemyPosY = state.enemies.y;
+
+        console.log((playerPosX >= enemyPosX - 30 - 30) && (playerPosX <= enemyPosX + 30 + 30)
+        && (playerPosY <= enemyPosY + 120) && (playerPosY >= enemyPosY)); // log for collision
+
+        if ((playerPosX >= enemyPosX - 30 - 30) && (playerPosX <= enemyPosX + 30 + 30)
+        && (playerPosY <= enemyPosY + 120) && (playerPosY >= enemyPosY)) { // PVP Collision model
+      }
+    }
       calcEnemies(state.enemies, state.player);
       calcPlayer();
+      calcCollision();
     },
   },
   extraReducers: {},
