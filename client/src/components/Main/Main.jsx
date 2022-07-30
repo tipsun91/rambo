@@ -3,16 +3,14 @@ import './Main.css';
 
 export default function Main() {
   return (
-    <>
-      <nav>
-        <ul>
-          <li>
-            <a data-title="Ты готов?" id="jogar-btn">
-              Начать игру
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </>
+    <nav>
+      <ul>
+        <li>
+          <a href="/" data-title="Ты готов?" id="jogar-btn">
+            Начать игру
+          </a>
+        </li>
+      </ul>
+    </nav>
   );
 }

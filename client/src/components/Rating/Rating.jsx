@@ -1,11 +1,12 @@
 import React from 'react';
 import './Rating.css';
 
-export function Rating() {
+export default function Rating() {
   return (
     <div className="center">
       <h1>
-        <span className="blue">&lt;</span>GAME
+        <span className="blue">&lt;</span>
+        <span className="blue">GAME</span>
         <span className="blue">&gt;</span>
         <span className="yellow">SCORE</span>
       </h1>
@@ -67,7 +68,7 @@ export function Rating() {
         </tbody>
       </table>
       <div className="score-box">
-        <p className="score"></p>
+        <p className="score" />
         <a className="return" href="/">
           &lt;&lt; НАЗАД
         </a>

@@ -6,7 +6,7 @@ body {
   margin: 0;
 }
 body {
-  background-image: url('super-game/client/public/img/rembo.jpeg');
+  background-image: url('/Users/khmm/elbrus/3_phase/Final_Project_Game/super-game/client/public/img/rembo.jpeg');
   background-size: contain;
   font: normal 1.1em Calibri;
 }
