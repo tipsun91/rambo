@@ -127,6 +127,7 @@ const gameSlice = createSlice({
             hero.hp -= randomDamage([0, 0, 0, 0, enemie.damage, 0, 0, 0, 0]);
           }
         });
+      }
       function calcCollisionBullets() {
         state.bullets.forEach((bullet) => {
           state.enemies.forEach((enemy) => {
@@ -142,7 +143,6 @@ const gameSlice = createSlice({
             }
           });
         });
-      }
       }
 
       calcEnemies(state.enemies, state.player);
