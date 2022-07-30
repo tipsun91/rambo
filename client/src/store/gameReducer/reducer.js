@@ -27,6 +27,7 @@ const gameSlice = createSlice({
       x: 600, // горизонталь
       y: 30, // вертикаль
       hp: 100, // здоровье
+      damage: 1, // урон
     }, {
       id: 2,
       w: 30, // высота
@@ -35,6 +36,7 @@ const gameSlice = createSlice({
       x: 600, // горизонталь
       y: 80, // вертикаль
       hp: 100, // здоровье
+      damage: 1, // урон
     }, {
       id: 3,
       w: 30, // высота
@@ -43,6 +45,7 @@ const gameSlice = createSlice({
       x: 600, // горизонталь
       y: 150, // вертикаль
       hp: 100, // здоровье
+      damage: 1, // урон
     }],
     weapon: [{
       name: 'trunk', // название
@@ -100,23 +103,24 @@ const gameSlice = createSlice({
         });
       }
 
-      function calcCollision() {
-        const playerPosX = state.player.x;
-        const enemyPosX = state.enemies.x;
-        const playerPosY = state.player.y;
-        const enemyPosY = state.enemies.y;
-
-        console.log((playerPosX >= enemyPosX - 30 - 30) && (playerPosX <= enemyPosX + 30 + 30)
-          && (playerPosY <= enemyPosY + 120) && (playerPosY >= enemyPosY)); // log for collision
-
-        if ((playerPosX >= enemyPosX - 30 - 30) && (playerPosX <= enemyPosX + 30 + 30)
-          && (playerPosY <= enemyPosY + 120) && (playerPosY >= enemyPosY)) { // PVP Collision model
+      function calcCollisionsEnemie(arr, hero) {
+        function randomDamage(arrX) {
+          const num = Math.floor(Math.random() * arrX.length);
+          return arrX[num];
         }
+        arr.forEach((enemie) => {
+          if ((hero.x + hero.w / 2 >= enemie.x - enemie.w / 2)
+            && (hero.x - hero.w / 2 <= enemie.x + enemie.w / 2)
+            && (hero.y - hero.h <= enemie.y + enemie.h)
+            && (hero.y >= enemie.y)) {
+            hero.hp -= randomDamage([0, 0, 0, 0, enemie.damage, 0, 0, 0, 0]);
+          }
+        });
       }
       calcEnemies(state.enemies, state.player);
       calcPlayer();
       calcBullets();
-      calcCollision();
+      calcCollisionsEnemie(state.enemies, state.player);
     },
   },
   extraReducers: {},
