@@ -21,30 +21,22 @@ const gameSlice = createSlice({
     },
     enemies: [{
       id: 1,
-      on: false,
       x: 600, // горизонталь
       y: 30, // вертикаль
       hp: 100, // здоровье
     }, {
       id: 2,
-      on: false,
       x: 600, // горизонталь
       y: 80, // вертикаль
       hp: 100, // здоровье
-    }, {
-      id: 3,
-      on: false,
-      x: 600, // горизонталь
-      y: 150, // вертикаль
-      hp: 100, // здоровье
     }],
-    weapon: [{
+    weapon: {
       name: 'trunk', // название
-      damage: 50, // урон
+      damage: 20, // урон
       clip: 30, // обойма
       rateOfFire: 0.5, // скорострельность
       recharge: 1500, // время перезарядки
-    }],
+    },
     bullets: [],
   },
   reducers: {
@@ -63,16 +55,27 @@ const gameSlice = createSlice({
           state.player.y += state.player.speed; // идем вниз
         }
         if (action.payload.player.includes(' ')) {
-          // console.log(action.payload.player.every((el) => el === ' '));
           state.bullets.push({
-            id: uuidv4(), x: state.player.x, y: state.player.y, speed: 50,
+            id: uuidv4(),
+            x: state.player.x,
+            y: state.player.y,
+            speed: 50,
+            damage: state.weapon.damage,
+          });
+        }
+        if (action.payload.player.includes('enemy')) {
+          state.enemies.push({
+            id: uuidv4(),
+            x: 900, // горизонталь
+            y: Math.floor(Math.random() * (600 - 100)) + 100, // вертикаль
+            hp: 100, // здоровье
           });
         }
       }
       function calcBullets() {
         state.bullets.forEach((el) => {
           el.x += el.speed;
-          if (el.x >= (state.player.x + 700)) {
+          if (el.x >= (state.player.x + 900)) {
             state.bullets.splice(el.id, 1);
           }
         });
@@ -94,23 +97,42 @@ const gameSlice = createSlice({
         });
       }
 
-      function calcCollision() {
+      function calcCollisionBullets() {
+        state.bullets.forEach((bullet) => {
+          state.enemies.forEach((enemy) => {
+            if (bullet.x >= enemy.x
+              && bullet.y >= (enemy.y - 20)
+              && bullet.y <= (enemy.y + 20)) {
+              console.log(enemy.hp);
+              enemy.hp -= bullet.damage;
+              state.bullets.splice(state.enemies.findIndex((el) => el.id === bullet.id), 1);
+              if (enemy.hp <= 0) {
+                state.enemies.splice(state.enemies.findIndex((el) => el.id === enemy.id), 1);
+              }
+            }
+          });
+        });
+      }
+
+      function calcCollisionEnemyes() {
         const playerPosX = state.player.x;
         const enemyPosX = state.enemies.x;
         const playerPosY = state.player.y;
         const enemyPosY = state.enemies.y;
 
-        console.log((playerPosX >= enemyPosX - 30 - 30) && (playerPosX <= enemyPosX + 30 + 30)
-        && (playerPosY <= enemyPosY + 120) && (playerPosY >= enemyPosY)); // log for collision
+        // console.log((playerPosX >= enemyPosX - 30 - 30) && (playerPosX <= enemyPosX + 30 + 30)
+        // && (playerPosY <= enemyPosY + 120) && (playerPosY >= enemyPosY)); // log for collision
 
-        if ((playerPosX >= enemyPosX - 30 - 30) && (playerPosX <= enemyPosX + 30 + 30)
-        && (playerPosY <= enemyPosY + 120) && (playerPosY >= enemyPosY)) { // PVP Collision model
-        }
+        // if ((playerPosX >= enemyPosX - 30 - 30) && (playerPosX <= enemyPosX + 30 + 30)
+        // && (playerPosY <= enemyPosY + 120) && (playerPosY >= enemyPosY)) { // PVP Collision model
+        // }
       }
+
       calcEnemies(state.enemies, state.player);
       calcPlayer();
       calcBullets();
-      calcCollision();
+      calcCollisionEnemyes();
+      calcCollisionBullets();
     },
   },
   extraReducers: {},

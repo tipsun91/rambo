@@ -6,7 +6,7 @@ function Enemy({ enemy }) {
   return (
     <div
       className="enemy"
-      style={{ transform: ` translate(${enemy.x}px, ${enemy.y}px)` }}
+      style={{ height: '20px', width: '20px', transform: ` translate(${enemy.x}px, ${enemy.y}px)` }}
     >
       f
     </div>
