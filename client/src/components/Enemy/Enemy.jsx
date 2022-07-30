@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import './Enemy_Style.css';
 
 function Enemy({ enemy }) {
   return (
