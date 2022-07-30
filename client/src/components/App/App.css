@@ -2,10 +2,7 @@
 	margin: 0;
 	padding: 0;
 	background-color: rgb(253, 253, 253);
+  position: absolute;
 }
-.hero {
-	background-color: black;
-	position: absolute;
-	width: 20px;
-	height: 20px;
-}
+
+

@@ -2,18 +2,26 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Hero from '../Hero/Hero';
+import GameBar from '../GameBar/GameBar';
+import Bullet from '../Bullet/Bullet';
+import Enemy from '../Enemy/Enemy';
 import './App.css';
 import { updateFrame } from '../../store/gameReducer/reducer';
-import GameBar from '../GameBar/GameBar';
 
 function App() {
+  const { enemies } = useSelector((state) => state.game);
   const dispatch = useDispatch();
+
+  const { bullets, player } = useSelector((state) => state.game);
+
   const [arrowRight, setArrowRight] = useState(false);
   const [arrowLeft, setArrowLeft] = useState(false);
   const [arrowUp, setArrowUp] = useState(false);
   const [arrowDown, setArrowDown] = useState(false);
+  const [bullet, setBullet] = useState(false);
+  const [timeBullet, seTimeBullet] = useState(Date.now());
 
   useEffect(() => {
     const funtion1 = (event) => {
@@ -29,6 +37,9 @@ function App() {
       if (event.key === 'ArrowDown') {
         setArrowDown(true);
       }
+      if (event.key === ' ') {
+        setBullet(true);
+      }
     };
 
     const function2 = (event) => {
@@ -43,6 +54,9 @@ function App() {
       }
       if (event.key === 'ArrowDown') {
         setArrowDown(false);
+      }
+      if (event.key === ' ') {
+        setBullet(false);
       }
     };
 
@@ -71,6 +85,12 @@ function App() {
     if (arrowDown) {
       pressedButtons.push('ArrowDown');
     }
+    if (bullet) {
+      if ((Date.now() - timeBullet) > 300) {
+        pressedButtons.push(' ');
+        seTimeBullet(Date.now);
+      }
+    }
 
     dispatch(updateFrame({ player: pressedButtons }));
 
@@ -78,10 +98,15 @@ function App() {
       setTimeoutFlag((prev) => !prev);
     }, 20);
   }, [timeoutFlag]);
+
   return (
     <div className="App">
-      <Hero />
       <GameBar />
+      <Hero />
+      { bullets
+        && bullets.map((el) => <Bullet bullet={el} key={el.id} />)}
+      { enemies
+      && enemies.map((enemy) => <Enemy key={enemy.id} enemy={enemy} />)}
     </div>
   );
 }
