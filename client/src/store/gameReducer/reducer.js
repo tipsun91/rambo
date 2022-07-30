@@ -47,13 +47,13 @@ const gameSlice = createSlice({
       hp: 100, // здоровье
       damage: 1, // урон
     }],
-    weapon: [{
+    weapon: {
       name: 'trunk', // название
-      damage: 50, // урон
+      damage: 20, // урон
       clip: 30, // обойма
       rateOfFire: 0.5, // скорострельность
       recharge: 1500, // время перезарядки
-    }],
+    },
     bullets: [],
   },
   reducers: {
@@ -72,16 +72,27 @@ const gameSlice = createSlice({
           state.player.y += state.player.speed; // идем вниз
         }
         if (action.payload.player.includes(' ')) {
-          // console.log(action.payload.player.every((el) => el === ' '));
           state.bullets.push({
-            id: uuidv4(), x: state.player.x, y: state.player.y - state.player.h / 2, speed: 50,
+            id: uuidv4(),
+            x: state.player.x,
+            y: state.player.y - state.player.h / 2,
+            speed: 50,
+            damage: state.weapon.damage,
+          });
+        }
+        if (action.payload.player.includes('enemy')) {
+          state.enemies.push({
+            id: uuidv4(),
+            x: 900, // горизонталь
+            y: Math.floor(Math.random() * (600 - 100)) + 100, // вертикаль
+            hp: 100, // здоровье
           });
         }
       }
       function calcBullets() {
         state.bullets.forEach((el) => {
           el.x += el.speed;
-          if (el.x >= (state.player.x + 700)) {
+          if (el.x >= (state.player.x + 900)) {
             state.bullets.splice(el.id, 1);
           }
         });
@@ -116,11 +127,29 @@ const gameSlice = createSlice({
             hero.hp -= randomDamage([0, 0, 0, 0, enemie.damage, 0, 0, 0, 0]);
           }
         });
+      function calcCollisionBullets() {
+        state.bullets.forEach((bullet) => {
+          state.enemies.forEach((enemy) => {
+            if (bullet.x >= enemy.x
+              && bullet.y >= (enemy.y - 20)
+              && bullet.y <= (enemy.y + 20)) {
+              console.log(enemy.hp);
+              enemy.hp -= bullet.damage;
+              state.bullets.splice(state.enemies.findIndex((el) => el.id === bullet.id), 1);
+              if (enemy.hp <= 0) {
+                state.enemies.splice(state.enemies.findIndex((el) => el.id === enemy.id), 1);
+              }
+            }
+          });
+        });
       }
+      }
+
       calcEnemies(state.enemies, state.player);
       calcPlayer();
       calcBullets();
       calcCollisionsEnemie(state.enemies, state.player);
+      calcCollisionBullets();
     },
   },
   extraReducers: {},

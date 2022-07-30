@@ -1,10 +1,18 @@
-import * as React from 'react';
+import React from 'react';
+import './Main.css';
 
 export default function Main() {
   return (
-    <div>
-      <h1>Главная страница</h1>
-      <p>Что тут должно быть?</p>
-    </div>
+    <>
+      <nav>
+        <ul>
+          <li>
+            <a data-title="Ты готов?" id="jogar-btn">
+              Начать игру
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </>
   );
 }
