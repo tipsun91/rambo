@@ -4,11 +4,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Hero from '../Hero/Hero';
+import GameBar from '../GameBar/GameBar';
 import Bullet from '../Bullet/Bullet';
+import Enemy from '../Enemy/Enemy';
 import './App.css';
-import { updateFrame, calcBullets } from '../../store/gameReducer/reducer';
+import { updateFrame } from '../../store/gameReducer/reducer';
 
 function App() {
+  const { enemies } = useSelector((state) => state.game);
   const dispatch = useDispatch();
 
   const { bullets, player } = useSelector((state) => state.game);
@@ -98,9 +101,12 @@ function App() {
 
   return (
     <div className="App">
+      <GameBar />
       <Hero />
       { bullets
         && bullets.map((el) => <Bullet bullet={el} key={el.id} />)}
+      { enemies
+      && enemies.map((enemy) => <Enemy key={enemy.id} enemy={enemy} />)}
     </div>
   );
 }
