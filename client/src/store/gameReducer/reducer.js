@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable default-param-last */
+import { v4 as uuidv4 } from 'uuid';
 import { createSlice } from '@reduxjs/toolkit';
 
 const gameSlice = createSlice({
@@ -49,6 +51,7 @@ const gameSlice = createSlice({
       rateOfFire: 0.5, // скорострельность
       recharge: 1500, // время перезарядки
     }],
+    bullets: [],
   },
   reducers: {
     updateFrame(state, action) {
@@ -65,6 +68,20 @@ const gameSlice = createSlice({
         if (action.payload.player.includes('ArrowDown')) {
           state.player.y += state.player.speed; // идем вниз
         }
+        if (action.payload.player.includes(' ')) {
+          // console.log(action.payload.player.every((el) => el === ' '));
+          state.bullets.push({
+            id: uuidv4(), x: state.player.x, y: state.player.y, speed: 50,
+          });
+        }
+      }
+      function calcBullets() {
+        state.bullets.forEach((el) => {
+          el.x += el.speed;
+          if (el.x >= (state.player.x + 700)) {
+            state.bullets.splice(el.id, 1);
+          }
+        });
       }
       function calcEnemies(arr, hero) {
         arr.forEach((el) => {
@@ -84,6 +101,7 @@ const gameSlice = createSlice({
       }
       calcEnemies(state.enemies, state.player);
       calcPlayer();
+      calcBullets();
     },
   },
   extraReducers: {},
