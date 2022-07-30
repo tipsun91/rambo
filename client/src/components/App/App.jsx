@@ -22,6 +22,7 @@ function App() {
   const [arrowDown, setArrowDown] = useState(false);
   const [bullet, setBullet] = useState(false);
   const [timeBullet, seTimeBullet] = useState(Date.now());
+  const [timeEnemy, setTimeEnemy] = useState(Date.now());
 
   useEffect(() => {
     const funtion1 = (event) => {
@@ -91,6 +92,10 @@ function App() {
         seTimeBullet(Date.now);
       }
     }
+    if ((Date.now() - timeEnemy) > 2000) {
+      pressedButtons.push('enemy');
+      setTimeEnemy(Date.now());
+    }
 
     dispatch(updateFrame({ player: pressedButtons }));
 
@@ -106,7 +111,7 @@ function App() {
       { bullets
         && bullets.map((el) => <Bullet bullet={el} key={el.id} />)}
       { enemies
-      && enemies.map((enemy) => <Enemy key={enemy.id} enemy={enemy} />)}
+      && enemies.map((el) => <Enemy key={el.id} enemy={el} />)}
     </div>
   );
 }
