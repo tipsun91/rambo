@@ -10,8 +10,8 @@ const gameSlice = createSlice({
     player: {
       x: 0, // горизонталь
       y: 0, // вертикаль
-      w: 60, // высота
-      h: 60, // ширина
+      w: 30, // высота
+      h: 30, // ширина
       speed: 7, // скорость передвижения
       hp: 100, // здоровье
       weapon: ['trunk'],
@@ -21,14 +21,31 @@ const gameSlice = createSlice({
     },
     enemies: [{
       id: 1,
+      w: 30, // высота
+      h: 30, // ширина
+      on: false,
       x: 600, // горизонталь
       y: 30, // вертикаль
       hp: 100, // здоровье
+      damage: 1, // урон
     }, {
       id: 2,
+      w: 30, // высота
+      h: 30, // ширина
+      on: false,
       x: 600, // горизонталь
       y: 80, // вертикаль
       hp: 100, // здоровье
+      damage: 1, // урон
+    }, {
+      id: 3,
+      w: 30, // высота
+      h: 30, // ширина
+      on: false,
+      x: 600, // горизонталь
+      y: 150, // вертикаль
+      hp: 100, // здоровье
+      damage: 1, // урон
     }],
     weapon: {
       name: 'trunk', // название
@@ -58,7 +75,7 @@ const gameSlice = createSlice({
           state.bullets.push({
             id: uuidv4(),
             x: state.player.x,
-            y: state.player.y,
+            y: state.player.y - state.player.h / 2,
             speed: 50,
             damage: state.weapon.damage,
           });
@@ -97,6 +114,19 @@ const gameSlice = createSlice({
         });
       }
 
+      function calcCollisionsEnemie(arr, hero) {
+        function randomDamage(arrX) {
+          const num = Math.floor(Math.random() * arrX.length);
+          return arrX[num];
+        }
+        arr.forEach((enemie) => {
+          if ((hero.x + hero.w / 2 >= enemie.x - enemie.w / 2)
+            && (hero.x - hero.w / 2 <= enemie.x + enemie.w / 2)
+            && (hero.y - hero.h <= enemie.y + enemie.h)
+            && (hero.y >= enemie.y)) {
+            hero.hp -= randomDamage([0, 0, 0, 0, enemie.damage, 0, 0, 0, 0]);
+          }
+        });
       function calcCollisionBullets() {
         state.bullets.forEach((bullet) => {
           state.enemies.forEach((enemy) => {
@@ -113,25 +143,12 @@ const gameSlice = createSlice({
           });
         });
       }
-
-      function calcCollisionEnemyes() {
-        const playerPosX = state.player.x;
-        const enemyPosX = state.enemies.x;
-        const playerPosY = state.player.y;
-        const enemyPosY = state.enemies.y;
-
-        // console.log((playerPosX >= enemyPosX - 30 - 30) && (playerPosX <= enemyPosX + 30 + 30)
-        // && (playerPosY <= enemyPosY + 120) && (playerPosY >= enemyPosY)); // log for collision
-
-        // if ((playerPosX >= enemyPosX - 30 - 30) && (playerPosX <= enemyPosX + 30 + 30)
-        // && (playerPosY <= enemyPosY + 120) && (playerPosY >= enemyPosY)) { // PVP Collision model
-        // }
       }
 
       calcEnemies(state.enemies, state.player);
       calcPlayer();
       calcBullets();
-      calcCollisionEnemyes();
+      calcCollisionsEnemie(state.enemies, state.player);
       calcCollisionBullets();
     },
   },
