@@ -4,3 +4,8 @@
 	background-color: rgb(253, 253, 253);
   position: absolute;
 }
+
+.gameOver {
+  display: flex;
+  flex-direction: column;
+}

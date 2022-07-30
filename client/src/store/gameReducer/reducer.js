@@ -23,7 +23,6 @@ const gameSlice = createSlice({
       id: 1,
       w: 30, // высота
       h: 30, // ширина
-      on: false,
       x: 600, // горизонталь
       y: 30, // вертикаль
       hp: 100, // здоровье
@@ -32,7 +31,6 @@ const gameSlice = createSlice({
       id: 2,
       w: 30, // высота
       h: 30, // ширина
-      on: false,
       x: 600, // горизонталь
       y: 80, // вертикаль
       hp: 100, // здоровье
@@ -41,7 +39,6 @@ const gameSlice = createSlice({
       id: 3,
       w: 30, // высота
       h: 30, // ширина
-      on: false,
       x: 600, // горизонталь
       y: 150, // вертикаль
       hp: 100, // здоровье
@@ -83,9 +80,12 @@ const gameSlice = createSlice({
         if (action.payload.player.includes('enemy')) {
           state.enemies.push({
             id: uuidv4(),
+            w: 30,
+            h: 30,
             x: 900, // горизонталь
             y: Math.floor(Math.random() * (600 - 100)) + 100, // вертикаль
             hp: 100, // здоровье
+            damage: 1,
           });
         }
       }
@@ -134,7 +134,6 @@ const gameSlice = createSlice({
             if (bullet.x >= enemy.x
               && bullet.y >= (enemy.y - 20)
               && bullet.y <= (enemy.y + 20)) {
-              console.log(enemy.hp);
               enemy.hp -= bullet.damage;
               state.bullets.splice(state.enemies.findIndex((el) => el.id === bullet.id), 1);
               if (enemy.hp <= 0) {
