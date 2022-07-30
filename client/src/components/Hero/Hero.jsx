@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import './Hero_Style.css';
 
 function Hero() {
   const { player } = useSelector((state) => state.game);
