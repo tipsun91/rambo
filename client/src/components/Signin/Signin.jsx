@@ -3,7 +3,7 @@ import './Signin.css';
 
 export default function Signin() {
   return (
-    <div className="registr-box">
+    <div className="login-box">
       <div className="input-section">
         <i className="far" />
         <input className="input-area" type="text" placeholder="Email" />

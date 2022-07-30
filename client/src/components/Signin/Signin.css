@@ -20,8 +20,8 @@ h1 {
 }
 
 input {
-    width: 300px;
-    font-size: 17px;
+  width: 300px;
+  font-size: 17px;
   display: inline-block;
   background: none;
   border: none;
@@ -31,7 +31,7 @@ input {
   border-radius: 0;
 }
 
-.registr-box {
+.login-box {
   position: absolute;
   top: 50%;
   left: 50%;
