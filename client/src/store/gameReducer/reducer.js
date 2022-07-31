@@ -38,7 +38,7 @@ const gameSlice = createSlice({
       y: 0, // вертикаль
       w: 30, // высота
       h: 30, // ширина
-      speed: 7, // скорость передвижения
+      speed: 3, // скорость передвижения
       hp: 100, // здоровье
       weapon: ['trunk'],
       ammunition: [{ // боезапас
@@ -52,7 +52,8 @@ const gameSlice = createSlice({
       x: 600, // горизонталь
       y: 30, // вертикаль
       hp: 100, // здоровье
-      damage: 1, // урон
+      damage: 5, // урон
+      coolDown: 30, // скорость удара
     }, {
       id: 2,
       w: 30, // высота
@@ -60,15 +61,17 @@ const gameSlice = createSlice({
       x: 600, // горизонталь
       y: 80, // вертикаль
       hp: 100, // здоровье
-      damage: 1, // урон
+      damage: 5, // урон
+      coolDown: 30,
     }, {
       id: 3,
       w: 30, // высота
       h: 30, // ширина
-      x: 600, // горизонталь
+      x: 400, // горизонталь
       y: 150, // вертикаль
       hp: 100, // здоровье
-      damage: 1, // урон
+      damage: 5, // урон
+      coolDown: 30,
     }],
     weapon: {
       name: 'trunk', // название
@@ -85,9 +88,13 @@ const gameSlice = createSlice({
       timeGame: 0,
       countWawes: 0,
     },
+    gameLoop: 0,
   },
   reducers: {
     updateFrame(state, action) {
+      function upGameLoop() {
+        state.gameLoop += 1;
+      }
       function calcPlayer() {
         if (action.payload.player.includes('ArrowRight')) {
           state.player.x += state.player.speed; // идем вправо
@@ -113,12 +120,13 @@ const gameSlice = createSlice({
         if (action.payload.player.includes('enemy')) {
           state.enemies.push({
             id: uuidv4(),
-            w: 30,
-            h: 30,
-            x: 900, // горизонталь
-            y: Math.floor(Math.random() * (600 - 100)) + 100, // вертикаль
+            x: Math.floor(Math.random() * (1400 - 1200)) + 1200, // горизонталь
+            y: Math.floor(Math.random() * (300 - 100)) + 50, // вертикаль
+            w: 30, // высота
+            h: 30, // ширина
             hp: 100, // здоровье
-            damage: 1,
+            damage: 5, // урон
+            coolDown: 30, // скорость удара
           });
         }
       }
@@ -157,7 +165,10 @@ const gameSlice = createSlice({
             && (hero.x - hero.w / 2 <= enemie.x + enemie.w / 2)
             && (hero.y - hero.h <= enemie.y + enemie.h)
             && (hero.y >= enemie.y)) {
-            hero.hp -= randomDamage([0, 0, 0, 0, enemie.damage, 0, 0, 0, 0]);
+            // hero.hp -= randomDamage([0, 0, 0, 0, enemie.damage, 0, 0, 0, 0]);
+            if (state.gameLoop % enemie.coolDown === 0) {
+              hero.hp -= enemie.damage;
+            }
           }
         });
       }
@@ -182,7 +193,7 @@ const gameSlice = createSlice({
           });
         });
       }
-
+      upGameLoop();
       calcEnemies(state.enemies, state.player);
       calcPlayer();
       calcBullets();
