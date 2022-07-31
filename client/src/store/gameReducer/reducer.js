@@ -2,7 +2,33 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable default-param-last */
 import { v4 as uuidv4 } from 'uuid';
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+export const sendStatistic = createAsyncThunk(
+  'api/statistics',
+  async (statGame, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/api/statistics', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          countEnemies: statGame.countEnemies,
+          countMoney: statGame.countMoney,
+          countDamage: statGame.countDamage,
+          countWawes: statGame.countWawes,
+          timeGame: statGame.timeGame,
+        }),
+      });
+      const data = await responce.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
 
 const gameSlice = createSlice({
   name: 'game',
@@ -55,10 +81,14 @@ const gameSlice = createSlice({
       recharge: 1500, // время перезарядки
     },
     bullets: [],
+    game: {
+      countEnemies: 0,
+      countMoney: 0,
+      countDamage: 0,
+      timeGame: 0,
+      countWawes: 0,
+    },
     gameLoop: 0,
-    score: [{
-      
-    }]
   },
   reducers: {
     updateFrame(state, action) {
@@ -150,9 +180,12 @@ const gameSlice = createSlice({
                 && bullet.y >= enemy.y
                 && bullet.y <= (enemy.y + state.player.w)) {
                 enemy.hp -= bullet.damage;
-                console.log(enemy.hp);
+                state.game.countDamage += bullet.damage;
+                // console.log(state.game.countDamage);
                 state.bullets.splice(state.enemies.findIndex((el) => el.id === bullet.id), 1);
                 if (enemy.hp <= 0) {
+                  state.game.countEnemies += 1;
+                  state.game.countMoney += 15;
                   state.enemies.splice(state.enemies.findIndex((el) => el.id === enemy.id), 1);
                 }
               }
