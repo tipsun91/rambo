@@ -7,15 +7,11 @@ body {
   padding: 2.23em;
   height: 100%;
   margin: 0;
-  background-image: none;
-  background-size: contain;
-  background: #0d6050;
   font: normal 1.1em Calibri;
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   line-height: 1.42em;
   color: #ffffff;
-  background-color: #1f2739;
 }
 
 h1 {
