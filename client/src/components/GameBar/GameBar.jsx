@@ -10,7 +10,7 @@ function GameBar() {
       <div className="gamebar__progress">
         <div
           className="gamebar__progress-inner"
-          style={{ width: `${player.hp}%` }}
+          style={{ width: `${player.hp}px` }}
         />
         <span className="gamebar__progress-persent">{player.hp}</span>
       </div>

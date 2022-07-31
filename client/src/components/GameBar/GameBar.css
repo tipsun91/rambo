@@ -4,21 +4,24 @@
   padding: 2px;
   border-radius: 2px;
   background-color: red;
-  position: relative;
+  position: fixed;
+  left: 40%;
+  
 }
 
 .gamebar__progress-inner {
-  width: 100%;
+  /* width: 300px; */
   border-radius: 2px;
   background-color: greenyellow;
   height: 100%;
+  /* position: relative; */
 }
 
 .gamebar__progress-persent {
-  position: relative;
-  top: 50%;
-  left: 50%;
+  position: fixed;
   display: block;
+  margin-top: -10px;
+  margin-left: 50px;
   transform: translate(-50%, -50%);
   background-color: transparent;
 }
