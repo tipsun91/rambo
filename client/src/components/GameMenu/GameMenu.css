@@ -1,0 +1,77 @@
+@import url(https://fonts.googleapis.com/css?family=Kite+One);
+@import url(https://fonts.googleapis.com/css?family=Offside);
+
+html {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  background-image: url('/Users/khmm/elbrus/3_phase/111/public/img/rembo.jpeg');
+  background-size: contain;
+  font: normal 1.1em Calibri;
+}
+
+nav {
+  height: 25%;
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  font: normal 1.2em Offside;
+}
+
+p {
+  margin: 5px 0;
+}
+
+a {
+  text-decoration: none;
+  color: #eee;
+  transition: all linear 0.3s;
+}
+
+a:hover {
+  color: #ecbb15;
+  position: relative;
+  cursor: pointer;
+  text-shadow: rgb(172, 136, 15) 0px 1px 0px, rgb(108, 86, 10) 0px 2px 0px,
+    rgba(0, 0, 0, 0.199219) 0px 3px 1px, rgba(0, 0, 0, 0.296875) 0px 4px 2px;
+  transition: all linear 0.3s;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  width: 100%;
+  text-align: center;
+  line-height: 2.5em;
+  float: left;
+  line-height: 60px;
+  font-size: 1.5em;
+  text-shadow: rgb(187, 187, 187) 0px 1px 0px, rgb(181, 181, 181) 0px 2px 0px,
+    rgba(0, 0, 0, 0.199219) 0px 3px 1px, rgba(0, 0, 0, 0.296875) 0px 4px 3px;
+}
+
+li a {
+  display: block;
+}
+
+@-webkit-keyframes anim {
+  0% {
+    -webkit-transform: rotate(4deg);
+  }
+  50% {
+    -webkit-transform: rotate(-4deg);
+  }
+  100% {
+    -webkit-transform: rotate(4deg);
+  }
+}
