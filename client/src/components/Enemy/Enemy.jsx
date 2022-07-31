@@ -11,9 +11,7 @@ function Enemy({ enemy }) {
         width: `${enemy.w}px`,
         height: `${enemy.h}px`,
       }}
-    >
-      f
-    </div>
+    />
   );
 }
 

@@ -117,7 +117,7 @@ function App() {
               <GameBar />
               <Hero />
               { bullets
-                && bullets.map((el) => <Bullet bullet={el} key={el.id} />)}
+                && bullets.map((el) => <Bullet key={el.id} bullet={el} />)}
               { enemies
                 && enemies.map((el) => <Enemy key={el.id} enemy={el} />)}
             </div>
