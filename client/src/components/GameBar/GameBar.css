@@ -48,3 +48,19 @@
   transform: translate(-50%, -50%);
   background-color: transparent;
 }
+
+.gamebar__progress__damage__number
+{
+  position: fixed;
+  display: block;
+  margin-top: -10px;
+  margin-left: 700px;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+}
+
+span
+{
+  display: flex;
+  justify-content: center;
+}

@@ -8,19 +8,21 @@ import GameBar from '../GameBar/GameBar';
 import Bullet from '../Bullet/Bullet';
 import Enemy from '../Enemy/Enemy';
 import './App.css';
-import { updateFrame } from '../../store/gameReducer/reducer';
+import { updateFrame, sendStatistic } from '../../store/gameReducer/reducer';
 
 function App() {
   const dispatch = useDispatch();
   const {
-    enemies, bullets, player,
+    enemies, bullets, player, game,
   } = useSelector((state) => state.game);
+  const [countWawes, setCountWawes] = useState(1);
   const [playGame, setplayGame] = useState(true);
   const [arrowRight, setArrowRight] = useState(false);
   const [arrowLeft, setArrowLeft] = useState(false);
   const [arrowUp, setArrowUp] = useState(false);
   const [arrowDown, setArrowDown] = useState(false);
   const [bullet, setBullet] = useState(false);
+  const [startTime, setStartTime] = useState(Date.now());
   const [timeBullet, seTimeBullet] = useState(Date.now());
   const [timeEnemy, setTimeEnemy] = useState(Date.now());
 
@@ -101,12 +103,41 @@ function App() {
     if (player.hp <= 0) {
       setplayGame(false);
     }
+
+    if (playGame) {
+      if (game.countEnemies === 2) {
+        setCountWawes(2);
+      }
+      if (game.countEnemies === 3) {
+        setCountWawes(3);
+      }
+      if (game.countEnemies === 4) {
+        setCountWawes(4);
+      }
+      if (game.countEnemies === 5) {
+        setCountWawes(5);
+      }
+    }
+
     if (playGame) {
       setTimeout(() => {
         setTimeoutFlag((prev) => !prev);
       }, 20);
     }
   }, [timeoutFlag]);
+
+  useEffect(() => {
+    if (!playGame) {
+      const time = (+Date.now() - +startTime) / 1000;
+      dispatch(sendStatistic({
+        countEnemies: game.countEnemies,
+        countMoney: game.countMoney,
+        countDamage: game.countDamage,
+        countWawes,
+        timeGame: time,
+      }));
+    }
+  }, [playGame]);
 
   return (
     <div className="App">
