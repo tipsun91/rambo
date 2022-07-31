@@ -1,12 +1,12 @@
 .gamebar__progress 
 {
-  width: 300px;
+  width: 1200px;
   height: 25px;
   padding: 2px;
   border-radius: 2px;
   background-color: rgb(82, 89, 99);
   position: fixed;
-  left: 40%;
+  left: 2%;
   
 }
 
@@ -22,8 +22,11 @@
 .gamebar__progress__damage
 {
   border-radius: 2px;
-  background-color: rgb(33, 186, 67);
+  background-color: rgba(5, 58, 139, 0.86);
   height: 100%;
+  margin-top: -21px;
+  margin-left: 110px;
+
 }
 
 .gamebar__progress__number 
@@ -32,6 +35,16 @@
   display: block;
   margin-top: -10px;
   margin-left: 50px;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+}
+
+.gamebar__progress__damage__number
+{
+  position: fixed;
+  display: block;
+  margin-top: -10px;
+  margin-left: 700px;
   transform: translate(-50%, -50%);
   background-color: transparent;
 }
