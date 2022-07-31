@@ -1,9 +1,5 @@
 import React from 'react';
-<<<<<<< HEAD
-// import './Statistic.css';
-=======
 import './Profile.css';
->>>>>>> 502d916d716aace020f33f52711ba9bb16c02483
 
 export default function Profile() {
   return (
