@@ -59,6 +59,9 @@ const gameSlice = createSlice({
     },
     bullets: [],
     gameLoop: 0,
+    score: [{
+      
+    }]
   },
   reducers: {
     updateFrame(state, action) {
