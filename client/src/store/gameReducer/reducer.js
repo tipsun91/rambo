@@ -23,7 +23,6 @@ const gameSlice = createSlice({
       id: 1,
       w: 30, // высота
       h: 30, // ширина
-      on: false,
       x: 600, // горизонталь
       y: 30, // вертикаль
       hp: 100, // здоровье
@@ -33,8 +32,7 @@ const gameSlice = createSlice({
       id: 2,
       w: 30, // высота
       h: 30, // ширина
-      on: false,
-      x: 500, // горизонталь
+      x: 600, // горизонталь
       y: 80, // вертикаль
       hp: 100, // здоровье
       damage: 5, // урон
@@ -43,7 +41,6 @@ const gameSlice = createSlice({
       id: 3,
       w: 30, // высота
       h: 30, // ширина
-      on: false,
       x: 400, // горизонталь
       y: 150, // вертикаль
       hp: 100, // здоровье
@@ -148,14 +145,16 @@ const gameSlice = createSlice({
       function calcCollisionBullets() {
         state.bullets.forEach((bullet) => {
           state.enemies.forEach((enemy) => {
-            if (bullet.x >= enemy.x
-              && bullet.y >= (enemy.y - 20)
-              && bullet.y <= (enemy.y + 20)) {
-              console.log(enemy.hp);
-              enemy.hp -= bullet.damage;
-              state.bullets.splice(state.enemies.findIndex((el) => el.id === bullet.id), 1);
-              if (enemy.hp <= 0) {
-                state.enemies.splice(state.enemies.findIndex((el) => el.id === enemy.id), 1);
+            if (enemy.x > state.player.x) {
+              if (bullet.x >= enemy.x
+                && bullet.y >= enemy.y
+                && bullet.y <= (enemy.y + state.player.w)) {
+                enemy.hp -= bullet.damage;
+                console.log(enemy.hp);
+                state.bullets.splice(state.enemies.findIndex((el) => el.id === bullet.id), 1);
+                if (enemy.hp <= 0) {
+                  state.enemies.splice(state.enemies.findIndex((el) => el.id === enemy.id), 1);
+                }
               }
             }
           });

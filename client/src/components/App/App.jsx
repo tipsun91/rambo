@@ -11,11 +11,11 @@ import './App.css';
 import { updateFrame } from '../../store/gameReducer/reducer';
 
 function App() {
-  const { enemies } = useSelector((state) => state.game);
   const dispatch = useDispatch();
-
-  const { bullets, player } = useSelector((state) => state.game);
-
+  const {
+    enemies, bullets, player,
+  } = useSelector((state) => state.game);
+  const [playGame, setplayGame] = useState(true);
   const [arrowRight, setArrowRight] = useState(false);
   const [arrowLeft, setArrowLeft] = useState(false);
   const [arrowUp, setArrowUp] = useState(false);
@@ -98,20 +98,38 @@ function App() {
     }
 
     dispatch(updateFrame({ player: pressedButtons }));
-
-    setTimeout(() => {
-      setTimeoutFlag((prev) => !prev);
-    }, 20);
+    if (player.hp <= 0) {
+      setplayGame(false);
+    }
+    if (playGame) {
+      setTimeout(() => {
+        setTimeoutFlag((prev) => !prev);
+      }, 20);
+    }
   }, [timeoutFlag]);
 
   return (
     <div className="App">
-      <GameBar />
-      <Hero />
-      { bullets
-        && bullets.map((el) => <Bullet bullet={el} key={el.id} />)}
-      { enemies
-      && enemies.map((el) => <Enemy key={el.id} enemy={el} />)}
+      {
+        playGame
+          ? (
+            <div>
+              <GameBar />
+              <Hero />
+              { bullets
+                && bullets.map((el) => <Bullet key={el.id} bullet={el} />)}
+              { enemies
+                && enemies.map((el) => <Enemy key={el.id} enemy={el} />)}
+            </div>
+          )
+          : (
+            <div className="gameOver">
+              <h1>GAME OVER</h1>
+              <button type="button">Играть еще раз</button>
+              <button type="button">Вернуться в главное меню</button>
+            </div>
+          )
+      }
     </div>
   );
 }

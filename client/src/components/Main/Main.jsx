@@ -6,7 +6,7 @@ export default function Main() {
     <nav>
       <ul>
         <li>
-          <a href="/" data-title="Ты готов?" id="jogar-btn">
+          <a required href="/" data-title="Ты готов?" id="jogar-btn">
             Начать игру
           </a>
         </li>

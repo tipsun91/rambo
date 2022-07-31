@@ -1,7 +1,7 @@
 import React from 'react';
 import './Rating.css';
 
-export default function Rating() {
+function Rating() {
   return (
     <div className="center">
       <h1>
@@ -76,3 +76,5 @@ export default function Rating() {
     </div>
   );
 }
+
+export default Rating;
