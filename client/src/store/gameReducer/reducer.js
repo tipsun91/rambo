@@ -15,6 +15,7 @@ const gameSlice = createSlice({
       speed: 3, // скорость передвижения
       hp: 100, // здоровье
       damage: 2, // урон
+      damagevalue: 0,
       weapon: ['trunk'],
       ammunition: [{ // боезапас
         trunk: 0,
@@ -127,6 +128,7 @@ const gameSlice = createSlice({
       }
 
       function calcCollisionsEnemie(arr, hero) {
+        
         function randomDamage(arrX) {
           const num = Math.floor(Math.random() * arrX.length);
           return arrX[num];
@@ -141,6 +143,7 @@ const gameSlice = createSlice({
               hero.hp -= enemie.damage;
             }
             enemie.hp -= hero.damage; // PVP damage
+            hero.damagevalue += hero.damage;  // counts pvp damage into GameBar !
             if (enemie.hp <= 0) {
               state.enemies.splice(state.enemies.findIndex((el) => el.id === enemie.id), 1); // enemy die
             }
@@ -155,6 +158,8 @@ const gameSlice = createSlice({
                 && bullet.y >= enemy.y
                 && bullet.y <= (enemy.y + state.player.w)) {
                 enemy.hp -= bullet.damage;
+                state.player.damagevalue += bullet.damage; // counts bullet damage into GameBar !
+                // add some gif as damage effect
                 console.log(enemy.hp);
                 state.bullets.splice(state.enemies.findIndex((el) => el.id === bullet.id), 1);
                 if (enemy.hp <= 0) {
