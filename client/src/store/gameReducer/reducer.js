@@ -131,13 +131,16 @@ const gameSlice = createSlice({
       function calcCollisionBullets() {
         state.bullets.forEach((bullet) => {
           state.enemies.forEach((enemy) => {
-            if (bullet.x >= enemy.x
-              && bullet.y >= (enemy.y - 20)
-              && bullet.y <= (enemy.y + 20)) {
-              enemy.hp -= bullet.damage;
-              state.bullets.splice(state.enemies.findIndex((el) => el.id === bullet.id), 1);
-              if (enemy.hp <= 0) {
-                state.enemies.splice(state.enemies.findIndex((el) => el.id === enemy.id), 1);
+            if (enemy.x > state.player.x) {
+              if (bullet.x >= enemy.x
+                && bullet.y >= enemy.y
+                && bullet.y <= (enemy.y + state.player.w)) {
+                enemy.hp -= bullet.damage;
+                console.log(enemy.hp);
+                state.bullets.splice(state.enemies.findIndex((el) => el.id === bullet.id), 1);
+                if (enemy.hp <= 0) {
+                  state.enemies.splice(state.enemies.findIndex((el) => el.id === enemy.id), 1);
+                }
               }
             }
           });
