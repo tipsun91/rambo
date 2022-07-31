@@ -7,24 +7,16 @@ function GameMenu() {
       <nav>
         <ul>
           <li>
-            <a data-title="Ты готов?" id="jogar-btn">
-              Войти
-            </a>
+            <a href="/">Войти</a>
           </li>
           <li>
-            <a data-title="Ты готов?" id="jogar-btn">
-              Зарегистрироваться
-            </a>
+            <a href="/">Зарегистрироваться</a>
           </li>
           <li>
-            <a data-title="Ты готов?" id="jogar-btn">
-              Статистика
-            </a>
+            <a href="/">Статистика</a>
           </li>
           <li>
-            <a data-title="Ты готов?" id="jogar-btn">
-              Выход
-            </a>
+            <a href="/">Выход</a>
           </li>
         </ul>
       </nav>
