@@ -14,6 +14,7 @@ const gameSlice = createSlice({
       h: 30, // ширина
       speed: 3, // скорость передвижения
       hp: 100, // здоровье
+      damage: 2, // урон
       weapon: ['trunk'],
       ammunition: [{ // боезапас
         trunk: 0,
@@ -138,6 +139,10 @@ const gameSlice = createSlice({
             // hero.hp -= randomDamage([0, 0, 0, 0, enemie.damage, 0, 0, 0, 0]);
             if (state.gameLoop % enemie.coolDown === 0) {
               hero.hp -= enemie.damage;
+            }
+            enemie.hp -= hero.damage; // PVP damage
+            if (enemie.hp <= 0) {
+              state.enemies.splice(state.enemies.findIndex((el) => el.id === enemie.id), 1); // enemy die
             }
           }
         });
