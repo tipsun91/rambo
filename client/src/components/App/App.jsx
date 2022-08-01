@@ -78,7 +78,6 @@ function App() {
       }
     };
 
-    // document.addEventListener('mouseover', mouseXY);
     document.addEventListener('mousedown', mouseClickDown);
     document.addEventListener('mouseup', mouseClickUp);
 
