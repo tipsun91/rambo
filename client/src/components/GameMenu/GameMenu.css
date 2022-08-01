@@ -1,5 +1,15 @@
-@import url(https://fonts.googleapis.com/css?family=Kite+One);
-@import url(https://fonts.googleapis.com/css?family=Offside);
+html {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  background-image: url('../../../public/img/rembo.jpeg');
+  background-size: contain;
+  font-family: 'Press Start 2P', sans-serif;
+}
 
 nav {
   height: 25%;
@@ -8,7 +18,6 @@ nav {
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
-  font: normal 1.2em Offside;
 }
 
 p {
@@ -23,7 +32,6 @@ a {
 
 a:hover {
   color: #ecbb15;
-  position: relative;
   cursor: pointer;
   text-shadow: rgb(172, 136, 15) 0px 1px 0px, rgb(108, 86, 10) 0px 2px 0px,
     rgba(0, 0, 0, 0.199219) 0px 3px 1px, rgba(0, 0, 0, 0.296875) 0px 4px 2px;
@@ -68,7 +76,7 @@ li a {
   text-align: center;
   opacity: 0;
   transition: 1s;
-  animation: show 3s 1;
+  animation: show 1s 1;
   animation-fill-mode: forwards;
   animation-delay: 0s;
 }

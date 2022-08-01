@@ -2,17 +2,16 @@ const router = require('express').Router();
 
 const { access, AUTHENTICATED } = require('../middlewares/access');
 
-const gameData = (data) => {
-  return {
-    countEnemies: data.countEnemies,
-    countMoney:   data.countMoney,
-    countDamage:  data.countDamage,
-    countWawes:   data.countWawes,
-    timeGame:     data.timeGame,
-  };
-};
+const gameData = (data) => ({
+  countEnemies: data.countEnemies,
+  countMoney: data.countMoney,
+  countDamage: data.countDamage,
+  countWawes: data.countWawes,
+  timeGame: data.timeGame,
+});
 
 const { sequelize, User, Game } = require('../db/models');
+
 router.route('/statistics')
   .get(async (req, res) => {
     try {
@@ -21,28 +20,29 @@ router.route('/statistics')
         group: ['User.id'],
         attributes: [
           [sequelize.fn('COUNT', sequelize.col('Game.id')), 'Game.countGames'],
-          [sequelize.fn('SUM',   sequelize.col('countEnemies')), 'Game.countEnemies'],
-          [sequelize.fn('SUM',   sequelize.col('countMoney')),   'Game.countMoney'],
-          [sequelize.fn('SUM',   sequelize.col('countDamage')),  'Game.countDamage'],
-          [sequelize.fn('SUM',   sequelize.col('timeGame')),     'Game.timeGame'],
-          [sequelize.fn('SUM',   sequelize.col('countWaves')),   'Game.countWaves'],
+          [sequelize.fn('SUM', sequelize.col('countEnemies')), 'Game.countEnemies'],
+          [sequelize.fn('SUM', sequelize.col('countMoney')), 'Game.countMoney'],
+          [sequelize.fn('SUM', sequelize.col('countDamage')), 'Game.countDamage'],
+          [sequelize.fn('SUM', sequelize.col('timeGame')), 'Game.timeGame'],
+          [sequelize.fn('SUM', sequelize.col('countWaves')), 'Game.countWaves'],
         ],
         include: {
           raw: true,
           model: User,
-          attributes: ['id', 'name']
+          attributes: ['id', 'name'],
         },
       });
 
       res.status(200).json({ statistics });
-    } catch(e) {
+    } catch (e) {
       res.status(502).json({ message: e.message });
     }
   })
   .post(access(AUTHENTICATED), async (req, res) => {
+    console.log(req.body);
     try {
       const gameResult = await Game.create(
-        gameData(req.body)
+        gameData(req.body),
       );
 
       await gameResult.save();
@@ -51,7 +51,7 @@ router.route('/statistics')
       } else {
         res.status(501).json({ message: 'Can not create!' });
       }
-    } catch(e) {
+    } catch (e) {
       res.status(502).json({ message: e.message });
     }
   })
@@ -61,7 +61,7 @@ router.route('/statistics')
         res.status(403).json({ message: 'Your are not owner!' });
         return;
       }
-      const gameResult = await Game.findByPk(req.body.id);
+      let gameResult = await Game.findByPk(req.body.id);
       if (!gameResult) {
         res.status(404).json({ message: 'Not found!' });
         return;
@@ -76,7 +76,7 @@ router.route('/statistics')
       } else {
         res.status(501).json({ message: 'Not saved!' });
       }
-    } catch(e) {
+    } catch (e) {
       res.status(502).json({ message: e.message });
     }
   })
@@ -98,7 +98,7 @@ router.route('/statistics')
       } else {
         res.status(501).json({ message: 'Record not deleted!' });
       }
-    } catch(e) {
+    } catch (e) {
       res.status(502).json({ message: e.message });
     }
   });
