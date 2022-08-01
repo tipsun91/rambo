@@ -34,6 +34,7 @@ function App() {
   const [cordMouse, setCordMouse] = useState();
 
   useEffect(() => {
+ 
     const mouseClickDown = (event) => {
       setShoot(true);
       setCordMouse([event.clientX - 36, event.clientY - 35]);
@@ -77,7 +78,7 @@ function App() {
         setBullet(false);
       }
     };
-console.log('jopaaaaaa');
+
     document.addEventListener('mousedown', mouseClickDown);
     document.addEventListener('mouseup', mouseClickUp);
 
