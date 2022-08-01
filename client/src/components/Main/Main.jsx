@@ -3,12 +3,10 @@ import './Main.css';
 
 export default function Main() {
   return (
-    <nav className="anim-show">
+    <nav className="anim-show-main">
       <ul>
         <li>
-          <a required href="/">
-            Начать игру
-          </a>
+          <a href="/">Начать игру</a>
         </li>
       </ul>
     </nav>
