@@ -1,7 +1,7 @@
 const UNAUTHENTICATED = 'unauthenticated';
 const AUTHENTICATED   = 'authenticated';
 
-const access = (role, status = 500) => {
+const access = (role, status = 403) => {
   return (req, res, next) => {
     switch (role) {
       case AUTHENTICATED:

@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const sendStatistic = createAsyncThunk(
-  'api/statistics',
+  '/api/statistics',
   async (statGame, { rejectWithValue }) => {
     try {
       const responce = await fetch('/api/statistics', {

@@ -17,7 +17,6 @@ app.use(express.static(path.resolve('public')));
 
 require('./middlewares/session')(app);
 require('./middlewares/routes')(app);
-//app.use('/game', tems);
 
 const { sequelize } = require('./db/models');
 
