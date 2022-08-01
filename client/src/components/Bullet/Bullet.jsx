@@ -8,12 +8,8 @@ function Bullet({ bullet }) {
   const { bullets } = useSelector((state) => state.game);
   return (
     <div>
-      <div>
-        {
-        bullets
-        && <div style={{ transform: `translate(${bullet.x.toString()}px, ${bullet.y.toString()}px)` }} className="bullet" />
-        }
-      </div>
+      {bullets
+        && <div style={{ transform: `translate(${bullet.x.toString()}px, ${bullet.y.toString()}px)` }} className="bullet" />}
     </div>
   );
 }
