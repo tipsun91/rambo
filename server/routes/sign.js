@@ -38,6 +38,7 @@ router.route('/in')
   .post(access(UNAUTHENTICATED), async (req, res) => {
     try {
       const { email, password } = req.body;
+
       const user = await User.isExists(email);
 
       if(!user) {
@@ -84,7 +85,6 @@ router.route('/up')
     res.status(200).json(
       clientUser(user)
     );
-
   } catch (error) {
     res.status(500).json(error);
   }

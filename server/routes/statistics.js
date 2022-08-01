@@ -13,7 +13,7 @@ const gameData = (data) => {
 };
 
 const { sequelize, User, Game } = require('../db/models');
-router.route('/statistics')
+router.route('/')
   .get(async (req, res) => {
     try {
       const statistics = await Game.findAll({
