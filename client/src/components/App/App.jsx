@@ -1,17 +1,25 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-array-index-key */
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import Hero from '../Hero/Hero';
 import GameBar from '../GameBar/GameBar';
 import Bullet from '../Bullet/Bullet';
 import Enemy from '../Enemy/Enemy';
 import './App.css';
-import { updateFrame, sendStatistic, updateWawes } from '../../store/gameReducer/reducer';
+import {
+  display,
+  updateFrame,
+  sendStatistic,
+  updateWawes,
+} from '../../store/gameReducer/reducer';
 
 function App() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const app = useRef();
   const {
     enemies, bullets, player, game,
   } = useSelector((state) => state.game);
@@ -25,8 +33,19 @@ function App() {
   const [startTime, setStartTime] = useState(Date.now());
   const [timeBullet, seTimeBullet] = useState(Date.now());
   const [timeEnemy, setTimeEnemy] = useState(Date.now());
+  const [shoot, setShoot] = useState(false);
+  const [cordMouse, setCordMouse] = useState();
 
   useEffect(() => {
+ 
+    const mouseClickDown = (event) => {
+      setShoot(true);
+      setCordMouse([event.clientX - 36, event.clientY - 35]);
+    };
+    const mouseClickUp = (event) => {
+      setShoot(false);
+    };
+
     const funtion1 = (event) => {
       if (event.key === 'ArrowRight') {
         setArrowRight(true);
@@ -63,6 +82,12 @@ function App() {
       }
     };
 
+    document.addEventListener('mousedown', mouseClickDown);
+    document.addEventListener('mouseup', mouseClickUp);
+
+    console.log(app.current.offsetWidth, app.current.offsetHeight);
+    dispatch(display({ width: app.current.offsetWidth, height: app.current.offsetHeight }));
+
     document.addEventListener('keydown', funtion1);
     document.addEventListener('keyup', function2);
 
@@ -75,6 +100,14 @@ function App() {
   const [timeoutFlag, setTimeoutFlag] = useState(false);
   useEffect(() => {
     const pressedButtons = [];
+    const mouseCord = [];
+
+    if (shoot) {
+      if ((Date.now() - timeBullet) > 300) {
+        mouseCord.push(cordMouse[0], cordMouse[1]);
+        seTimeBullet(Date.now);
+      }
+    }
 
     if (arrowRight) {
       pressedButtons.push('ArrowRight');
@@ -89,17 +122,17 @@ function App() {
       pressedButtons.push('ArrowDown');
     }
     if (bullet) {
-      if ((Date.now() - timeBullet) > 300) {
+      if (Date.now() - timeBullet > 300) {
         pressedButtons.push(' ');
         seTimeBullet(Date.now);
       }
     }
-    if ((Date.now() - timeEnemy) > 2000) {
+    if (Date.now() - timeEnemy > 2000) {
       pressedButtons.push('enemy');
       setTimeEnemy(Date.now());
     }
 
-    dispatch(updateFrame({ player: pressedButtons }));
+    dispatch(updateFrame({ player: pressedButtons, mouseCord }));
     if (player.hp <= 0) {
       setplayGame(false);
     }
@@ -129,38 +162,38 @@ function App() {
   useEffect(() => {
     if (!playGame) {
       const time = (+Date.now() - +startTime) / 1000;
-      dispatch(sendStatistic({
-        countEnemies: game.countEnemies,
-        countMoney: game.countMoney,
-        countDamage: game.countDamage,
-        countWawes,
-        timeGame: time,
-      }));
+      dispatch(
+        sendStatistic({
+          countEnemies: game.countEnemies,
+          countMoney: game.countMoney,
+          countDamage: game.countDamage,
+          countWawes,
+          timeGame: time,
+        }),
+      );
     }
   }, [playGame]);
 
   return (
-    <div className="App">
-      {
-        playGame
-          ? (
-            <div>
-              <GameBar />
-              <Hero />
-              { bullets
-                && bullets.map((el) => <Bullet key={el.id} bullet={el} />)}
-              { enemies
-                && enemies.map((el) => <Enemy key={el.id} enemy={el} />)}
-            </div>
-          )
-          : (
-            <div className="gameOver">
-              <h1>GAME OVER</h1>
-              <button type="button">Играть еще раз</button>
-              <button type="button">Вернуться в главное меню</button>
-            </div>
-          )
-      }
+    <div ref={app} className="App">
+      {playGame ? (
+        <div>
+          <GameBar />
+          <Hero />
+          {bullets && bullets.map((el) => <Bullet key={el.id} bullet={el} />)}
+          {enemies && enemies.map((el) => <Enemy key={el.id} enemy={el} />)}
+        </div>
+      ) : (
+        <div className="gameOver">
+          <h1>GAME OVER</h1>
+          <Link className="nes-btn is-primary" to="/">
+            Играть еще раз
+          </Link>
+          <Link className="nes-btn is-warning" to="/main">
+            Вернуться в главное меню
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

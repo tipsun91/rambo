@@ -1,15 +1,15 @@
-@import url(https://fonts.googleapis.com/css?family=Kite+One);
-@import url(https://fonts.googleapis.com/css?family=Offside);
 html,
 body {
   height: 100%;
   margin: 0;
 }
+
 body {
   background-image: url('../../../public/img/rembo.jpeg');
   background-size: contain;
-  font: normal 1.1em Calibri;
+  font-family: 'Press Start 2P', sans-serif;
 }
+
 nav {
   height: 25%;
   width: 30%;
@@ -17,46 +17,30 @@ nav {
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
-  font: normal 1.2em Offside;
 }
+
 p {
   margin: 5px 0;
 }
+
 li a {
   display: block;
 }
+
 a {
   text-decoration: none;
   color: #eee;
   transition: all linear 0.3s;
 }
+
 a:hover {
   color: #ecbb15;
-  position: relative;
   cursor: pointer;
   text-shadow: rgb(172, 136, 15) 0px 1px 0px, rgb(108, 86, 10) 0px 2px 0px,
     rgba(0, 0, 0, 0.199219) 0px 3px 1px, rgba(0, 0, 0, 0.296875) 0px 4px 2px;
   transition: all linear 0.3s;
 }
-li a:after {
-  content: attr(data-title);
-  padding: 4px 8px;
-  line-height: 100%;
-  color: #fff;
-  position: absolute;
-  left: 40%;
-  top: 70%;
-  white-space: nowrap;
-  z-index: 20px;
-  font-size: 0.7em;
-  background: rgba(23, 172, 144, 0.8);
-  opacity: 0;
-  text-shadow: none;
-}
-li a:hover:after {
-  opacity: 1;
-  transition: all linear 0.5s 0.2s;
-}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -68,15 +52,7 @@ li {
   line-height: 2.5em;
   float: left;
 }
-li:first-child {
-  line-height: 60px;
-  font-size: 1.5em;
-  text-shadow: rgb(187, 187, 187) 0px 1px 0px, rgb(181, 181, 181) 0px 2px 0px,
-    rgba(0, 0, 0, 0.199219) 0px 3px 1px, rgba(0, 0, 0, 0.296875) 0px 4px 3px;
-}
-li:first-child a:hover {
-  -webkit-animation: anim infinite 1.5s;
-}
+
 @-webkit-keyframes anim {
   0% {
     -webkit-transform: rotate(4deg);
@@ -89,22 +65,20 @@ li:first-child a:hover {
   }
 }
 
-.anim-show {
-    color: #fff;
-    font-size: 25px;
-    text-align: center;
-    opacity: 0; /*Элемент полностью прозрачный (невидимый)*/
-    transition: 1s; /*Скорость перехода состояния элемента*/
-    animation: show 3s 1; /* Указываем название анимации, её время и количество повторов*/
-    animation-fill-mode: forwards; /* Чтобы элемент оставался в конечном состоянии анимации */
-    animation-delay: 0.1s; /* Задержка перед началом */
+.anim-show-main {
+  color: #fff;
+  opacity: 0;
+  transition: 1s;
+  animation: show 1s 1;
+  animation-fill-mode: forwards;
+  animation-delay: 0.1s;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
   }
-  
-  @keyframes show {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+  100% {
+    opacity: 1;
   }
+}
