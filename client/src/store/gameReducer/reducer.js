@@ -9,6 +9,7 @@ import calcBullets from './functions/calcBullets';
 import calcEnemies from './functions/calcEnemies';
 import calcCollisionsEnemie from './functions/calcCollisionsEnemie';
 import calcCollisionBullets from './functions/calcCollisionBullets';
+import upGameLoop from './functions/upGameLoop';
 
 export const sendStatistic = createAsyncThunk(
   '/api/statistics',
@@ -76,11 +77,11 @@ const gameSlice = createSlice({
     },
     bullets: [],
     game: {
-      countEnemies: 0, // кол-во убитых мобов
-      countMoney: 0, // кол-во заработаных денег
-      countDamage: 0, // кол-во нанесеного урона
-      timeGame: 0, // кол-во время в игре
-      countWawes: 0, // кол-во пройденых волн
+      countEnemies: 0,
+      countMoney: 0,
+      countDamage: 0,
+      timeGame: 0,
+      countWawes: 1,
     },
     gameLoop: 0, // игровой цик
     display: {
@@ -91,18 +92,22 @@ const gameSlice = createSlice({
     calcEnemiesFlag1: false, // ии врагов
   },
   reducers: {
+    updateEnemies(state, action) {
+      state.enemies.forEach((el) => {
+        el.hp *= 1.2;
+        el.damage *= 1.2;
+        el.coolDown *= 1.2;
+      });
+    },
     display(state, action) {
       state.display.height = action.payload.height;
       state.display.width = action.payload.width;
     },
     updateWawes(state, action) {
-      state.game.countWawes = action.payload;
+      state.game.countWawes += 1;
     },
     updateFrame(state, action) {
-      function upGameLoop() { // прибовляет 1 каждый цикл
-        state.gameLoop += 1;
-      }
-      upGameLoop();
+      upGameLoop(state); // прибовляет 1 каждый цикл;
       calcEnemies(state, state.enemies, state.player); // рассчитывает поведение мобов
       calcPlayer(state, action); // рассчитывает функционал героя, внутри скорость пуль по Х и У
       calcBullets(state); // рассчитыввает длинну полета пули
@@ -113,6 +118,8 @@ const gameSlice = createSlice({
   extraReducers: {},
 });
 
-export const { display, updateFrame, updateWawes } = gameSlice.actions;
+export const {
+  display, updateFrame, updateWawes, updateEnemies,
+} = gameSlice.actions;
 
 export default gameSlice.reducer;

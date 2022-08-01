@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const URL = '/api/sign/in/';
@@ -13,7 +14,7 @@ export const signIn = createAsyncThunk(
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email:    event.target.email.value,
+          email: event.target.email.value,
           password: event.target.password.value,
         }),
       });
@@ -22,8 +23,8 @@ export const signIn = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
-)
+  },
+);
 
 const userSlice = createSlice({
   name: 'user',
@@ -40,7 +41,7 @@ const userSlice = createSlice({
     [signIn.fulfilled]: (state, action) => {
       state.status = 'resolved';
       state.user = action.payload.user;
-    }
+    },
   },
 });
 

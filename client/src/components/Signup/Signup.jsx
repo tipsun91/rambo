@@ -18,23 +18,23 @@ export default function Signup() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name:  signUpForm.current.name.value,
+          name: signUpForm.current.name.value,
           email: signUpForm.current.email.value,
           password: [
             signUpForm.current.password.value,
-            signUpForm.current.pswdcfrm.value
+            signUpForm.current.pswdcfrm.value,
           ],
         }),
       })
-      .then(
-        data => data.json()
-      )
-      .then(
-        data => { console.log(data); }
-      )
-      .catch(
-        error => { console.log(error); }
-      );
+        .then(
+          (data) => data.json(),
+        )
+        .then(
+          (data) => { console.log(data); },
+        )
+        .catch(
+          (error) => { console.log(error); },
+        );
     },
     [signUpForm],
   );
