@@ -8,7 +8,7 @@ import GameBar from '../GameBar/GameBar';
 import Bullet from '../Bullet/Bullet';
 import Enemy from '../Enemy/Enemy';
 import './App.css';
-import { updateFrame, sendStatistic } from '../../store/gameReducer/reducer';
+import { updateFrame, sendStatistic, updateWawes } from '../../store/gameReducer/reducer';
 
 function App() {
   const dispatch = useDispatch();
@@ -106,16 +106,16 @@ function App() {
 
     if (playGame) {
       if (game.countEnemies === 2) {
-        setCountWawes(2);
+        dispatch(updateWawes(2));
       }
       if (game.countEnemies === 3) {
-        setCountWawes(3);
+        dispatch(updateWawes(3));
       }
       if (game.countEnemies === 4) {
-        setCountWawes(4);
+        dispatch(updateWawes(4));
       }
       if (game.countEnemies === 5) {
-        setCountWawes(5);
+        dispatch(updateWawes(5));
       }
     }
 
