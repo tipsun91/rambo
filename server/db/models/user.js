@@ -9,47 +9,49 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Game, { foreignKey: 'userId' });
     }
   }
-  User.init(
-    {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: DataTypes.INTEGER,
-      },
-      email: {
-        unique: true,
-        allowNull: false,
-        type: DataTypes.TEXT,
-        validate: {
-          isEmail: true,
-        },
-      },
-      name: {
-        allowNull: false,
-        type: DataTypes.TEXT,
-        validate: {
-          is: /^[a-zA-Zа-яА-ЯёЁ]{3,20}$/,
-        },
-      },
-      password: {
-        allowNull: false,
-        type: DataTypes.TEXT,
-      },
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
+  User.init({
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+    },
+    email: {
+      unique: true,
+      allowNull: false,
+      type: DataTypes.TEXT,
+      validate: {
+        isEmail: true,
       },
     },
-    {
-      sequelize,
-      modelName: 'User',
-      tableName: 'Users',
-    }
-  );
+    name: {
+      allowNull: false,
+      type: DataTypes.TEXT,
+      validate: {
+        is: /^[a-zA-Zа-яА-ЯёЁ]{3,20}$/,
+      },
+    },
+    password: {
+      allowNull: false,
+      type: DataTypes.TEXT,
+    },
+    money: {
+      allowNull: false,
+      defaultValue: 0,
+      type: DataTypes.INTEGER,
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+  }, {
+    sequelize,
+    modelName: 'User',
+    tableName: 'Users',
+  });
   return User;
 };
