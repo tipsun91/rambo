@@ -126,16 +126,31 @@ const gameSlice = createSlice({
           });
         }
         if (action.payload.player.includes('enemy')) {
-          state.enemies.push({
-            id: uuidv4(),
-            x: Math.floor(Math.random() * (1400 - 1200)) + 1200, // горизонталь
-            y: Math.floor(Math.random() * (300 - 100)) + 50, // вертикаль
-            w: 30, // высота
-            h: 30, // ширина
-            hp: 100, // здоровье
-            damage: 5, // урон
-            coolDown: 30, // скорость удара
-          });
+          const randomNum = Math.floor(Math.random() * (10 - 1)) + 1;
+          console.log(randomNum);
+          if (randomNum < 6) {
+            state.enemies.push({
+              id: uuidv4(),
+              x: state.display.width + 50,
+              y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
+              w: 30, // высота
+              h: 30, // ширина
+              hp: 100, // здоровье
+              damage: 5, // урон
+              coolDown: 30, // скорость удара
+            });
+          } else {
+            state.enemies.push({
+              id: uuidv4(),
+              x: -60, // Math.floor(Math.random() * ((-30) - (-50))) + (-50), // горизонталь
+              y: Math.floor(Math.random() * (300 - 100)) + 50, // вертикаль
+              w: 30, // высота
+              h: 30, // ширина
+              hp: 100, // здоровье
+              damage: 5, // урон
+              coolDown: 30, // скорость удара
+            });
+          }
         }
       }
       function calcBullets() {
