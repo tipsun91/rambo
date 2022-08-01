@@ -67,6 +67,7 @@ function App() {
         setBullet(false);
       }
     };
+    console.log(app.current.offsetWidth, app.current.offsetHeight);
     dispatch(display({ width: app.current.offsetWidth, height: app.current.offsetHeight }));
     document.addEventListener('keydown', funtion1);
     document.addEventListener('keyup', function2);
