@@ -34,15 +34,10 @@ function App() {
   const [cordMouse, setCordMouse] = useState();
 
   useEffect(() => {
-    // const mouseXY = (event) => {
-    //   console.log('====>', event.x);
-    //   console.log('<====', event.y);
-    // };
+ 
     const mouseClickDown = (event) => {
       setShoot(true);
-      // console.log(event.clientX);
-      // console.log(event.x);
-      setCordMouse([event.x, event.y]);
+      setCordMouse([event.clientX - 36, event.clientY - 35]);
     };
     const mouseClickUp = (event) => {
       setShoot(false);
@@ -84,11 +79,12 @@ function App() {
       }
     };
 
-    // document.addEventListener('mouseover', mouseXY);
     document.addEventListener('mousedown', mouseClickDown);
     document.addEventListener('mouseup', mouseClickUp);
+
     console.log(app.current.offsetWidth, app.current.offsetHeight);
     dispatch(display({ width: app.current.offsetWidth, height: app.current.offsetHeight }));
+
     document.addEventListener('keydown', funtion1);
     document.addEventListener('keyup', function2);
 
