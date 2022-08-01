@@ -136,7 +136,7 @@ const gameSlice = createSlice({
             const cord = Math.floor(Math.random() * arrCord.length);
             return arrCord[cord];
           }
-          if ((hero.x - el.x) < -40) {
+          if ((hero.x - el.x) < -50) {
             if (state.gameLoop % randomNumLoop() === 0) {
               state.calcEnemiesFlag = !state.calcEnemiesFlag;
             }
@@ -169,16 +169,16 @@ const gameSlice = createSlice({
           } else {
             const cord = randomCord(state.player);
             if (cord[0] >= el.x) {
-              el.x += 1;
+              el.x += 0.7;
             }
             if (cord[0] <= el.x) {
-              el.x -= 1;
+              el.x -= 0.7;
             }
             if (cord[1] > el.y) {
-              el.y += 0.35;
+              el.y += 0.7;
             }
             if (cord[1] < el.y) {
-              el.y -= 0.35;
+              el.y -= 0.7;
             }
           }
           // if (hero.y > el.y) {
@@ -202,7 +202,7 @@ const gameSlice = createSlice({
             && (hero.y >= enemie.y)) {
             // hero.hp -= randomDamage([0, 0, 0, 0, enemie.damage, 0, 0, 0, 0]);
             if (state.gameLoop % enemie.coolDown === 0) {
-              // hero.hp -= enemie.damage;
+              hero.hp -= enemie.damage;
             }
           }
         });
