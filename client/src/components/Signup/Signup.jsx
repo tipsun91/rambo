@@ -6,15 +6,30 @@ export default function Signup() {
     <div className="registr-box">
       <div className="input-section">
         <i className="far" />
-        <input className="input-area" type="text" placeholder="Username" />
+        <input
+          required
+          className="input-area"
+          type="text"
+          placeholder="Username"
+        />
       </div>
       <div className="input-section">
         <i className="far" />
-        <input className="input-area" type="text" placeholder="Email" />
+        <input
+          required
+          className="input-area"
+          type="email"
+          placeholder="Email"
+        />
       </div>
       <div className="input-section">
         <i className="fas" />
-        <input className="input-area" type="password" placeholder="Password" />
+        <input
+          required
+          className="input-area"
+          type="password"
+          placeholder="Password"
+        />
       </div>
       <button type="button" className="btn" id="login-btn">
         Зарегистрироваться
