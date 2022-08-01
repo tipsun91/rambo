@@ -3,7 +3,7 @@ import './Profile.css';
 
 export default function Profile() {
   return (
-    <div className="container__stats">
+    <div className="container__stats anim-show-profile">
       <div className="user-profile">
         <img
           className="avatar"
@@ -13,7 +13,7 @@ export default function Profile() {
         <div className="username">Rembo</div>
       </div>
       <div className="body">
-        <table className="container">
+        <table className="container__profile">
           <thead>
             <tr>
               <th>
@@ -39,7 +39,7 @@ export default function Profile() {
             </tr>
           </tbody>
         </table>
-        <table className="container">
+        <table className="container__profile">
           <thead>
             <tr>
               <th>
@@ -66,9 +66,9 @@ export default function Profile() {
           </tbody>
         </table>
       </div>
-      <div className="score-box">
-        <p className="score" />
-        <a className="return" href="/">
+      <div className="score-box-profile">
+        <p className="score-profile" />
+        <a className="return-profile" href="/">
           &lt;&lt; НАЗАД
         </a>
       </div>
