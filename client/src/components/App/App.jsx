@@ -10,7 +10,10 @@ import Bullet from '../Bullet/Bullet';
 import Enemy from '../Enemy/Enemy';
 import './App.css';
 import {
-  display, updateFrame, sendStatistic, updateWawes,
+  display,
+  updateFrame,
+  sendStatistic,
+  updateWawes,
 } from '../../store/gameReducer/reducer';
 
 function App() {
@@ -119,12 +122,12 @@ function App() {
       pressedButtons.push('ArrowDown');
     }
     if (bullet) {
-      if ((Date.now() - timeBullet) > 300) {
+      if (Date.now() - timeBullet > 300) {
         pressedButtons.push(' ');
         seTimeBullet(Date.now);
       }
     }
-    if ((Date.now() - timeEnemy) > 2000) {
+    if (Date.now() - timeEnemy > 2000) {
       pressedButtons.push('enemy');
       setTimeEnemy(Date.now());
     }
@@ -159,38 +162,38 @@ function App() {
   useEffect(() => {
     if (!playGame) {
       const time = (+Date.now() - +startTime) / 1000;
-      dispatch(sendStatistic({
-        countEnemies: game.countEnemies,
-        countMoney: game.countMoney,
-        countDamage: game.countDamage,
-        countWawes,
-        timeGame: time,
-      }));
+      dispatch(
+        sendStatistic({
+          countEnemies: game.countEnemies,
+          countMoney: game.countMoney,
+          countDamage: game.countDamage,
+          countWawes,
+          timeGame: time,
+        }),
+      );
     }
   }, [playGame]);
 
   return (
     <div ref={app} className="App">
-      {
-        playGame
-          ? (
-            <div>
-              <GameBar />
-              <Hero />
-              { bullets
-                && bullets.map((el) => <Bullet key={el.id} bullet={el} />)}
-              { enemies
-                && enemies.map((el) => <Enemy key={el.id} enemy={el} />)}
-            </div>
-          )
-          : (
-            <div className="gameOver">
-              <h1>GAME OVER</h1>
-              <Link className="nes-btn is-primary" to="/">Играть еще раз</Link>
-              <Link className="nes-btn is-warning" to="/main">Вернуться в главное меню</Link>
-            </div>
-          )
-      }
+      {playGame ? (
+        <div>
+          <GameBar />
+          <Hero />
+          {bullets && bullets.map((el) => <Bullet key={el.id} bullet={el} />)}
+          {enemies && enemies.map((el) => <Enemy key={el.id} enemy={el} />)}
+        </div>
+      ) : (
+        <div className="gameOver">
+          <h1>GAME OVER</h1>
+          <Link className="nes-btn is-primary" to="/">
+            Играть еще раз
+          </Link>
+          <Link className="nes-btn is-warning" to="/main">
+            Вернуться в главное меню
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

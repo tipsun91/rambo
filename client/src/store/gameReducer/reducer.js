@@ -51,16 +51,18 @@ const gameSlice = createSlice({
         },
       ],
     },
-    enemies: [{
-      id: 1,
-      w: 30, // высота
-      h: 30, // ширина
-      x: 600, // горизонталь
-      y: 30, // вертикаль
-      hp: 100, // здоровье
-      damage: 5, // урон
-      coolDown: 30, // скорость удара
-    }],
+    enemies: [
+      {
+        id: 1,
+        w: 30, // высота
+        h: 30, // ширина
+        x: 600, // горизонталь
+        y: 30, // вертикаль
+        hp: 100, // здоровье
+        damage: 5, // урон
+        coolDown: 30, // скорость удара
+      },
+    ],
     weapon: {
       name: 'trunk', // название
       damage: 20, // урон
@@ -111,7 +113,7 @@ const gameSlice = createSlice({
       }
       function calcPlayer() {
         if (action.payload.player.includes('ArrowRight')) {
-          if (state.player.x < (state.display.width - state.player.w)) {
+          if (state.player.x < state.display.width - state.player.w) {
             state.player.x += state.player.speed; // идем вправо
           }
         }
@@ -126,7 +128,7 @@ const gameSlice = createSlice({
           }
         }
         if (action.payload.player.includes('ArrowDown')) {
-          if (state.player.y < (state.display.height - state.player.h)) {
+          if (state.player.y < state.display.height - state.player.h) {
             state.player.y += state.player.speed; // идем вниз
           }
         }
@@ -219,11 +221,12 @@ const gameSlice = createSlice({
               [heroXY.x, heroXY.y - heroXY.w * 2],
               [heroXY.x + heroXY.w, heroXY.y - heroXY.w],
               [heroXY.x, heroXY.y],
-              [heroXY.x - heroXY.h, heroXY.y - heroXY.w]];
+              [heroXY.x - heroXY.h, heroXY.y - heroXY.w],
+            ];
             const cord = Math.floor(Math.random() * arrCord.length);
             return arrCord[cord];
           }
-          if ((hero.x - el.x) < -50) {
+          if (hero.x - el.x < -50) {
             if (state.gameLoop % randomNumLoop() === 0) {
               state.calcEnemiesFlag = !state.calcEnemiesFlag;
             }
