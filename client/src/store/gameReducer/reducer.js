@@ -24,7 +24,6 @@ export const sendStatistic = createAsyncThunk(
         credentials: true,
       });
       const data = await responce.json();
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -59,7 +58,7 @@ const gameSlice = createSlice({
         x: 600, // горизонталь
         y: 30, // вертикаль
         hp: 100, // здоровье
-        damage: 5, // урон
+        damage: 500, // урон
         coolDown: 30, // скорость удара
       },
     ],
@@ -76,7 +75,7 @@ const gameSlice = createSlice({
       countMoney: 0,
       countDamage: 0,
       timeGame: 0,
-      countWawes: 0,
+      countWawes: 1,
     },
     gameLoop: 0,
     display: {
@@ -87,12 +86,19 @@ const gameSlice = createSlice({
     calcEnemiesFlag1: false,
   },
   reducers: {
+    updateEnemies(state, action) {
+      state.enemies.forEach((el) => {
+        el.hp *= 1.2;
+        el.damage *= 1.2;
+        el.coolDown *= 1.2;
+      });
+    },
     display(state, action) {
       state.display.height = action.payload.height;
       state.display.width = action.payload.width;
     },
     updateWawes(state, action) {
-      state.game.countWawes = action.payload;
+      state.game.countWawes += 1;
     },
     updateFrame(state, action) {
       function upGameLoop() {
@@ -161,7 +167,6 @@ const gameSlice = createSlice({
         }
         if (action.payload.player.includes('enemy')) {
           const randomNum = Math.floor(Math.random() * (10 - 1)) + 1;
-          console.log(randomNum);
           if (randomNum < 6) {
             state.enemies.push({
               id: uuidv4(),
@@ -299,6 +304,8 @@ const gameSlice = createSlice({
             enemie.hp -= hero.damage; // PVP damage
             hero.damagevalue += hero.damage; // counts pvp damage into GameBar !
             if (enemie.hp <= 0) {
+              state.game.countEnemies += 1;
+              state.game.countMoney += 15;
               state.enemies.splice(
                 state.enemies.findIndex((el) => el.id === enemie.id),
                 1,
@@ -321,7 +328,6 @@ const gameSlice = createSlice({
               && bullet.y - bullet.h <= enemie.y + enemie.h
               && bullet.y >= enemie.y) {
               enemie.hp -= bullet.damage;
-              console.log(enemie.hp);
               state.game.countDamage += bullet.damage;
               // console.log(state.game.countDamage);
               state.bullets.splice(bullet, 1);
@@ -352,6 +358,8 @@ const gameSlice = createSlice({
   extraReducers: {},
 });
 
-export const { display, updateFrame, updateWawes } = gameSlice.actions;
+export const {
+  display, updateFrame, updateWawes, updateEnemies,
+} = gameSlice.actions;
 
 export default gameSlice.reducer;
