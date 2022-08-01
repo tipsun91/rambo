@@ -94,6 +94,9 @@ const gameSlice = createSlice({
     calcEnemiesFlag1: false,
   },
   reducers: {
+    updateWawes(state, action) {
+      state.game.countWawes = action.payload;
+    },
     updateFrame(state, action) {
       function upGameLoop() {
         state.gameLoop += 1;
@@ -241,8 +244,10 @@ const gameSlice = createSlice({
             enemie.hp -= hero.damage; // PVP damage
             hero.damagevalue += hero.damage; // counts pvp damage into GameBar !
             if (enemie.hp <= 0) {
-              state.enemies.splice(state.enemies
-                .findIndex((el) => el.id === enemie.id), 1); // enemy die
+              state.enemies.splice(
+                state.enemies.findIndex((el) => el.id === enemie.id),
+                1,
+              ); // enemy die
             }
           }
         });
@@ -279,6 +284,6 @@ const gameSlice = createSlice({
   extraReducers: {},
 });
 
-export const { updateFrame } = gameSlice.actions;
+export const { updateFrame, updateWawes } = gameSlice.actions;
 
 export default gameSlice.reducer;

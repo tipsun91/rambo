@@ -13,7 +13,7 @@ function GameBar() {
           style={{ width: `${player.hp}px` }}
         />
         <span className="gamebar__progress__number">{player.hp}</span>
-       {/* <div
+        {/* <div
           className="gamebar__progress__damage"
           style={{ width: `${game.countDamage}px` }}
         /> */}
