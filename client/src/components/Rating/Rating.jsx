@@ -3,15 +3,13 @@ import './Rating.css';
 
 function Rating() {
   return (
-    <div className="center">
+    <div className="center anim-show-rating">
       <h1>
-        <span className="blue">&lt;</span>
         <span className="blue">GAME</span>
-        <span className="blue">&gt;</span>
         <span className="yellow">SCORE</span>
       </h1>
 
-      <table className="container">
+      <table className="container-rating">
         <thead>
           <tr>
             <th>
@@ -67,9 +65,9 @@ function Rating() {
           </tr>
         </tbody>
       </table>
-      <div className="score-box">
-        <p className="score" />
-        <a className="return" href="/">
+      <div className="score-box-rating">
+        <p className="score-rating" />
+        <a className="return-rating" href="/">
           &lt;&lt; НАЗАД
         </a>
       </div>

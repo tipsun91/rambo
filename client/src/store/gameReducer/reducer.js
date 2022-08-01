@@ -20,6 +20,7 @@ export const sendStatistic = createAsyncThunk(
           countWawes: statGame.countWawes,
           timeGame: statGame.timeGame,
         }),
+        credentials: true,
       });
       const data = await responce.json();
       console.log(data);
@@ -35,16 +36,19 @@ const gameSlice = createSlice({
   initialState: {
     player: {
       x: 0, // горизонталь
-      y: 0, // вертикаль
+      y: 100, // вертикаль
       w: 30, // высота
       h: 30, // ширина
-      speed: 3, // скорость передвижения
-      hp: 1, // здоровье
+      speed: 5, // скорость передвижения
+      hp: 100, // здоровье
       damage: 2, // урон
       weapon: ['trunk'],
-      ammunition: [{ // боезапас
-        trunk: 0,
-      }],
+      ammunition: [
+        {
+          // боезапас
+          trunk: 0,
+        },
+      ],
     },
     enemies: [{
       id: 1,
@@ -55,24 +59,6 @@ const gameSlice = createSlice({
       hp: 100, // здоровье
       damage: 5, // урон
       coolDown: 30, // скорость удара
-    }, {
-      id: 2,
-      w: 30, // высота
-      h: 30, // ширина
-      x: 600, // горизонталь
-      y: 80, // вертикаль
-      hp: 100, // здоровье
-      damage: 5, // урон
-      coolDown: 30,
-    }, {
-      id: 3,
-      w: 30, // высота
-      h: 30, // ширина
-      x: 400, // горизонталь
-      y: 150, // вертикаль
-      hp: 100, // здоровье
-      damage: 5, // урон
-      coolDown: 30,
     }],
     weapon: {
       name: 'trunk', // название
@@ -90,10 +76,18 @@ const gameSlice = createSlice({
       countWawes: 0,
     },
     gameLoop: 0,
+    display: {
+      width: 0,
+      height: 0,
+    },
     calcEnemiesFlag: false,
     calcEnemiesFlag1: false,
   },
   reducers: {
+    display(state, action) {
+      state.display.height = action.payload.height;
+      state.display.width = action.payload.width;
+    },
     updateWawes(state, action) {
       state.game.countWawes = action.payload;
     },
@@ -103,16 +97,24 @@ const gameSlice = createSlice({
       }
       function calcPlayer() {
         if (action.payload.player.includes('ArrowRight')) {
-          state.player.x += state.player.speed; // идем вправо
+          if (state.player.x < (state.display.width - state.player.w)) {
+            state.player.x += state.player.speed; // идем вправо
+          }
         }
         if (action.payload.player.includes('ArrowLeft')) {
-          state.player.x -= state.player.speed; // идем влево
+          if (state.player.x > 0) {
+            state.player.x -= state.player.speed; // идем влево
+          }
         }
         if (action.payload.player.includes('ArrowUp')) {
-          state.player.y -= state.player.speed; // идем вверх
+          if (state.player.y > 0) {
+            state.player.y -= state.player.speed; // идем вверх
+          }
         }
         if (action.payload.player.includes('ArrowDown')) {
-          state.player.y += state.player.speed; // идем вниз
+          if (state.player.y < (state.display.height - state.player.h)) {
+            state.player.y += state.player.speed; // идем вниз
+          }
         }
         if (action.payload.player.includes(' ')) {
           state.bullets.push({
@@ -139,7 +141,7 @@ const gameSlice = createSlice({
       function calcBullets() {
         state.bullets.forEach((el) => {
           el.x += el.speed;
-          if (el.x >= (state.player.x + 900)) {
+          if (el.x >= state.player.x + 900) {
             state.bullets.splice(el.id, 1);
           }
         });
@@ -233,10 +235,12 @@ const gameSlice = createSlice({
           return arrX[num];
         }
         arr.forEach((enemie) => {
-          if ((hero.x + hero.w / 2 >= enemie.x - enemie.w / 2)
-            && (hero.x - hero.w / 2 <= enemie.x + enemie.w / 2)
-            && (hero.y - hero.h <= enemie.y + enemie.h)
-            && (hero.y >= enemie.y)) {
+          if (
+            hero.x + hero.w / 2 >= enemie.x - enemie.w / 2
+            && hero.x - hero.w / 2 <= enemie.x + enemie.w / 2
+            && hero.y - hero.h <= enemie.y + enemie.h
+            && hero.y >= enemie.y
+          ) {
             // hero.hp -= randomDamage([0, 0, 0, 0, enemie.damage, 0, 0, 0, 0]);
             if (state.gameLoop % enemie.coolDown === 0) {
               hero.hp -= enemie.damage;
@@ -256,17 +260,25 @@ const gameSlice = createSlice({
         state.bullets.forEach((bullet) => {
           state.enemies.forEach((enemy) => {
             if (enemy.x > state.player.x) {
-              if (bullet.x >= enemy.x
+              if (
+                bullet.x >= enemy.x
                 && bullet.y >= enemy.y
-                && bullet.y <= (enemy.y + state.player.w)) {
+                && bullet.y <= enemy.y + state.player.w
+              ) {
                 enemy.hp -= bullet.damage;
                 state.game.countDamage += bullet.damage;
                 // console.log(state.game.countDamage);
-                state.bullets.splice(state.enemies.findIndex((el) => el.id === bullet.id), 1);
+                state.bullets.splice(
+                  state.enemies.findIndex((el) => el.id === bullet.id),
+                  1,
+                );
                 if (enemy.hp <= 0) {
                   state.game.countEnemies += 1;
                   state.game.countMoney += 15;
-                  state.enemies.splice(state.enemies.findIndex((el) => el.id === enemy.id), 1);
+                  state.enemies.splice(
+                    state.enemies.findIndex((el) => el.id === enemy.id),
+                    1,
+                  );
                 }
               }
             }
@@ -284,6 +296,6 @@ const gameSlice = createSlice({
   extraReducers: {},
 });
 
-export const { updateFrame, updateWawes } = gameSlice.actions;
+export const { display, updateFrame, updateWawes } = gameSlice.actions;
 
 export default gameSlice.reducer;

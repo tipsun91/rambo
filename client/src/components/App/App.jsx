@@ -1,18 +1,22 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-array-index-key */
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Hero from '../Hero/Hero';
 import GameBar from '../GameBar/GameBar';
 import Bullet from '../Bullet/Bullet';
 import Enemy from '../Enemy/Enemy';
 import './App.css';
-import { updateFrame, sendStatistic, updateWawes } from '../../store/gameReducer/reducer';
+import {
+  display, updateFrame, sendStatistic, updateWawes,
+} from '../../store/gameReducer/reducer';
 
 function App() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const app = useRef();
   const {
     enemies, bullets, player, game,
   } = useSelector((state) => state.game);
@@ -63,7 +67,7 @@ function App() {
         setBullet(false);
       }
     };
-
+    dispatch(display({ width: app.current.offsetWidth, height: app.current.offsetHeight }));
     document.addEventListener('keydown', funtion1);
     document.addEventListener('keyup', function2);
 
@@ -141,7 +145,7 @@ function App() {
   }, [playGame]);
 
   return (
-    <div className="App">
+    <div ref={app} className="App">
       {
         playGame
           ? (
@@ -158,7 +162,7 @@ function App() {
             <div className="gameOver">
               <h1>GAME OVER</h1>
               <Link className="nes-btn is-primary" to="/">Играть еще раз</Link>
-              <Link className="nes-btn is-warning" to="/game">Вернуться в главное меню</Link>
+              <Link className="nes-btn is-warning" to="/main">Вернуться в главное меню</Link>
             </div>
           )
       }

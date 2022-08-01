@@ -3,7 +3,7 @@ import './GameMenu.css';
 
 function GameMenu() {
   return (
-    <nav>
+    <nav className="anim-show-gamemenu">
       <ul>
         <li>
           <a href="/">Войти</a>

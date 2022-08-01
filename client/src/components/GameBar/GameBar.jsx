@@ -17,10 +17,18 @@ function GameBar() {
           className="gamebar__progress__damage"
           style={{ width: `${game.countDamage}px` }}
         /> */}
-        <span className="gamebar__progress__damage__number">{game.countDamage}</span>
-        <span className="gamebar__progress__money__number">{game.countMoney}</span>
-        <span className="gamebar__progress__waves__number">{game.countWawes}</span>
-        <span className="gamebar__progress__enemies__number">{game.countEnemies}</span>
+        <span className="gamebar__progress__damage__number">
+          {game.countDamage}
+        </span>
+        <span className="gamebar__progress__money__number">
+          {game.countMoney}
+        </span>
+        <span className="gamebar__progress__waves__number">
+          {game.countWawes}
+        </span>
+        <span className="gamebar__progress__enemies__number">
+          {game.countEnemies}
+        </span>
       </div>
     </div>
   );
