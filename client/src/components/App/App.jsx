@@ -37,7 +37,6 @@ function App() {
   const [cordMouse, setCordMouse] = useState();
 
   useEffect(() => {
- 
     const mouseClickDown = (event) => {
       setShoot(true);
       setCordMouse([event.clientX - 36, event.clientY - 35]);
@@ -47,16 +46,16 @@ function App() {
     };
 
     const funtion1 = (event) => {
-      if (event.key === 'ArrowRight') {
+      if (event.key === 'd') {
         setArrowRight(true);
       }
-      if (event.key === 'ArrowLeft') {
+      if (event.key === 'a') {
         setArrowLeft(true);
       }
-      if (event.key === 'ArrowUp') {
+      if (event.key === 'w') {
         setArrowUp(true);
       }
-      if (event.key === 'ArrowDown') {
+      if (event.key === 's') {
         setArrowDown(true);
       }
       if (event.key === ' ') {
@@ -65,16 +64,16 @@ function App() {
     };
 
     const function2 = (event) => {
-      if (event.key === 'ArrowRight') {
+      if (event.key === 'd') {
         setArrowRight(false);
       }
-      if (event.key === 'ArrowLeft') {
+      if (event.key === 'a') {
         setArrowLeft(false);
       }
-      if (event.key === 'ArrowUp') {
+      if (event.key === 'w') {
         setArrowUp(false);
       }
-      if (event.key === 'ArrowDown') {
+      if (event.key === 's') {
         setArrowDown(false);
       }
       if (event.key === ' ') {
@@ -92,6 +91,8 @@ function App() {
     document.addEventListener('keyup', function2);
 
     return () => {
+      document.removeEventListener('mousedown', mouseClickDown);
+      document.removeEventListener('mouseup', mouseClickUp);
       document.removeEventListener('keydown', funtion1);
       document.removeEventListener('keyup', function2);
     };
@@ -110,16 +111,16 @@ function App() {
     }
 
     if (arrowRight) {
-      pressedButtons.push('ArrowRight');
+      pressedButtons.push('d');
     }
     if (arrowLeft) {
-      pressedButtons.push('ArrowLeft');
+      pressedButtons.push('a');
     }
     if (arrowUp) {
-      pressedButtons.push('ArrowUp');
+      pressedButtons.push('w');
     }
     if (arrowDown) {
-      pressedButtons.push('ArrowDown');
+      pressedButtons.push('s');
     }
     if (bullet) {
       if (Date.now() - timeBullet > 300) {
