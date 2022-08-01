@@ -20,9 +20,13 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app",
+    "extends": [
+        "react-app",
+      "airbnb"
+    ],
     "rules": {
-      "react/prop-types": 0
+      "react/prop-types": 0,
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
     }
   },
   "browserslist": {
