@@ -6,7 +6,7 @@ export default function Main() {
     <nav className="anim-show">
       <ul>
         <li>
-          <a required href="/" data-title="Ты готов?" id="jogar-btn">
+          <a required href="/">
             Начать игру
           </a>
         </li>

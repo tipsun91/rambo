@@ -64,7 +64,7 @@ router.route('/in')
 router.route('/up')
   .post(access(UNAUTHENTICATED), async (req, res) => {
   try {
-    const { email, name, password }  = req.body;
+    const { email, username, password }  = req.body;
 
     if (!password[0] || password[0] !== password[1]) {
       res.status(401).json({ message: 'Incorrect password!' });
@@ -77,7 +77,7 @@ router.route('/up')
     }
 
     const hash = await bcrypt.hash(password[0], 2);
-    const user = await User.create({ email, name, password:hash });
+    const user = await User.create({ email, username, password:hash });
     await user.save();
     req.session.userId = user.id;
 
