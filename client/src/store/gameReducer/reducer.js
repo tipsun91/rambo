@@ -21,6 +21,7 @@ export const sendStatistic = createAsyncThunk(
           countWawes: statGame.countWawes,
           timeGame: statGame.timeGame,
         }),
+        credentials: true,
       });
       const data = await responce.json();
       console.log(data);
@@ -36,10 +37,10 @@ const gameSlice = createSlice({
   initialState: {
     player: {
       x: 0, // горизонталь
-      y: 0, // вертикаль
+      y: 100, // вертикаль
       w: 30, // высота
       h: 30, // ширина
-      speed: 3, // скорость передвижения
+      speed: 5, // скорость передвижения
       hp: 100, // здоровье
       damage: 2, // урон
       weapon: ['trunk'],
@@ -50,38 +51,16 @@ const gameSlice = createSlice({
         },
       ],
     },
-    enemies: [
-      {
-        id: 1,
-        w: 30, // высота
-        h: 30, // ширина
-        x: 600, // горизонталь
-        y: 30, // вертикаль
-        hp: 100, // здоровье
-        damage: 5, // урон
-        coolDown: 30, // скорость удара
-      },
-      {
-        id: 2,
-        w: 30, // высота
-        h: 30, // ширина
-        x: 600, // горизонталь
-        y: 80, // вертикаль
-        hp: 100, // здоровье
-        damage: 5, // урон
-        coolDown: 30,
-      },
-      {
-        id: 3,
-        w: 30, // высота
-        h: 30, // ширина
-        x: 400, // горизонталь
-        y: 150, // вертикаль
-        hp: 100, // здоровье
-        damage: 5, // урон
-        coolDown: 30,
-      },
-    ],
+    enemies: [{
+      id: 1,
+      w: 30, // высота
+      h: 30, // ширина
+      x: 600, // горизонталь
+      y: 30, // вертикаль
+      hp: 100, // здоровье
+      damage: 5, // урон
+      coolDown: 30, // скорость удара
+    }],
     weapon: {
       name: 'trunk', // название
       damage: 20, // урон
@@ -98,10 +77,18 @@ const gameSlice = createSlice({
       countWawes: 0,
     },
     gameLoop: 0,
+    display: {
+      width: 0,
+      height: 0,
+    },
     calcEnemiesFlag: false,
     calcEnemiesFlag1: false,
   },
   reducers: {
+    display(state, action) {
+      state.display.height = action.payload.height;
+      state.display.width = action.payload.width;
+    },
     updateWawes(state, action) {
       state.game.countWawes = action.payload;
     },
@@ -124,16 +111,24 @@ const gameSlice = createSlice({
       }
       function calcPlayer() {
         if (action.payload.player.includes('ArrowRight')) {
-          state.player.x += state.player.speed; // идем вправо
+          if (state.player.x < (state.display.width - state.player.w)) {
+            state.player.x += state.player.speed; // идем вправо
+          }
         }
         if (action.payload.player.includes('ArrowLeft')) {
-          state.player.x -= state.player.speed; // идем влево
+          if (state.player.x > 0) {
+            state.player.x -= state.player.speed; // идем влево
+          }
         }
         if (action.payload.player.includes('ArrowUp')) {
-          state.player.y -= state.player.speed; // идем вверх
+          if (state.player.y > 0) {
+            state.player.y -= state.player.speed; // идем вверх
+          }
         }
         if (action.payload.player.includes('ArrowDown')) {
-          state.player.y += state.player.speed; // идем вниз
+          if (state.player.y < (state.display.height - state.player.h)) {
+            state.player.y += state.player.speed; // идем вниз
+          }
         }
         // if (action.payload.player.includes(' ')) {
         //   state.bullets.push({
@@ -163,16 +158,31 @@ const gameSlice = createSlice({
           });
         }
         if (action.payload.player.includes('enemy')) {
-          state.enemies.push({
-            id: uuidv4(),
-            x: Math.floor(Math.random() * (1400 - 1200)) + 1200, // горизонталь
-            y: Math.floor(Math.random() * (300 - 100)) + 50, // вертикаль
-            w: 30, // высота
-            h: 30, // ширина
-            hp: 100, // здоровье
-            damage: 5, // урон
-            coolDown: 30, // скорость удара
-          });
+          const randomNum = Math.floor(Math.random() * (10 - 1)) + 1;
+          console.log(randomNum);
+          if (randomNum < 6) {
+            state.enemies.push({
+              id: uuidv4(),
+              x: state.display.width + 50,
+              y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
+              w: 30, // высота
+              h: 30, // ширина
+              hp: 100, // здоровье
+              damage: 5, // урон
+              coolDown: 30, // скорость удара
+            });
+          } else {
+            state.enemies.push({
+              id: uuidv4(),
+              x: -60, // Math.floor(Math.random() * ((-30) - (-50))) + (-50), // горизонталь
+              y: Math.floor(Math.random() * (300 - 100)) + 50, // вертикаль
+              w: 30, // высота
+              h: 30, // ширина
+              hp: 100, // здоровье
+              damage: 5, // урон
+              coolDown: 30, // скорость удара
+            });
+          }
         }
       }
       function calcBullets() {
@@ -339,6 +349,6 @@ const gameSlice = createSlice({
   extraReducers: {},
 });
 
-export const { updateFrame, updateWawes } = gameSlice.actions;
+export const { display, updateFrame, updateWawes } = gameSlice.actions;
 
 export default gameSlice.reducer;
