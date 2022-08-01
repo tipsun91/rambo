@@ -1,17 +1,13 @@
 @charset "UTF-8";
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
-@import url(https://fonts.googleapis.com/css?family=Raleway|Varela+Round|Coda);
-@import url(http://weloveiconfonts.com/api/?family=entypo);
 
 body {
   padding: 2.23em;
   height: 100%;
   margin: 0;
-  font: normal 1.1em Calibri;
-  font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   line-height: 1.42em;
   color: #ffffff;
+  font-family: 'Press Start 2P', sans-serif;
 }
 
 h1 {
@@ -58,7 +54,7 @@ h2 a {
   font-weight: bold;
   font-size: 1em;
   text-align: left;
-  color: rgba(24, 117, 66, 0.8);
+  color: #43adde;
   width: 250px;
 }
 
@@ -153,7 +149,7 @@ h2 a {
 }
 
 [class*='entypo-']:before {
-  font-family: 'entypo', sans-serif;
+  font-family: 'Press Start 2P', sans-serif;
 }
 
 .user-profile {
@@ -169,7 +165,7 @@ h2 a {
   margin-left: 5.8em;
   color: #658585;
   font-size: 1.53em;
-  font-family: 'Coda', sans-serif;
+  font-family: 'Press Start 2P', sans-serif;
   font-weight: bold;
 }
 .user-profile .bio {
@@ -178,7 +174,7 @@ h2 a {
   margin-left: 10.43em;
   color: #e76043;
   font-size: 0.87em;
-  font-family: 'varela round', sans-serif;
+  font-family: 'Press Start 2P', sans-serif;
 }
 
 .user-profile > img.avatar {

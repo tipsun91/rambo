@@ -3,6 +3,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Hero from '../Hero/Hero';
 import GameBar from '../GameBar/GameBar';
 import Bullet from '../Bullet/Bullet';
@@ -156,8 +157,8 @@ function App() {
           : (
             <div className="gameOver">
               <h1>GAME OVER</h1>
-              <button type="button">Играть еще раз</button>
-              <button type="button">Вернуться в главное меню</button>
+              <Link className="nes-btn is-primary" to="/">Играть еще раз</Link>
+              <Link className="nes-btn is-warning" to="/game">Вернуться в главное меню</Link>
             </div>
           )
       }

@@ -1,5 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Kite+One);
-@import url(https://fonts.googleapis.com/css?family=Offside);
+
 html,
 body {
   height: 100%;
@@ -8,8 +7,9 @@ body {
 body {
   background-image: url('../../../public/img/rembo.jpeg');
   background-size: contain;
-  font: normal 1.1em Calibri;
+  font-family: 'Press Start 2P', sans-serif;
 }
+
 nav {
   height: 25%;
   width: 30%;
@@ -17,7 +17,6 @@ nav {
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
-  font: normal 1.2em Offside;
 }
 p {
   margin: 5px 0;
