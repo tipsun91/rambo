@@ -1,19 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Kite+One);
 @import url(https://fonts.googleapis.com/css?family=Offside);
 
-html {
-  height: 100%;
-  margin: 0;
-}
-
-body {
-  height: 100%;
-  margin: 0;
-  background-image: url('/Users/khmm/elbrus/3_phase/111/public/img/rembo.jpeg');
-  background-size: contain;
-  font: normal 1.1em Calibri;
-}
-
 nav {
   height: 25%;
   width: 30%;
@@ -73,5 +60,24 @@ li a {
   }
   100% {
     -webkit-transform: rotate(4deg);
+  }
+}
+
+.anim-show-gamemenu {
+  color: #fff;
+  text-align: center;
+  opacity: 0;
+  transition: 1s;
+  animation: show 3s 1;
+  animation-fill-mode: forwards;
+  animation-delay: 0s;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

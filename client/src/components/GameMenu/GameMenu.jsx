@@ -3,24 +3,22 @@ import './GameMenu.css';
 
 function GameMenu() {
   return (
-    <>
-      <nav>
-        <ul>
-          <li>
-            <a href="/">Войти</a>
-          </li>
-          <li>
-            <a href="/">Зарегистрироваться</a>
-          </li>
-          <li>
-            <a href="/">Статистика</a>
-          </li>
-          <li>
-            <a href="/">Выход</a>
-          </li>
-        </ul>
-      </nav>
-    </>
+    <nav className="anim-show-gamemenu">
+      <ul>
+        <li>
+          <a href="/">Войти</a>
+        </li>
+        <li>
+          <a href="/">Зарегистрироваться</a>
+        </li>
+        <li>
+          <a href="/">Статистика</a>
+        </li>
+        <li>
+          <a href="/">Выход</a>
+        </li>
+      </ul>
+    </nav>
   );
 }
 
