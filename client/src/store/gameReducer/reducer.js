@@ -11,7 +11,7 @@ import calcCollisionsEnemie from './functions/calcCollisionsEnemie';
 import calcCollisionBullets from './functions/calcCollisionBullets';
 
 export const sendStatistic = createAsyncThunk(
-  'api/statistics',
+  '/api/statistics',
   async (statGame, { rejectWithValue }) => {
     try {
       const responce = await fetch('/api/statistics', {
@@ -55,16 +55,18 @@ const gameSlice = createSlice({
         },
       ],
     },
-    enemies: [{
-      id: 1,
-      w: 30, // высота
-      h: 30, // ширина
-      x: 600, // горизонталь
-      y: 30, // вертикаль
-      hp: 100, // здоровье
-      damage: 5, // урон
-      coolDown: 30, // скорость удара
-    }],
+    enemies: [
+      {
+        id: 1,
+        w: 30, // высота
+        h: 30, // ширина
+        x: 600, // горизонталь
+        y: 30, // вертикаль
+        hp: 100, // здоровье
+        damage: 5, // урон
+        coolDown: 30, // скорость удара
+      },
+    ],
     weapon: {
       name: 'trunk', // название
       damage: 20, // урон
