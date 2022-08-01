@@ -77,7 +77,7 @@ function App() {
         setBullet(false);
       }
     };
-
+console.log('jopaaaaaa');
     document.addEventListener('mousedown', mouseClickDown);
     document.addEventListener('mouseup', mouseClickUp);
 
