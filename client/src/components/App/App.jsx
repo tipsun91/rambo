@@ -34,14 +34,8 @@ function App() {
   const [cordMouse, setCordMouse] = useState();
 
   useEffect(() => {
-    // const mouseXY = (event) => {
-    //   console.log('====>', event.x);
-    //   console.log('<====', event.y);
-    // };
     const mouseClickDown = (event) => {
       setShoot(true);
-      // console.log(event.clientX);
-      // console.log(event.x);
       setCordMouse([event.clientX - 36, event.clientY - 35]);
     };
     const mouseClickUp = (event) => {

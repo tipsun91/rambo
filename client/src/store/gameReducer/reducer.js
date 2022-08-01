@@ -101,13 +101,9 @@ const gameSlice = createSlice({
         const codrY = action.payload.mouseCord[1];
         const speed = 50;
         const heroX = hero.x;
-        console.log('heroX', heroX);
         const heroY = hero.y;
-        console.log('heroY', heroY);
         const dX = codrX - heroX;
-        console.log('cordX', codrX);
         const dY = codrY - heroY;
-        console.log('cordY', codrY);
         const hypotenuse = Math.sqrt(Math.floor(dX ** 2) + Math.floor(dY ** 2));
         const speedX = speed / Math.floor(hypotenuse) * dX;
         const speedY = speed / Math.floor(hypotenuse) * dY;
