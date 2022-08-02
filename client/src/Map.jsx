@@ -18,10 +18,11 @@ import NavBar from './components/NavBar/NavBar';
 export default function Map() {
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
+  React.useEffect(
+    () => {
       dispatch(signData());
     },
-    []
+    [],
   );
 
   return (

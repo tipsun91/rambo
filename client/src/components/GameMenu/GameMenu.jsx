@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './GameMenu.css';
 
 function GameMenu() {
-  const { user } = useSelector(state => state.user);
+  const { user } = useSelector((state) => state.user);
 
   return (
     <nav className="anim-show-gamemenu">
