@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Rating.css';
 
 function Rating() {
@@ -67,9 +68,9 @@ function Rating() {
       </table>
       <div className="score-box-rating">
         <p className="score-rating" />
-        <a className="return-rating" href="/game">
+        <Link className="return-rating" to="/game">
           &lt;&lt; НАЗАД
-        </a>
+        </Link>
       </div>
     </div>
   );

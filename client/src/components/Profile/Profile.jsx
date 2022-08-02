@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Profile.css';
 
 export default function Profile() {
@@ -68,9 +69,9 @@ export default function Profile() {
       </div>
       <div className="score-box-profile">
         <p className="score-profile" />
-        <a className="return-profile" href="/game">
+        <Link className="return-profile" to="/game">
           &lt;&lt; НАЗАД
-        </a>
+        </Link>
       </div>
     </div>
   );
