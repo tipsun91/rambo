@@ -4,6 +4,22 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 const SIGN_IN_URL = '/api/sign/in/';
 const SIGN_UP_URL = '/api/sign/up/';
 
+export const signData = createAsyncThunk(
+  '/api/sign/in',
+  async (event, { rejectWithValue }) => {
+    try {
+      const responce = await fetch(SIGN_IN_URL, {
+        method: 'GET',
+        credentials: 'include',
+      });
+      const data = await responce.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 export const signIn = createAsyncThunk(
   '/api/sign/in',
   async (event, { rejectWithValue }) => {
@@ -62,6 +78,14 @@ const userSlice = createSlice({
   reducers: {
   },
   extraReducers: {
+    [signData.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [signData.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.user = action.payload.user;
+    },
     [signIn.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
