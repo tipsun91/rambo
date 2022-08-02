@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import './Signin.css';
-import { signIn } from '../../store/userReducer/reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
-const URL = '/api/sign/in/';
+import { signIn } from '../../store/userReducer/reducer';
+import './Signin.css';
 
 export default function Signin() {
   const navigate = useNavigate();
