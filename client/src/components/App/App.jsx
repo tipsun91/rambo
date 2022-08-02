@@ -18,6 +18,7 @@ import {
   updateBackgroundWawes2,
   updateBackgroundWawes3,
   updatePositionPlayer,
+  deleteAllEnemies,
 } from '../../store/gameReducer/reducer';
 
 function App() {
@@ -181,6 +182,7 @@ function App() {
 
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWawes === 2) {
+      dispatch(deleteAllEnemies());
       // переходт на вторую локацию
       dispatch(updateBackgroundWawes2());
       // меняем позицию героя для прохождения в ворота
@@ -192,6 +194,7 @@ function App() {
     }
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWawes === 3) {
+      dispatch(deleteAllEnemies());
       // переходт на третью локацию
       dispatch(updateBackgroundWawes3());
       // меняем позицию героя для прохождения в ворота
@@ -253,7 +256,7 @@ function App() {
             <Link className="nes-btn is-primary" to="/">
               Играть еще раз
             </Link>
-            <Link className="nes-btn is-warning" to="/main">
+            <Link className="nes-btn is-warning" to="/game">
               Вернуться в главное меню
             </Link>
           </div>
@@ -265,7 +268,7 @@ function App() {
                 <Link className="nes-btn is-primary" to="/">
                   Играть еще раз
                 </Link>
-                <Link className="nes-btn is-warning" to="/main">
+                <Link className="nes-btn is-warning" to="/game">
                   Вернуться в главное меню
                 </Link>
               </div>

@@ -93,6 +93,9 @@ const gameSlice = createSlice({
     calcEnemiesFlag1: false, // ии врагов
   },
   reducers: {
+    deleteAllEnemies(state, action) {
+      state.enemies = [];
+    },
     // логика движения игрока при смены локации чтобы он проходил в ворота
     updatePositionPlayer(state, action) {
       if (state.player.y < 600) {
@@ -152,6 +155,7 @@ export const {
   updateBackgroundWawes2,
   updateBackgroundWawes3,
   updatePositionPlayer,
+  deleteAllEnemies,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
