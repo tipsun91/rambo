@@ -89,7 +89,12 @@ function App() {
     document.addEventListener('mousedown', mouseClickDown);
     document.addEventListener('mouseup', mouseClickUp);
 
-    dispatch(display({ width: app.current.offsetWidth, height: app.current.offsetHeight }));
+    dispatch(
+      display({
+        width: app.current.offsetWidth,
+        height: app.current.offsetHeight,
+      }),
+    );
 
     document.addEventListener('keydown', funtion1);
     document.addEventListener('keyup', function2);
@@ -108,7 +113,7 @@ function App() {
     const mouseCord = [];
 
     if (shoot) {
-      if ((Date.now() - timeBullet) > 300) {
+      if (Date.now() - timeBullet > 300) {
         mouseCord.push(cordMouse[0], cordMouse[1]);
         seTimeBullet(Date.now);
       }

@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import './Signin.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { signIn } from '../../store/userReducer/reducer';
-
-// const URL = '/api/sign/in/';
+import './Signin.css';
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -37,8 +35,8 @@ export default function Signin() {
         <div className="input-section">
           <i className="far" />
           <input
-            name="email"
             required
+            name="email"
             className="input-area"
             type="email"
             placeholder="Email"
