@@ -11,10 +11,12 @@ import Dialog from './components/Dialog/Dialog';
 import Rating from './components/Rating/Rating';
 import NoPage from './components/NoPage/NoPage';
 import GameMenu from './components/GameMenu/GameMenu';
+import NavBar from './components/NavBar/NavBar';
 
 export default function Map() {
   return (
     <BrowserRouter>
+      <NavBar />
       <Routes>
         <Route index path="/" element={<App />} />
         <Route path="/main" element={<Main />} />

@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { editUser } from '../../store/userReducer/reducer';
 import './Profile.css';
 
 export default function Profile() {
+  const dispatch = useDispatch();
+  const editProfileForm = useRef();
+
+  const onSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+      dispatch(editUser(event));
+    },
+    [editProfileForm],
+  );
+
   return (
     <div className="container__stats anim-show-profile flex">
       <div className="profile__wrapper">
@@ -24,10 +37,11 @@ export default function Profile() {
           </div>
         </div>
         <div className="edit-user-profile">
-          <form className="edit-form">
+          <form className="edit-form" ref={editProfileForm} onSubmit={onSubmit}>
             <div className="edit-profile">
               <input
                 required
+                autoComplete="off"
                 name="name"
                 type="name"
                 placeholder="Name"
@@ -37,7 +51,7 @@ export default function Profile() {
             <div className="edit-profile">
               <input
                 required
-                className="edit-profile"
+                autoComplete="off"
                 name="email"
                 type="email"
                 placeholder="Email"
@@ -47,7 +61,7 @@ export default function Profile() {
             <div className="edit-profile">
               <input
                 required
-                className="edit-profile"
+                autoComplete="off"
                 name="passoword"
                 type="password"
                 placeholder="Password"
