@@ -38,11 +38,11 @@ export const signUp = createAsyncThunk(
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name:  event.target.name.value,
+          name: event.target.name.value,
           email: event.target.email.value,
           password: [
             event.target.password.value,
-            event.target.pswdcfrm.value
+            event.target.pswdcfrm.value,
           ],
         }),
       });
@@ -51,8 +51,8 @@ export const signUp = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
-)
+  },
+);
 
 const userSlice = createSlice({
   name: 'user',
@@ -77,7 +77,7 @@ const userSlice = createSlice({
     [signUp.fulfilled]: (state, action) => {
       state.status = 'resolved';
       state.user = action.payload.user;
-    }
+    },
   },
 });
 
