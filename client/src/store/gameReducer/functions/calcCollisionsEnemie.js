@@ -9,6 +9,18 @@ function calcCollisionsEnemie(state, arr, hero) {
     ) {
       if (state.gameLoop % enemie.coolDown === 0) {
         hero.hp -= enemie.damage;
+        if (enemie.type === 1) {
+          enemie.skin = '/animations/enemie0attack.gif'; // меняем скин врага при ударе первого типа
+        }
+        if (enemie.type === 2) {
+          enemie.skin = '/animations/enemie1attack.gif'; // меняем скин врага при ударе второго типа
+        }
+        if (enemie.type === 3) {
+          enemie.skin = '/animations/enemie2attack.gif'; // меняем скин врага при ударе третьего типа
+        }
+        if (enemie.type === 4) {
+          enemie.skin = '/animations/enemie3attack.gif'; // меняем скин врага при ударе третьего типа
+        }
       }
       enemie.hp -= hero.damage; // PVP damage
       // hero.damagevalue += hero.damage; // counts pvp damage into GameBar !

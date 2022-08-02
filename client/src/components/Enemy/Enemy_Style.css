@@ -2,5 +2,6 @@
 {
   position: absolute;
   z-index: 5;
-  background-color: rgb(255, 0, 0);
+  background-color: transparent;
+  display: flex;
 }

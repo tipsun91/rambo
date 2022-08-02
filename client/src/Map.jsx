@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { signData } from './store/userReducer/reducer';
 
 import App from './components/App/App';
 import Main from './components/Main/Main';
@@ -14,21 +16,49 @@ import GameMenu from './components/GameMenu/GameMenu';
 import NavBar from './components/NavBar/NavBar';
 
 export default function Map() {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+
+  React.useEffect(() => {
+    dispatch(signData());
+  }, []);
+
   return (
     <BrowserRouter>
       <NavBar />
       <Routes>
-        <Route index path="/" element={<App />} />
-        <Route path="/main" element={<Main />} />
-        <Route path="/sign/in" element={<Signin />} />
-        <Route path="/sign/up" element={<Signup />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/dialogues" element={<Dialogues />} />
-        <Route path=":id" element={<Dialog />} />
-        <Route path="/rating" element={<Rating />} />
-        <Route path="/game" element={<GameMenu />} />
-        <Route path="page/:page" element={<Rating />} />
-        <Route path="*" element={<NoPage />} />
+        {user
+          ? (
+            <>
+              <Route path="/" element={<GameMenu />} />
+              <Route index path="game" element={<App />} />
+              <Route path="main" element={<Main />} />
+              <Route path="profile" element={<Profile />}>
+                <Route path=":id" element={<Profile />} />
+              </Route>
+              <Route path="dialogues" element={<Dialogues />}>
+                <Route path=":id" element={<Dialog />} />
+              </Route>
+              <Route path="rating" element={<Rating />}>
+                <Route path="page/:page" element={<Rating />} />
+              </Route>
+              <Route path="sign">
+                <Route path="in" element={<Signin />} />
+                <Route path="up" element={<Signup />} />
+              </Route>
+            </>
+          )
+          : (
+            <>
+              <Route path="/" element={<GameMenu />} />
+              <Route path="sign">
+                <Route path="in" element={<Signin />} />
+                <Route path="up" element={<Signup />} />
+              </Route>
+              <Route path="*" element={<NoPage />} />
+            </>
+          )}
+
       </Routes>
     </BrowserRouter>
   );

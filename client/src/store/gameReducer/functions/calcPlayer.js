@@ -6,11 +6,15 @@ function calcPlayer(state, action) {
   if (action.payload.player.includes('d')) {
     if (state.player.x < (state.display.width - state.player.w)) {
       state.player.x += state.player.speed; // идем вправо
+      state.player.skin = '/animations/hero1move.gif'; // меняем скин при ходьбе
+      state.player.move = 1; // отзеркаливаем скин
     }
   }
   if (action.payload.player.includes('a')) {
     if (state.player.x > 0) {
       state.player.x -= state.player.speed; // идем влево
+      state.player.skin = '/animations/hero1move.gif'; // меняем скин при ходьбе
+      state.player.move = -1; // отзеркаливаем скин
     }
   }
   if (action.payload.player.includes('w')) {
@@ -46,25 +50,30 @@ function calcPlayer(state, action) {
         id: uuidv4(),
         x: state.display.width + 50,
         y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
-        w: 30, // высота
-        h: 30, // ширина
+        w: 60, // высота
+        h: 60, // ширина
         hp: 100, // здоровье
+        speed: 0.7,
         damage: 5, // урон
         coolDown: 30, // скорость удара
+        skin: '/animations/enemie0move.gif',
+        move: -1,
       });
     } else {
       state.enemies.push({
         id: uuidv4(),
         x: -60, // Math.floor(Math.random() * ((-30) - (-50))) + (-50), // горизонталь
         y: Math.floor(Math.random() * (300 - 100)) + 50, // вертикаль
-        w: 30, // высота
-        h: 30, // ширина
+        w: 60, // высота
+        h: 60, // ширина
         hp: 100, // здоровье
+        speed: 0.7,
         damage: 5, // урон
         coolDown: 30, // скорость удара
+        skin: '/animations/enemie0move.gif',
+        move: 1,
       });
     }
   }
 }
-
 export default calcPlayer;
