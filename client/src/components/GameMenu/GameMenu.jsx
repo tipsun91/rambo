@@ -1,12 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './GameMenu.css';
 
 function GameMenu() {
-  const user = {
-    name: 'Max',
-    lvl: 80,
-  };
+  const { user } = useSelector(state => state.user);
+
   return (
     <nav className="anim-show-gamemenu">
       <ul>
