@@ -1,23 +1,16 @@
-// import React from 'react';
-// import './NavBar.css';
-// import { Link } from 'react-router-dom';
+import React from 'react';
+import './NavBar.css';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-// export default function NavBar() {
-//   return (
-//     <nav className="navbar">
-//       <div className="lk">
-//         <h2>
-//           Привет,
-//         </h2>
-//       </div>
-//       <ul className="navbar__list">
-//         <li className="li">
-//           <Link to="/cabinet">ЛК</Link>
-//         </li>
-//         <li className="li">
-//           <Link to="/logout">Выйти</Link>
-//         </li>
-//       </ul>
-//     </nav>
-//   );
-// }
+export default function NavBar() {
+  const { user } = useSelector(state => state.user);
+
+  return (
+    <nav className="navbar">
+      <div className="lk">
+        <h2>Привет{ user && user.name ? `, ${user.name}` : ', Гость' }</h2>
+      </div>
+    </nav>
+  );
+}
