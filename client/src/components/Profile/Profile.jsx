@@ -68,7 +68,7 @@ export default function Profile() {
       </div>
       <div className="score-box-profile">
         <p className="score-profile" />
-        <a className="return-profile" href="/">
+        <a className="return-profile" href="/game">
           &lt;&lt; НАЗАД
         </a>
       </div>

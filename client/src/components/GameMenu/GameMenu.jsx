@@ -6,16 +6,19 @@ function GameMenu() {
     <nav className="anim-show-gamemenu">
       <ul>
         <li>
-          <a href="/">Войти</a>
+          <a href="/sign/in">Войти</a>
         </li>
         <li>
-          <a href="/">Зарегистрироваться</a>
+          <a href="/sign/up">Зарегистрироваться</a>
         </li>
         <li>
-          <a href="/">Статистика</a>
+          <a href="/profile">Статистика</a>
         </li>
         <li>
-          <a href="/">Выход</a>
+          <a href="/rating">Рейтинг</a>
+        </li>
+        <li>
+          <a href="/main">Выход</a>
         </li>
       </ul>
     </nav>

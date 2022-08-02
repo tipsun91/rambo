@@ -33,8 +33,18 @@ function App() {
   const [startTime, setStartTime] = useState(Date.now());
   const [timeBullet, seTimeBullet] = useState(Date.now());
   const [timeEnemy, setTimeEnemy] = useState(Date.now());
+  const [shoot, setShoot] = useState(false);
+  const [cordMouse, setCordMouse] = useState();
 
   useEffect(() => {
+    const mouseClickDown = (event) => {
+      setShoot(true);
+      setCordMouse([event.clientX - 36, event.clientY - 35]);
+    };
+    const mouseClickUp = (event) => {
+      setShoot(false);
+    };
+
     const funtion1 = (event) => {
       if (event.key === 'ArrowRight') {
         setArrowRight(true);
@@ -70,12 +80,17 @@ function App() {
         setBullet(false);
       }
     };
+
+    document.addEventListener('mousedown', mouseClickDown);
+    document.addEventListener('mouseup', mouseClickUp);
+
     dispatch(
       display({
         width: app.current.offsetWidth,
         height: app.current.offsetHeight,
       }),
     );
+
     document.addEventListener('keydown', funtion1);
     document.addEventListener('keyup', function2);
 
@@ -88,6 +103,14 @@ function App() {
   const [timeoutFlag, setTimeoutFlag] = useState(false);
   useEffect(() => {
     const pressedButtons = [];
+    const mouseCord = [];
+
+    if (shoot) {
+      if (Date.now() - timeBullet > 300) {
+        mouseCord.push(cordMouse[0], cordMouse[1]);
+        seTimeBullet(Date.now);
+      }
+    }
 
     if (arrowRight) {
       pressedButtons.push('ArrowRight');
@@ -112,7 +135,7 @@ function App() {
       setTimeEnemy(Date.now());
     }
 
-    dispatch(updateFrame({ player: pressedButtons }));
+    dispatch(updateFrame({ player: pressedButtons, mouseCord }));
     if (player.hp <= 0) {
       setplayGame(false);
     }

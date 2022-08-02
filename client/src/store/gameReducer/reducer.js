@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable default-param-last */
@@ -23,7 +24,6 @@ export const sendStatistic = createAsyncThunk(
         credentials: true,
       });
       const data = await responce.json();
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -97,6 +97,19 @@ const gameSlice = createSlice({
       function upGameLoop() {
         state.gameLoop += 1;
       }
+      function GANGBANG360(hero) {
+        const codrX = action.payload.mouseCord[0];
+        const codrY = action.payload.mouseCord[1];
+        const speed = 50;
+        const heroX = hero.x;
+        const heroY = hero.y;
+        const dX = codrX - heroX;
+        const dY = codrY - heroY;
+        const hypotenuse = Math.sqrt(Math.floor(dX ** 2) + Math.floor(dY ** 2));
+        const speedX = speed / Math.floor(hypotenuse) * dX;
+        const speedY = speed / Math.floor(hypotenuse) * dY;
+        return [speedX, speedY];
+      }
       function calcPlayer() {
         if (action.payload.player.includes('ArrowRight')) {
           if (state.player.x < state.display.width - state.player.w) {
@@ -118,32 +131,65 @@ const gameSlice = createSlice({
             state.player.y += state.player.speed; // идем вниз
           }
         }
-        if (action.payload.player.includes(' ')) {
+        // if (action.payload.player.includes(' ')) {
+        //   state.bullets.push({
+        //     id: uuidv4(),
+        //     x: state.player.x,
+        //     y: state.player.y - state.player.h / 2,
+        //     speed: 50,
+        //     damage: state.weapon.damage,
+        //   });
+        // }
+
+        if (action.payload.mouseCord.length > 0) {
+          // console.log(action.payload.mouseCord[1]);
+          // console.log(action.payload.mouseCord[0]);
+          const [speedX, speedY] = GANGBANG360(state.player);
+          // console.log(speedX);
+          // console.log(speedY);
           state.bullets.push({
             id: uuidv4(),
             x: state.player.x,
             y: state.player.y - state.player.h / 2,
-            speed: 50,
+            w: 12,
+            h: 3,
+            speedX,
+            speedY,
             damage: state.weapon.damage,
           });
         }
         if (action.payload.player.includes('enemy')) {
-          state.enemies.push({
-            id: uuidv4(),
-            x: Math.floor(Math.random() * (1400 - 1200)) + 1200, // горизонталь
-            y: Math.floor(Math.random() * (300 - 100)) + 50, // вертикаль
-            w: 30, // высота
-            h: 30, // ширина
-            hp: 100, // здоровье
-            damage: 5, // урон
-            coolDown: 30, // скорость удара
-          });
+          const randomNum = Math.floor(Math.random() * (10 - 1)) + 1;
+          if (randomNum < 6) {
+            state.enemies.push({
+              id: uuidv4(),
+              x: state.display.width + 50,
+              y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
+              w: 30, // высота
+              h: 30, // ширина
+              hp: 100, // здоровье
+              damage: 5, // урон
+              coolDown: 30, // скорость удара
+            });
+          } else {
+            state.enemies.push({
+              id: uuidv4(),
+              x: -60, // Math.floor(Math.random() * ((-30) - (-50))) + (-50), // горизонталь
+              y: Math.floor(Math.random() * (300 - 100)) + 50, // вертикаль
+              w: 30, // высота
+              h: 30, // ширина
+              hp: 100, // здоровье
+              damage: 5, // урон
+              coolDown: 30, // скорость удара
+            });
+          }
         }
       }
       function calcBullets() {
         state.bullets.forEach((el) => {
-          el.x += el.speed;
-          if (el.x >= state.player.x + 900) {
+          el.x += el.speedX;
+          el.y += el.speedY;
+          if (el.x >= state.player.x + 1200) {
             state.bullets.splice(el.id, 1);
           }
         });
@@ -261,28 +307,33 @@ const gameSlice = createSlice({
       }
       function calcCollisionBullets() {
         state.bullets.forEach((bullet) => {
-          state.enemies.forEach((enemy) => {
-            if (enemy.x > state.player.x) {
-              if (
-                bullet.x >= enemy.x
-                && bullet.y >= enemy.y
-                && bullet.y <= enemy.y + state.player.w
-              ) {
-                enemy.hp -= bullet.damage;
-                state.game.countDamage += bullet.damage;
-                // console.log(state.game.countDamage);
-                state.bullets.splice(
-                  state.enemies.findIndex((el) => el.id === bullet.id),
+          state.enemies.forEach((enemie) => {
+            // if (enemy.x > state.player.x) {
+            //   if (
+            //     bullet.x >= enemy.x
+            //     && bullet.y >= enemy.y
+            //     && bullet.y <= enemy.y + state.player.w
+            //   ) {
+            if (bullet.x + bullet.w / 2 >= enemie.x - enemie.w / 2
+              && bullet.x - bullet.w / 2 <= enemie.x + enemie.w / 2
+              && bullet.y - bullet.h <= enemie.y + enemie.h
+              && bullet.y >= enemie.y) {
+              enemie.hp -= bullet.damage;
+              console.log(enemie.hp);
+              state.game.countDamage += bullet.damage;
+              // console.log(state.game.countDamage);
+              state.bullets.splice(bullet, 1);
+              // state.bullets.splice(
+              //   state.enemies.findIndex((el) => el.id === bullet.id),
+              //   1,
+              // );
+              if (enemie.hp <= 0) {
+                state.game.countEnemies += 1;
+                state.game.countMoney += 15;
+                state.enemies.splice(
+                  state.enemies.findIndex((el) => el.id === enemie.id),
                   1,
                 );
-                if (enemy.hp <= 0) {
-                  state.game.countEnemies += 1;
-                  state.game.countMoney += 15;
-                  state.enemies.splice(
-                    state.enemies.findIndex((el) => el.id === enemy.id),
-                    1,
-                  );
-                }
               }
             }
           });
