@@ -14,6 +14,7 @@ import {
   updateFrame,
   sendStatistic,
   updateWawes,
+  updateEnemies,
 } from '../../store/gameReducer/reducer';
 
 function App() {
@@ -23,8 +24,9 @@ function App() {
   const {
     enemies, bullets, player, game,
   } = useSelector((state) => state.game);
+  const [passageWawes, setPassageWawes] = useState(1);
   const [countWawes, setCountWawes] = useState(1);
-  const [playGame, setplayGame] = useState(true);
+  const [playGame, setPlayGame] = useState('play');
   const [arrowRight, setArrowRight] = useState(false);
   const [arrowLeft, setArrowLeft] = useState(false);
   const [arrowUp, setArrowUp] = useState(false);
@@ -37,7 +39,6 @@ function App() {
   const [cordMouse, setCordMouse] = useState();
 
   useEffect(() => {
- 
     const mouseClickDown = (event) => {
       setShoot(true);
       setCordMouse([event.clientX - 36, event.clientY - 35]);
@@ -47,16 +48,16 @@ function App() {
     };
 
     const funtion1 = (event) => {
-      if (event.key === 'ArrowRight') {
+      if (event.key === 'd') {
         setArrowRight(true);
       }
-      if (event.key === 'ArrowLeft') {
+      if (event.key === 'a') {
         setArrowLeft(true);
       }
-      if (event.key === 'ArrowUp') {
+      if (event.key === 'w') {
         setArrowUp(true);
       }
-      if (event.key === 'ArrowDown') {
+      if (event.key === 's') {
         setArrowDown(true);
       }
       if (event.key === ' ') {
@@ -65,16 +66,16 @@ function App() {
     };
 
     const function2 = (event) => {
-      if (event.key === 'ArrowRight') {
+      if (event.key === 'd') {
         setArrowRight(false);
       }
-      if (event.key === 'ArrowLeft') {
+      if (event.key === 'a') {
         setArrowLeft(false);
       }
-      if (event.key === 'ArrowUp') {
+      if (event.key === 'w') {
         setArrowUp(false);
       }
-      if (event.key === 'ArrowDown') {
+      if (event.key === 's') {
         setArrowDown(false);
       }
       if (event.key === ' ') {
@@ -85,13 +86,19 @@ function App() {
     document.addEventListener('mousedown', mouseClickDown);
     document.addEventListener('mouseup', mouseClickUp);
 
-    console.log(app.current.offsetWidth, app.current.offsetHeight);
-    dispatch(display({ width: app.current.offsetWidth, height: app.current.offsetHeight }));
+    dispatch(
+      display({
+        width: app.current.offsetWidth,
+        height: app.current.offsetHeight,
+      }),
+    );
 
     document.addEventListener('keydown', funtion1);
     document.addEventListener('keyup', function2);
 
     return () => {
+      document.removeEventListener('mousedown', mouseClickDown);
+      document.removeEventListener('mouseup', mouseClickUp);
       document.removeEventListener('keydown', funtion1);
       document.removeEventListener('keyup', function2);
     };
@@ -103,23 +110,23 @@ function App() {
     const mouseCord = [];
 
     if (shoot) {
-      if ((Date.now() - timeBullet) > 300) {
+      if (Date.now() - timeBullet > 300) {
         mouseCord.push(cordMouse[0], cordMouse[1]);
         seTimeBullet(Date.now);
       }
     }
 
     if (arrowRight) {
-      pressedButtons.push('ArrowRight');
+      pressedButtons.push('d');
     }
     if (arrowLeft) {
-      pressedButtons.push('ArrowLeft');
+      pressedButtons.push('a');
     }
     if (arrowUp) {
-      pressedButtons.push('ArrowUp');
+      pressedButtons.push('w');
     }
     if (arrowDown) {
-      pressedButtons.push('ArrowDown');
+      pressedButtons.push('s');
     }
     if (bullet) {
       if (Date.now() - timeBullet > 300) {
@@ -134,25 +141,26 @@ function App() {
 
     dispatch(updateFrame({ player: pressedButtons, mouseCord }));
     if (player.hp <= 0) {
-      setplayGame(false);
+      setPlayGame('game-over');
     }
 
-    if (playGame) {
-      if (game.countEnemies === 2) {
-        dispatch(updateWawes(2));
+    if (playGame === 'play') {
+      if (game.countEnemies === 2 && passageWawes === 1) {
+        dispatch(updateWawes());
+        dispatch(updateEnemies());
+        setPassageWawes(2);
       }
-      if (game.countEnemies === 3) {
-        dispatch(updateWawes(3));
-      }
-      if (game.countEnemies === 4) {
-        dispatch(updateWawes(4));
+      if (game.countEnemies === 4 && passageWawes === 2) {
+        dispatch(updateWawes());
+        dispatch(updateEnemies());
+        setPassageWawes(3);
       }
       if (game.countEnemies === 5) {
-        dispatch(updateWawes(5));
+        setPlayGame('vin');
       }
     }
 
-    if (playGame) {
+    if (playGame === 'play') {
       setTimeout(() => {
         setTimeoutFlag((prev) => !prev);
       }, 20);
@@ -160,7 +168,7 @@ function App() {
   }, [timeoutFlag]);
 
   useEffect(() => {
-    if (!playGame) {
+    if (playGame === 'game-over') {
       const time = (+Date.now() - +startTime) / 1000;
       dispatch(
         sendStatistic({
@@ -176,16 +184,28 @@ function App() {
 
   return (
     <div ref={app} className="App">
-      {playGame ? (
+      {playGame === 'play' && (
         <div>
           <GameBar />
           <Hero />
           {bullets && bullets.map((el) => <Bullet key={el.id} bullet={el} />)}
           {enemies && enemies.map((el) => <Enemy key={el.id} enemy={el} />)}
         </div>
-      ) : (
+      )}
+      {playGame === 'game-over' && (
         <div className="gameOver">
           <h1>GAME OVER</h1>
+          <Link className="nes-btn is-primary" to="/">
+            Играть еще раз
+          </Link>
+          <Link className="nes-btn is-warning" to="/main">
+            Вернуться в главное меню
+          </Link>
+        </div>
+      )}
+      {playGame === 'vin' && (
+        <div className="gameOver">
+          <h1>WINNER</h1>
           <Link className="nes-btn is-primary" to="/">
             Играть еще раз
           </Link>
