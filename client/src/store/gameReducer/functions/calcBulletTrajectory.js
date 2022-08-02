@@ -6,7 +6,7 @@ function calcBulletTrajectory(state, cord) {
   // console.log(codrY);
   const speed = 50; // скорость пули
   const heroX = state.player.x; // корды героя по Х
-  const heroY = state.player.y + state.player.h; // корды героя по У
+  const heroY = state.player.y + state.player.h / 2; // корды героя по У
   const dX = codrX - heroX; // длинна безду Х героя и Х клика
   const dY = codrY - heroY; // длинна безду У героя и У клика
   const hypotenuse = Math.sqrt(dX ** 2 + dY ** 2); // гипотенуза

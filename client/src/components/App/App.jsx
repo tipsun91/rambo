@@ -33,9 +33,9 @@ function App() {
     enemies2,
     enemies3,
     enemies4,
-    bullets, 
-    player, 
-    game, 
+    bullets,
+    player,
+    game,
     backgroundPositionLeft,
   } = useSelector((state) => state.game);
   const [passageWawes, setPassageWawes] = useState(1);
