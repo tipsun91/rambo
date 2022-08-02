@@ -18,7 +18,7 @@ function calcPlayer(state, action) {
     }
   }
   if (action.payload.player.includes('w')) {
-    if (state.player.y > 0) {
+    if (state.player.y > 300) {
       state.player.y -= state.player.speed; // идем вверх
     }
   }

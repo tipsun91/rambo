@@ -42,7 +42,7 @@ const gameSlice = createSlice({
   initialState: {
     player: {
       x: 0, // горизонталь
-      y: 100, // вертикаль
+      y: 500, // вертикаль
       w: 150, // высота
       h: 150, // ширина
       skin: '/animations/hero1.gif',

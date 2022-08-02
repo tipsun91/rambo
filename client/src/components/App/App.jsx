@@ -272,10 +272,10 @@ function App() {
           && (
           <div className="gameOver">
             <h1>GAME OVER</h1>
-            <Link className="nes-btn is-primary" to="/">
+            <Link className="nes-btn is-primary" to="/game">
               Играть еще раз
             </Link>
-            <Link className="nes-btn is-warning" to="/game">
+            <Link className="nes-btn is-warning" to="/">
               Вернуться в главное меню
             </Link>
           </div>
@@ -284,10 +284,10 @@ function App() {
             && (
               <div className="gameOver">
                 <h1>VINNER</h1>
-                <Link className="nes-btn is-primary" to="/">
+                <Link className="nes-btn is-primary" to="/game">
                   Играть еще раз
                 </Link>
-                <Link className="nes-btn is-warning" to="/game">
+                <Link className="nes-btn is-warning" to="/">
                   Вернуться в главное меню
                 </Link>
               </div>
