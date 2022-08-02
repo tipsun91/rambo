@@ -13,7 +13,6 @@ function calcCollisionBullets(state, arr) {
         && bullet.y - bullet.h <= enemie.y + enemie.h
         && bullet.y >= enemie.y) {
         enemie.hp -= bullet.damage;
-        console.log(enemie.hp);
         state.game.countDamage += bullet.damage;
         // console.log(state.game.countDamage);
         // state.bullets.splice(bullet, 1);
