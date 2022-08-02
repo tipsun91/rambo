@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { signData } from './store/userReducer/reducer';
 
 import App from './components/App/App';
 import Main from './components/Main/Main';
@@ -11,21 +13,36 @@ import Dialog from './components/Dialog/Dialog';
 import Rating from './components/Rating/Rating';
 import NoPage from './components/NoPage/NoPage';
 import GameMenu from './components/GameMenu/GameMenu';
+import NavBar from './components/NavBar/NavBar';
 
 export default function Map() {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+      dispatch(signData());
+    },
+    []
+  );
+
   return (
     <BrowserRouter>
       <Routes>
         <Route index path="/" element={<App />} />
-        <Route path="/main" element={<Main />} />
-        <Route path="/sign/in" element={<Signin />} />
-        <Route path="/sign/up" element={<Signup />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/dialogues" element={<Dialogues />} />
-        <Route path=":id" element={<Dialog />} />
-        <Route path="/rating" element={<Rating />} />
-        <Route path="/game" element={<GameMenu />} />
-        <Route path="page/:page" element={<Rating />} />
+        <Route path="game" element={<GameMenu />} />
+        <Route path="main" element={<Main />} />
+        <Route path="sign">
+          <Route path="in" element={<Signin />} />
+          <Route path="up" element={<Signup />} />
+        </Route>
+        <Route path="profile" element={<Profile />}>
+          <Route path=":id" element={<Profile />} />
+        </Route>
+        <Route path="dialogues" element={<Dialogues />}>
+          <Route path=":id" element={<Dialog />} />
+        </Route>
+        <Route path="rating" element={<Rating />}>
+          <Route path="page/:page" element={<Rating />} />
+        </Route>
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
