@@ -8,6 +8,9 @@ import Hero from '../Hero/Hero';
 import GameBar from '../GameBar/GameBar';
 import Bullet from '../Bullet/Bullet';
 import Enemy from '../Enemy/Enemy';
+import Enemy2 from '../Enemy/Enemy2.0';
+import Enemy3 from '../Enemy/Enemy3.0';
+import Enemy4 from '../Enemy/Enemy4.0';
 import './App.css';
 import {
   display,
@@ -21,7 +24,7 @@ function App() {
   const dispatch = useDispatch();
   const app = useRef();
   const {
-    enemies, bullets, player, game,
+    enemies, enemies2, enemies3, enemies4, bullets, player, game,
   } = useSelector((state) => state.game);
   const [countWawes, setCountWawes] = useState(1);
   const [playGame, setplayGame] = useState(true);
@@ -84,7 +87,7 @@ function App() {
     document.addEventListener('mousedown', mouseClickDown);
     document.addEventListener('mouseup', mouseClickUp);
 
-    console.log(app.current.offsetWidth, app.current.offsetHeight);
+    // console.log(app.current.offsetWidth, app.current.offsetHeight);
     dispatch(display({ width: app.current.offsetWidth, height: app.current.offsetHeight }));
 
     document.addEventListener('keydown', funtion1);
@@ -179,10 +182,20 @@ function App() {
     <div ref={app} className="App">
       {playGame ? (
         <div>
+          <p>{enemies.reduce((acc, el) => el.hp + acc, 0)}</p>
           <GameBar />
           <Hero />
           {bullets && bullets.map((el) => <Bullet key={el.id} bullet={el} />)}
           {enemies && enemies.map((el) => <Enemy key={el.id} enemy={el} />)}
+          {/* {enemies.reduce((acc, el) => el.hp + acc, 0) === 0 && enemies2.map((el) => (
+            <Enemy2 key={el.id} enemy2={el} />
+          ))}
+          {enemies2.reduce((acc, el) => el.hp + acc, 0) === 0 && enemies3.map((el) => (
+            <Enemy3 key={el.id} enemy3={el} />
+          ))}
+          {enemies3.reduce((acc, el) => el.hp + acc, 0) === 0 && enemies4.map((el) => (
+            <Enemy4 key={el.id} enemy4={el} />
+          ))} */}
         </div>
       ) : (
         <div className="gameOver">

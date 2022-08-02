@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-function calcCollisionBullets(state) {
+function calcCollisionBullets(state, arr) {
   state.bullets.forEach((bullet) => {
-    state.enemies.forEach((enemie) => {
+    arr.forEach((enemie) => {
       // if (enemy.x > state.player.x) {
       //   if (
       //     bullet.x >= enemy.x
@@ -16,16 +16,16 @@ function calcCollisionBullets(state) {
         console.log(enemie.hp);
         state.game.countDamage += bullet.damage;
         // console.log(state.game.countDamage);
-        state.bullets.splice(bullet, 1);
-        // state.bullets.splice(
-        //   state.enemies.findIndex((el) => el.id === bullet.id),
-        //   1,
-        // );
+        // state.bullets.splice(bullet, 1);
+        state.bullets.splice(
+          arr.findIndex((el) => el.id === bullet.id),
+          1,
+        );
         if (enemie.hp <= 0) {
           state.game.countEnemies += 1;
           state.game.countMoney += 15;
-          state.enemies.splice(
-            state.enemies.findIndex((el) => el.id === enemie.id),
+          arr.splice(
+            arr.findIndex((el) => el.id === enemie.id),
             1,
           );
         }
