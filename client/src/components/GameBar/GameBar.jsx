@@ -20,10 +20,10 @@ function GameBar() {
           className="gamebar__progress__experience"
           style={{ width: `${player.experience}px` }}
         /> */}
-        {/* <span className="gamebar__progress__experience__number">{`⭐${player.experience}`}</span> */}
+        {/* <span className="gamebar__progress__experience__number">
+        {`⭐${player.experience}`}</span> */}
         <span className="gamebar__progress__money__number">{`🥮${game.countMoney}`}</span>
-        
-        
+
       </div>
     </div>
   );

@@ -1,16 +1,78 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { editUser } from '../../store/userReducer/reducer';
 import './Profile.css';
 
 export default function Profile() {
+  const dispatch = useDispatch();
+  const editProfileForm = useRef();
+
+  const onSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+      dispatch(editUser(event));
+    },
+    [editProfileForm],
+  );
+
   return (
-    <div className="container__stats anim-show-profile">
-      <div className="user-profile">
-        <img
-          className="avatar"
-          src="https://cdnn11.img.sputnik.by/img/07e5/07/06/1054427663_79:0:979:900_1920x0_80_0_0_7d61a9785aa88b97857d3414f37ba600.jpg"
-          alt="Ash"
-        />
-        <div className="username">Rembo</div>
+    <div className="container__stats anim-show-profile flex">
+      <div className="profile__wrapper">
+        <div className="user-profile">
+          <img
+            className="avatar"
+            src="https://cdnn11.img.sputnik.by/img/07e5/07/06/1054427663_79:0:979:900_1920x0_80_0_0_7d61a9785aa88b97857d3414f37ba600.jpg"
+            alt="Ash"
+          />
+          <div className="username">Rembo</div>
+          <div className="edit-profile">
+            <input
+              required
+              className="edit-avatar"
+              name="file"
+              type="file"
+              defaultValue=""
+            />
+          </div>
+        </div>
+        <div className="edit-user-profile">
+          <form className="edit-form" ref={editProfileForm} onSubmit={onSubmit}>
+            <div className="edit-profile">
+              <input
+                required
+                autoComplete="off"
+                name="name"
+                type="name"
+                placeholder="Name"
+                defaultValue=""
+              />
+            </div>
+            <div className="edit-profile">
+              <input
+                required
+                autoComplete="off"
+                name="email"
+                type="email"
+                placeholder="Email"
+                defaultValue=""
+              />
+            </div>
+            <div className="edit-profile">
+              <input
+                required
+                autoComplete="off"
+                name="passoword"
+                type="password"
+                placeholder="Password"
+                defaultValue=""
+              />
+            </div>
+            <button type="submit" className="btn-2 nes-btn is-primary">
+              Изменить данные
+            </button>
+          </form>
+        </div>
       </div>
       <div className="body">
         <table className="container__profile">
@@ -68,9 +130,9 @@ export default function Profile() {
       </div>
       <div className="score-box-profile">
         <p className="score-profile" />
-        <a className="return-profile" href="/">
+        <Link className="return-profile" to="/game">
           &lt;&lt; НАЗАД
-        </a>
+        </Link>
       </div>
     </div>
   );

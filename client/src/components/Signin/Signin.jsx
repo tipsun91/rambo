@@ -1,15 +1,13 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import './Signin.css';
-import { signIn } from '../../store/userReducer/reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
-const URL = '/api/sign/in/';
+import { signIn } from '../../store/userReducer/reducer';
+import './Signin.css';
 
 export default function Signin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user)
+  const { user } = useSelector((state) => state.user);
   const signInForm = useRef();
 
   const onSubmit = useCallback(
@@ -28,7 +26,7 @@ export default function Signin() {
         navigate('/main');
       }
     },
-    [user]
+    [user],
   );
 
   return (
@@ -36,8 +34,9 @@ export default function Signin() {
       <form className="form_login" autoComplete="off" ref={signInForm} onSubmit={onSubmit}>
         <div className="input-section">
           <i className="far" />
-          <input name="email"
+          <input
             required
+            name="email"
             className="input-area"
             type="email"
             placeholder="Email"
@@ -45,7 +44,8 @@ export default function Signin() {
         </div>
         <div className="input-section">
           <i className="fas" />
-          <input name="password"
+          <input
+            name="password"
             required
             className="input-area"
             type="password"

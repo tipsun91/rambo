@@ -9,6 +9,7 @@ import calcBullets from './functions/calcBullets';
 import calcEnemies from './functions/calcEnemies';
 import calcCollisionsEnemie from './functions/calcCollisionsEnemie';
 import calcCollisionBullets from './functions/calcCollisionBullets';
+import upGameLoop from './functions/upGameLoop';
 
 export const sendStatistic = createAsyncThunk(
   '/api/statistics',
@@ -57,7 +58,7 @@ const gameSlice = createSlice({
         },
       ],
     },
-    enemies: [
+    enemies: [ // массив врагов
       {
         id: 1,
         type: 1,
@@ -198,43 +199,75 @@ const gameSlice = createSlice({
         move: 1,
       },
     ],
-    enemies5: [],
-    weapon: {
+    weapon: { // НЕ ИСПОЛЬЗУЕТСЯ
       name: 'trunk', // название
       damage: 20, // урон
       clip: 30, // обойма
       rateOfFire: 0.5, // скорострельность
       recharge: 1500, // время перезарядки
     },
-    bullets: [],
-    game: {
-      countEnemies: 0, // кол-во убитых мобов
-      countMoney: 0, // кол-во заработаных денег
-      countDamage: 0, // кол-во нанесеного урона
-      timeGame: 0, // кол-во время в игре
-      countWawes: 0, // кол-во пройденых волн
+    bullets: [], // массив в который мы пушим пули
+    game: { // объект для сбора статистики за игру
+      countEnemies: 0,
+      countMoney: 0,
+      countDamage: 0,
+      timeGame: 0,
+      countWawes: 1,
     },
     gameLoop: 0, // игровой цик
-    display: {
+    display: { // размеры экрана юзера
       width: 0,
       height: 0,
     },
+    backgroundPositionLeft: 0, // начальные координаты локации
     calcEnemiesFlag: false, // ии врагов
     calcEnemiesFlag1: false, // ии врагов
   },
   reducers: {
+    deleteAllEnemies(state, action) {
+      state.enemies = [];
+    },
+    // логика движения игрока при смены локации чтобы он проходил в ворота
+    updatePositionPlayer(state, action) {
+      if (state.player.y < 600) {
+        if (state.player.y !== 600) {
+          state.player.y += 5;
+        }
+      } else if (state.player.y !== 600) {
+        state.player.y -= 5;
+      }
+    },
+    // передвигаем бэкграунд при прохождении первой волны
+    updateBackgroundWawes2(state, action) {
+      if (state.backgroundPositionLeft > -2600) {
+        state.backgroundPositionLeft -= 10;
+      }
+    },
+    // передвигаем бэкграунд при прохождении второй волны
+    updateBackgroundWawes3(state, action) {
+      if (state.backgroundPositionLeft > -5600) {
+        state.backgroundPositionLeft -= 10;
+      }
+    },
+    // увеличиваем характеристики врагов
+    updateEnemies(state, action) {
+      state.enemies.forEach((el) => {
+        el.hp *= 1.2;
+        el.damage *= 1.2;
+        el.coolDown *= 1.2;
+      });
+    },
+    // записываем координаты экрана юзера
     display(state, action) {
       state.display.height = action.payload.height;
       state.display.width = action.payload.width;
     },
+    // обновляем игроавую волну
     updateWawes(state, action) {
-      state.game.countWawes = action.payload;
+      state.game.countWawes += 1;
     },
     updateFrame(state, action) {
-      function upGameLoop() { // прибовляет 1 каждый цикл
-        state.gameLoop += 1;
-      }
-      upGameLoop();
+      upGameLoop(state); // прибовляет 1 каждый цикл;
       calcEnemies(state, state.enemies, state.player); // рассчитывает поведение мобов
       // calcEnemies(state, state.enemies2, state.player);
       // calcEnemies(state, state.enemies3, state.player);
@@ -254,6 +287,15 @@ const gameSlice = createSlice({
   extraReducers: {},
 });
 
-export const { display, updateFrame, updateWawes } = gameSlice.actions;
+export const {
+  display,
+  updateFrame,
+  updateWawes,
+  updateEnemies,
+  updateBackgroundWawes2,
+  updateBackgroundWawes3,
+  updatePositionPlayer,
+  deleteAllEnemies,
+} = gameSlice.actions;
 
 export default gameSlice.reducer;

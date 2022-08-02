@@ -1,42 +1,32 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { signUp } from '../../store/userReducer/reducer';
 import './Signup.css';
 
-const URL = '/api/sign/up/';
-
 export default function Signup() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
   const signUpForm = useRef();
 
   const onSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    (event) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-      fetch(URL, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name:  signUpForm.current.name.value,
-          email: signUpForm.current.email.value,
-          password: [
-            signUpForm.current.password.value,
-            signUpForm.current.pswdcfrm.value
-          ],
-        }),
-      })
-      .then(
-        data => data.json()
-      )
-      .then(
-        data => { console.log(data); }
-      )
-      .catch(
-        error => { console.log(error); }
-      );
+      dispatch(signUp(event));
     },
     [signUpForm],
+  );
+
+  useEffect(
+    () => {
+      if (user && user.id) {
+        navigate('/main');
+      }
+    },
+    [user],
   );
 
   return (
@@ -90,12 +80,6 @@ export default function Signup() {
         <button type="submit" className="btn" id="login-btn">
           Зарегистрироваться
         </button>
-        <div className="question-box">
-          <p className="question" />
-          <a className="reg-btn" href="/sign/in">
-            Войти
-          </a>
-        </div>
       </form>
     </div>
   );

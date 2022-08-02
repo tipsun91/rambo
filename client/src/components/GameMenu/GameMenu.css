@@ -6,12 +6,14 @@ html {
 body {
   height: 100%;
   margin: 0;
-  background-image: url('../../../public/img/rembo.jpeg');
-  background-size: contain;
+  padding: 0;
+  width: 100%;
+  /* background-size: contain; */
   font-family: 'Press Start 2P', sans-serif;
+  padding: 0;
 }
 
-nav {
+.anim-show-gamemenu {
   height: 25%;
   width: 30%;
   position: absolute;
