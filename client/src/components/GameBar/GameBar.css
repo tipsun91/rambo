@@ -3,6 +3,7 @@
   width: 1200px;
   height: 25px;
   padding: 2px;
+  margin-top: -34px;
   border-radius: 2px;
   background-color: rgb(82, 89, 99);
   position: fixed;
@@ -19,13 +20,13 @@
   /* position: relative; */
 }
 
-.gamebar__progress__damage
+.gamebar__progress__experience
 {
   border-radius: 2px;
-  background-color: rgba(5, 58, 139, 0.86);
+  background-color: rgb(3, 253, 253);
   height: 100%;
   margin-top: -21px;
-  margin-left: 110px;
+  margin-left: 210px;
 
 }
 
@@ -44,7 +45,7 @@
   position: fixed;
   display: block;
   margin-top: -10px;
-  margin-left: 700px;
+  margin-left: 200px;
   transform: translate(-50%, -50%);
   background-color: transparent;
 }
@@ -54,13 +55,53 @@
   position: fixed;
   display: block;
   margin-top: -10px;
-  margin-left: 700px;
+  margin-left: 140px;
   transform: translate(-50%, -50%);
   background-color: transparent;
 }
 
-span
+.gamebar__progress__enemies__number
+{
+  position: fixed;
+  display: block;
+  margin-top: -10px;
+  margin-left: 220px;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+}
+
+/* .gamebar__progress__experience__number
+{
+  position: fixed;
+  display: block;
+  margin-top: -10px;
+  margin-left: 425px;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+} */
+
+.gamebar__progress__waves__number
+{
+  position: fixed;
+  display: block;
+  margin-top: -10px;
+  margin-left: 300px;
+  transform: translate(-50%, -50%);
+  background-color: transparent; 
+}
+
+.gamebar__progress__money__number
+{
+  position: fixed;
+  display: block;
+  margin-top: -10px;
+  margin-left: 750px;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+}
+
+/* span
 {
   display: flex;
   justify-content: center;
-}
+} */
