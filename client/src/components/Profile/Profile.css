@@ -106,7 +106,7 @@ h1 {
 
 .score-box-profile {
   position: absolute;
-  top: 115%;
+  top: 110%;
   left: 6%;
   transform: translate(-50%, -50%);
 }
@@ -127,15 +127,7 @@ h1 {
   font-family: 'Press Start 2P', sans-serif;
 }
 
-.user-profile {
-  transform: translate(-10%, -110%);
-  margin: auto;
-  width: 16em;
-  height: 11em;
-}
-
 .user-profile .username {
-  margin: auto;
   margin-top: -3.4em;
   margin-left: 5.8em;
   color: #658585;
@@ -144,7 +136,6 @@ h1 {
   font-weight: bold;
 }
 .user-profile .bio {
-  margin: auto;
   display: inline-block;
   margin-left: 10.43em;
   color: #e76043;
@@ -160,20 +151,52 @@ h1 {
 }
 
 .anim-show-profile {
-    color: #fff;
-    text-align: center;
-    opacity: 0; /*Элемент полностью прозрачный (невидимый)*/
-    transition: 1s; /*Скорость перехода состояния элемента*/
-    animation: show 1s 1; /* Указываем название анимации, её время и количество повторов*/
-    animation-fill-mode: forwards; /* Чтобы элемент оставался в конечном состоянии анимации */
-    animation-delay: 0.1s; /* Задержка перед началом */
+  color: #fff;
+  text-align: center;
+  opacity: 0; /*Элемент полностью прозрачный (невидимый)*/
+  transition: 1s; /*Скорость перехода состояния элемента*/
+  animation: show 0.5s 1; /* Указываем название анимации, её время и количество повторов*/
+  animation-fill-mode: forwards; /* Чтобы элемент оставался в конечном состоянии анимации */
+  animation-delay: 0s; /* Задержка перед началом */
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
   }
-  
-  @keyframes show {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+  100% {
+    opacity: 1;
   }
+}
+
+.edit-profile {
+  margin: 0px 0px 12px;
+  padding: 8px;
+}
+
+.btn-2 {
+  background: none;
+  border: none;
+}
+
+.edit-avatar {
+  width: 240px;
+}
+
+.profile__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-direction: row-reverse;
+}
+
+.user-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+input::placeholder {
+  color: black;
+}

@@ -86,7 +86,12 @@ function App() {
     document.addEventListener('mousedown', mouseClickDown);
     document.addEventListener('mouseup', mouseClickUp);
 
-    dispatch(display({ width: app.current.offsetWidth, height: app.current.offsetHeight }));
+    dispatch(
+      display({
+        width: app.current.offsetWidth,
+        height: app.current.offsetHeight,
+      }),
+    );
 
     document.addEventListener('keydown', funtion1);
     document.addEventListener('keyup', function2);
@@ -105,7 +110,7 @@ function App() {
     const mouseCord = [];
 
     if (shoot) {
-      if ((Date.now() - timeBullet) > 300) {
+      if (Date.now() - timeBullet > 300) {
         mouseCord.push(cordMouse[0], cordMouse[1]);
         seTimeBullet(Date.now);
       }
@@ -179,17 +184,15 @@ function App() {
 
   return (
     <div ref={app} className="App">
-      {playGame === 'play'
-        && (
+      {playGame === 'play' && (
         <div>
           <GameBar />
           <Hero />
           {bullets && bullets.map((el) => <Bullet key={el.id} bullet={el} />)}
           {enemies && enemies.map((el) => <Enemy key={el.id} enemy={el} />)}
         </div>
-        )}
-      {playGame === 'game-over'
-        && (
+      )}
+      {playGame === 'game-over' && (
         <div className="gameOver">
           <h1>GAME OVER</h1>
           <Link className="nes-btn is-primary" to="/">
@@ -199,19 +202,18 @@ function App() {
             Вернуться в главное меню
           </Link>
         </div>
-        )}
-      {playGame === 'vin'
-          && (
-            <div className="gameOver">
-              <h1>VINNER</h1>
-              <Link className="nes-btn is-primary" to="/">
-                Играть еще раз
-              </Link>
-              <Link className="nes-btn is-warning" to="/main">
-                Вернуться в главное меню
-              </Link>
-            </div>
-          )}
+      )}
+      {playGame === 'vin' && (
+        <div className="gameOver">
+          <h1>WINNER</h1>
+          <Link className="nes-btn is-primary" to="/">
+            Играть еще раз
+          </Link>
+          <Link className="nes-btn is-warning" to="/main">
+            Вернуться в главное меню
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

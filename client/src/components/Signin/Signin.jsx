@@ -37,8 +37,8 @@ export default function Signin() {
         <div className="input-section">
           <i className="far" />
           <input
-            name="email"
             required
+            name="email"
             className="input-area"
             type="email"
             placeholder="Email"

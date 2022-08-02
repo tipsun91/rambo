@@ -11,7 +11,7 @@ body {
   font-family: 'Press Start 2P', sans-serif;
 }
 
-nav {
+.anim-show-main {
   height: 25%;
   width: 30%;
   position: absolute;
