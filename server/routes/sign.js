@@ -64,30 +64,31 @@ router.route('/in')
 
 router.route('/up')
   .post(access(UNAUTHENTICATED), async (req, res) => {
-  try {
-    const { email, name, password }  = req.body;
+    try {
 
-    if (!password[0] || password[0] !== password[1]) {
-      res.status(401).json({ message: 'Incorrect password!' });
-      return;
+      const { email, name, password }  = req.body;
+
+      if (!password[0] || password[0] !== password[1]) {
+        res.status(401).json({ message: 'Incorrect password!' });
+        return;
+      }
+
+      if(await User.isExists(email)){
+        res.status(409).json({ message: 'User exists!' });
+        return;
+      }
+
+      const hash = await bcrypt.hash(password[0], 2);
+      const user = await User.create({ email, name, password:hash });
+      await user.save();
+      req.session.userId = user.id;
+
+      res.status(200).json(
+        clientUser(user)
+      );
+    } catch (error) {
+      res.status(500).json(error);
     }
-
-    if(await User.isExists(email)){
-      res.status(409).json({ message: 'User exists!' });
-      return;
-    }
-
-    const hash = await bcrypt.hash(password[0], 2);
-    const user = await User.create({ email, name, password:hash });
-    await user.save();
-    req.session.userId = user.id;
-
-    res.status(200).json(
-      clientUser(user)
-    );
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
+  });
 
 module.exports = router;
