@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const SIGN_IN_URL = '/api/sign/in/';
 const SIGN_UP_URL = '/api/sign/up/';
+const URL2 = '/api/user/';
 
 export const signIn = createAsyncThunk(
   '/api/sign/in',
@@ -40,10 +41,31 @@ export const signUp = createAsyncThunk(
         body: JSON.stringify({
           name: event.target.name.value,
           email: event.target.email.value,
-          password: [
-            event.target.password.value,
-            event.target.pswdcfrm.value,
-          ],
+          password: [event.target.password.value, event.target.pswdcfrm.value],
+        }),
+      });
+      const data = await responce.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const editUser = createAsyncThunk(
+  '/api/user',
+  async (event, { rejectWithValue }) => {
+    try {
+      const responce = await fetch(URL2, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: event.target.name.value,
+          email: event.target.email.value,
+          password: event.target.password.value,
         }),
       });
       const data = await responce.json();
@@ -59,8 +81,7 @@ const userSlice = createSlice({
   initialState: {
     user: {},
   },
-  reducers: {
-  },
+  reducers: {},
   extraReducers: {
     [signIn.pending]: (state) => {
       state.status = 'loading';
