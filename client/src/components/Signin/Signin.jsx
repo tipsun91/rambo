@@ -14,7 +14,6 @@ export default function Signin() {
     (event) => {
       event.preventDefault();
       event.stopPropagation();
-
       dispatch(signIn(event));
     },
     [signInForm],

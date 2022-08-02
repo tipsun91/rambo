@@ -14,7 +14,6 @@ export default function Signup() {
     (event) => {
       event.preventDefault();
       event.stopPropagation();
-
       dispatch(signUp(event));
     },
     [signUpForm],
@@ -23,7 +22,7 @@ export default function Signup() {
   useEffect(
     () => {
       if (user && user.id) {
-        navigate('/main');
+        navigate('/');
       }
     },
     [user],
