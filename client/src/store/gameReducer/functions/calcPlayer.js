@@ -52,7 +52,7 @@ function calcPlayer(state, action) {
         y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
         w: 150, // высота
         h: 150, // ширина
-        hp: 100, // здоровье
+        hp: 100, // здоровьее
         speed: 0.7,
         damage: 5, // урон
         coolDown: 30, // скорость удара
