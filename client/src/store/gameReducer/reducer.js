@@ -43,8 +43,8 @@ const gameSlice = createSlice({
     player: {
       x: 0, // горизонталь
       y: 100, // вертикаль
-      w: 60, // высота
-      h: 60, // ширина
+      w: 150, // высота
+      h: 150, // ширина
       skin: '/animations/hero1.gif',
       move: 1,
       speed: 4, // скорость передвижения
@@ -62,8 +62,8 @@ const gameSlice = createSlice({
       {
         id: 1,
         type: 1,
-        w: 60, // высота
-        h: 60, // ширина
+        w: 150, // высота
+        h: 150, // ширина
         x: 500, // горизонталь
         y: 300, // вертикаль
         hp: 100, // здоровье
@@ -72,33 +72,34 @@ const gameSlice = createSlice({
         coolDown: 30, // скорость удара
         skin: '/animations/enemie0move.gif',
         move: 1,
-      }, {
-        id: 2,
-        type: 1,
-        w: 60, // высота
-        h: 60, // ширина
-        x: 300, // горизонталь
-        y: 60, // вертикаль
-        hp: 100, // здоровье
-        speed: 0.7,
-        damage: 5, // урон
-        coolDown: 30, // скорость удара
-        skin: '/animations/enemie0move.gif',
-        move: 1,
-      }, {
-        id: 3,
-        type: 1,
-        w: 60, // высота
-        h: 60, // ширина
-        x: 400, // горизонталь
-        y: 50, // вертикаль
-        hp: 100, // здоровье
-        speed: 0.7,
-        damage: 5, // урон
-        coolDown: 30, // скорость удара
-        skin: '/animations/enemie0move.gif',
-        move: 1,
       },
+      // }, {
+      //   id: 2,
+      //   type: 1,
+      //   w: 150, // высота
+      //   h: 150, // ширина
+      //   x: 300, // горизонталь
+      //   y: 60, // вертикаль
+      //   hp: 100, // здоровье
+      //   speed: 0.7,
+      //   damage: 5, // урон
+      //   coolDown: 30, // скорость удара
+      //   skin: '/animations/enemie0move.gif',
+      //   move: 1,
+      // }, {
+      //   id: 3,
+      //   type: 1,
+      //   w: 200, // высота
+      //   h: 200, // ширина
+      //   x: 400, // горизонталь
+      //   y: 50, // вертикаль
+      //   hp: 100, // здоровье
+      //   speed: 0.7,
+      //   damage: 5, // урон
+      //   coolDown: 30, // скорость удара
+      //   skin: '/animations/enemie0move.gif',
+      //   move: 1,
+      // },
     ],
     enemies2: [
       {

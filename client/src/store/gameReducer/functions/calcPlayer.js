@@ -50,9 +50,9 @@ function calcPlayer(state, action) {
         id: uuidv4(),
         x: state.display.width + 50,
         y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
-        w: 60, // высота
-        h: 60, // ширина
-        hp: 100, // здоровье
+        w: 150, // высота
+        h: 150, // ширина
+        hp: 100, // здоровьее
         speed: 0.7,
         damage: 5, // урон
         coolDown: 30, // скорость удара
@@ -64,8 +64,8 @@ function calcPlayer(state, action) {
         id: uuidv4(),
         x: -60, // Math.floor(Math.random() * ((-30) - (-50))) + (-50), // горизонталь
         y: Math.floor(Math.random() * (300 - 100)) + 50, // вертикаль
-        w: 60, // высота
-        h: 60, // ширина
+        w: 150, // высота
+        h: 150, // ширина
         hp: 100, // здоровье
         speed: 0.7,
         damage: 5, // урон
