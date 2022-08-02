@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Main.css';
 
 export default function Main() {
@@ -6,7 +7,7 @@ export default function Main() {
     <nav className="anim-show-main">
       <ul>
         <li>
-          <a href="/game">Начать игру</a>
+          <Link to="/game">Start</Link>
         </li>
       </ul>
     </nav>
