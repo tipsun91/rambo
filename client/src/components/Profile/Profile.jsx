@@ -1,16 +1,18 @@
 import React, { useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { editUser } from '../../store/userReducer/reducer';
 import './Profile.css';
 
 export default function Profile() {
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const editProfileForm = useRef();
 
   const onSubmit = useCallback(
     (event) => {
       event.preventDefault();
+
       dispatch(editUser(event));
     },
     [editProfileForm],
@@ -25,7 +27,7 @@ export default function Profile() {
             src="https://cdnn11.img.sputnik.by/img/07e5/07/06/1054427663_79:0:979:900_1920x0_80_0_0_7d61a9785aa88b97857d3414f37ba600.jpg"
             alt="Ash"
           />
-          <div className="username">Rembo</div>
+          <div className="username">{user.name}</div>
           <div className="edit-profile">
             <input
               required
@@ -45,7 +47,7 @@ export default function Profile() {
                 name="name"
                 type="name"
                 placeholder="Name"
-                defaultValue=""
+                defaultValue={user.name}
               />
             </div>
             <div className="edit-profile">
@@ -55,17 +57,16 @@ export default function Profile() {
                 name="email"
                 type="email"
                 placeholder="Email"
-                defaultValue=""
+                defaultValue={user.email}
               />
             </div>
             <div className="edit-profile">
               <input
                 required
                 autoComplete="off"
-                name="passoword"
+                name="password"
                 type="password"
-                placeholder="Password"
-                defaultValue=""
+                placeholder="New password"
               />
             </div>
             <button type="submit" className="btn-2 nes-btn is-primary">

@@ -19,10 +19,8 @@ export default function Map() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-      dispatch(signData());
-    },
-    []
-  );
+    dispatch(signData());
+  }, []);
 
   return (
     <BrowserRouter>
