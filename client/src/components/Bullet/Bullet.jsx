@@ -6,10 +6,19 @@ import './style.css';
 
 function Bullet({ bullet }) {
   const { bullets } = useSelector((state) => state.game);
+  // console.log(bullets.x);
   return (
     <div>
       {bullets
-        && <div style={{ transform: `translate(${bullet.x.toString()}px, ${bullet.y.toString()}px)` }} className="bullet" />}
+        && (
+        <div
+          style={{
+            transform: `translate(${bullet.x.toString()}px, ${bullet.y.toString()}px) 
+            rotate(${bullet.corner.toString()}deg)`,
+          }}
+          className="bullet"
+        />
+        )}
     </div>
   );
 }

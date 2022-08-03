@@ -12,6 +12,7 @@ function Hero() {
         transform: ` translate(${player.x}px, ${player.y}px) scale(${player.move}, 1)`,
         width: `${player.w}px`,
         height: `${player.h}px`,
+        zIndex: `${player.y}`,
       }}
     >
       <img

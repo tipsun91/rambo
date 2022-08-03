@@ -8,9 +8,7 @@ import Hero from '../Hero/Hero';
 import GameBar from '../GameBar/GameBar';
 import Bullet from '../Bullet/Bullet';
 import Enemy from '../Enemy/Enemy';
-import Enemy2 from '../Enemy/Enemy2.0';
-import Enemy3 from '../Enemy/Enemy3.0';
-import Enemy4 from '../Enemy/Enemy4.0';
+import GoldCoin from '../GoldCoin/GoldCoin';
 import './App.css';
 import {
   display,
@@ -30,13 +28,12 @@ function App() {
   const app = useRef();
   const {
     enemies,
-    enemies2,
-    enemies3,
-    enemies4,
     bullets,
     player,
     game,
     backgroundPositionLeft,
+    golds,
+    gamePlay,
   } = useSelector((state) => state.game);
   const [passageWaves, setPassageWaves] = useState(1);
   const [countWaves, setCountWaves] = useState(1);
@@ -159,10 +156,10 @@ function App() {
     if (player.hp <= 0) {
       setPlayGame('game-over');
     }
-
     // логика смены волн врагов
     if (playGame === 'play') {
-      if (game.countEnemies === 2 && passageWaves === 1) {
+      if (game.countEnemies === gamePlay.waves1 && passageWaves === 1 && player.x > 1050) {
+      // if (game.countEnemies === 2 && passageWaves === 1) {
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
@@ -172,7 +169,11 @@ function App() {
         // стейт чтобы предотвартить заход в этот if каждыем 20 млск
         setPassageWaves(2);
       }
-      if (game.countEnemies === 4 && passageWaves === 2) {
+
+      if (game.countEnemies >= 3
+        && passageWaves === 2 && player.x > 1050) {
+        // if (game.countEnemies === 4 && passageWaves === 2) {
+
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
@@ -183,7 +184,7 @@ function App() {
         setPassageWaves(3);
       }
       // логика выгрыша
-      if (game.countEnemies === 5) {
+      if (game.countEnemies === gamePlay.waves2 + gamePlay.waves1 + gamePlay.waves3) {
         setPlayGame('vin');
       }
     }
@@ -259,15 +260,7 @@ function App() {
             <Hero />
             {bullets && bullets.map((el) => <Bullet key={el.id} bullet={el} />)}
             {enemies && enemies.map((el) => <Enemy key={el.id} enemy={el} />)}
-            {/* {enemies.reduce((acc, el) => el.hp + acc, 0) === 0 && enemies2.map((el) => (
-            <Enemy2 key={el.id} enemy2={el} />
-          ))}
-          {enemies2.reduce((acc, el) => el.hp + acc, 0) === 0 && enemies3.map((el) => (
-            <Enemy3 key={el.id} enemy3={el} />
-          ))}
-          {enemies3.reduce((acc, el) => el.hp + acc, 0) === 0 && enemies4.map((el) => (
-            <Enemy4 key={el.id} enemy4={el} />
-          ))} */}
+            {golds && golds.map((el) => <GoldCoin key={el.id} coin={el} />)}
           </div>
         )}
         {playGame === 'game-over' && (
