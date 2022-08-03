@@ -17,6 +17,7 @@
   "nodemonConfig": {
     "ignore": [
       "public/*",
+      "uploads/*",
       "sessions/*"
     ]
   },
