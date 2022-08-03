@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 } from 'uuid';
 import { addMessage } from '../../store/chatReducer/reducer';
+import './Chat.css';
+import Messages from './Messages';
 
 function Chat() {
   const dispatch = useDispatch();
@@ -68,7 +70,12 @@ function Chat() {
   }
 
   return (
-    <div className="center">
+    <div className="center nes-container is-rounded">
+      <h1>
+        <span className="blue">OUR</span>
+        {' '}
+        <span className="yellow">COMMUNITY</span>
+      </h1>
       <form className="form" onSubmit={sendMessage}>
         <input value={value} onChange={(e) => setValue(e.target.value)} type="text" name="messText" />
         <button type="submit">Отправить</button>
@@ -79,7 +86,7 @@ function Chat() {
             <div key={mess.id}>
               {mess.event === 'connection'
                 ? (
-                  <div className="connection-message">
+                  <div className="message">
                     Пользователь
                     {' '}
                     {mess.username}
@@ -97,7 +104,7 @@ function Chat() {
             </div>
           ))}
           {history.chats.map((message) => (
-            <div>
+            <div className="message">
               {message.User.name}
               :
               {message.message}

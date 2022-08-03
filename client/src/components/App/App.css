@@ -26,6 +26,9 @@
   width: 800px;
   background-color: white;
   margin: auto;
+  position: relative;
+  top: 20%;
+  left: 0;
 }
 
 .noPage {
