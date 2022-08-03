@@ -15,7 +15,7 @@ function GameBar() {
         <span className="gamebar__progress__number">{`${player.hp}💔`}</span>
         <span className="gamebar__progress__damage__number">{`🎯${game.countDamage}`}</span>
         <span className="gamebar__progress__enemies__number">{`👻${game.countEnemies}`}</span>
-        <span className="gamebar__progress__waves__number">{`Волна:${game.countWawes}`}</span>
+        <span className="gamebar__progress__waves__number">{`Волна:${game.countWaves}`}</span>
         {/* <div
           className="gamebar__progress__experience"
           style={{ width: `${player.experience}px` }}
