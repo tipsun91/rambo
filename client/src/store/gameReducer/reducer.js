@@ -12,11 +12,12 @@ import calcCollisionBullets from './functions/calcCollisionBullets';
 import upGameLoop from './functions/upGameLoop';
 
 export const sendStatistic = createAsyncThunk(
-  '/api/statistics',
+  '/api/statistics/',
   async (statGame, { rejectWithValue }) => {
+    console.log('🚀 statGame', statGame);
     try {
-      const responce = await fetch('/api/statistics', {
-        method: 'PATCH',
+      const responce = await fetch('/api/statistics/', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -24,12 +25,13 @@ export const sendStatistic = createAsyncThunk(
           countEnemies: statGame.countEnemies,
           countMoney: statGame.countMoney,
           countDamage: statGame.countDamage,
-          countWawes: statGame.countWawes,
+          countWaves: statGame.countWaves,
           timeGame: statGame.timeGame,
         }),
-        credentials: true,
+        credentials: 'include',
       });
       const data = await responce.json();
+      console.log('🚀data', data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -63,7 +65,8 @@ const gameSlice = createSlice({
         },
       ],
     },
-    enemies: [ // массив врагов
+    enemies: [
+      // массив врагов
       {
         id: 1,
         type: 1,
@@ -120,7 +123,8 @@ const gameSlice = createSlice({
         coolDown: 20, // скорость удара
         skin: '/animations/enemie1move.gif',
         move: 1,
-      }, {
+      },
+      {
         id: 2,
         type: 2,
         w: 80, // высота
@@ -133,7 +137,8 @@ const gameSlice = createSlice({
         coolDown: 20, // скорость удара
         skin: '/animations/enemie1move.gif',
         move: 1,
-      }, {
+      },
+      {
         id: 3,
         type: 2,
         w: 80, // высота
@@ -148,46 +153,49 @@ const gameSlice = createSlice({
         move: 1,
       },
     ],
-    enemies3: [{
-      id: 1,
-      type: 3,
-      w: 120, // высота
-      h: 120, // ширина
-      x: 600, // горизонталь
-      y: 30, // вертикаль
-      hp: 100, // здоровье
-      speed: 0.7,
-      damage: 5, // урон
-      coolDown: 30, // скорость удара
-      skin: '/animations/enemie2move.gif',
-      move: 1,
-    }, {
-      id: 2,
-      type: 3,
-      w: 120, // высота
-      h: 120, // ширина
-      x: 300, // горизонталь
-      y: 60, // вертикаль
-      hp: 100, // здоровье
-      speed: 0.7,
-      damage: 5, // урон
-      coolDown: 30, // скорость удара
-      skin: '/animations/enemie2move.gif',
-      move: 1,
-    }, {
-      id: 3,
-      type: 3,
-      w: 120, // высота
-      h: 120, // ширина
-      x: 400, // горизонталь
-      y: 50, // вертикаль
-      hp: 100, // здоровье
-      speed: 0.7,
-      damage: 5, // урон
-      coolDown: 30, // скорость удара
-      skin: '/animations/enemie2move.gif',
-      move: 1,
-    },
+    enemies3: [
+      {
+        id: 1,
+        type: 3,
+        w: 120, // высота
+        h: 120, // ширина
+        x: 600, // горизонталь
+        y: 30, // вертикаль
+        hp: 100, // здоровье
+        speed: 0.7,
+        damage: 5, // урон
+        coolDown: 30, // скорость удара
+        skin: '/animations/enemie2move.gif',
+        move: 1,
+      },
+      {
+        id: 2,
+        type: 3,
+        w: 120, // высота
+        h: 120, // ширина
+        x: 300, // горизонталь
+        y: 60, // вертикаль
+        hp: 100, // здоровье
+        speed: 0.7,
+        damage: 5, // урон
+        coolDown: 30, // скорость удара
+        skin: '/animations/enemie2move.gif',
+        move: 1,
+      },
+      {
+        id: 3,
+        type: 3,
+        w: 120, // высота
+        h: 120, // ширина
+        x: 400, // горизонталь
+        y: 50, // вертикаль
+        hp: 100, // здоровье
+        speed: 0.7,
+        damage: 5, // урон
+        coolDown: 30, // скорость удара
+        skin: '/animations/enemie2move.gif',
+        move: 1,
+      },
     ],
     enemies4: [
       {
@@ -205,7 +213,8 @@ const gameSlice = createSlice({
         move: 1,
       },
     ],
-    weapon: { // НЕ ИСПОЛЬЗУЕТСЯ
+    weapon: {
+      // НЕ ИСПОЛЬЗУЕТСЯ
       name: 'trunk', // название
       damage: 20, // урон
       clip: 30, // обойма
@@ -213,15 +222,17 @@ const gameSlice = createSlice({
       recharge: 1500, // время перезарядки
     },
     bullets: [], // массив в который мы пушим пули
-    game: { // объект для сбора статистики за игру
+    game: {
+      // объект для сбора статистики за игру
       countEnemies: 0,
       countMoney: 0,
       countDamage: 0,
       timeGame: 0,
-      countWawes: 1,
+      countWaves: 1,
     },
     gameLoop: 0, // игровой цик
-    display: { // размеры экрана юзера
+    display: {
+      // размеры экрана юзера
       width: 0,
       height: 0,
     },
@@ -244,13 +255,13 @@ const gameSlice = createSlice({
       }
     },
     // передвигаем бэкграунд при прохождении первой волны
-    updateBackgroundWawes2(state, action) {
+    updateBackgroundWaves2(state, action) {
       if (state.backgroundPositionLeft > -2600) {
         state.backgroundPositionLeft -= 10;
       }
     },
     // передвигаем бэкграунд при прохождении второй волны
-    updateBackgroundWawes3(state, action) {
+    updateBackgroundWaves3(state, action) {
       if (state.backgroundPositionLeft > -5600) {
         state.backgroundPositionLeft -= 10;
       }
@@ -269,8 +280,8 @@ const gameSlice = createSlice({
       state.display.width = action.payload.width;
     },
     // обновляем игроавую волну
-    updateWawes(state, action) {
-      state.game.countWawes += 1;
+    updateWaves(state, action) {
+      state.game.countWaves += 1;
     },
     updateFrame(state, action) {
       upGameLoop(state); // прибовляет 1 каждый цикл;
@@ -296,10 +307,10 @@ const gameSlice = createSlice({
 export const {
   display,
   updateFrame,
-  updateWawes,
+  updateWaves,
   updateEnemies,
-  updateBackgroundWawes2,
-  updateBackgroundWawes3,
+  updateBackgroundWaves2,
+  updateBackgroundWaves3,
   updatePositionPlayer,
   deleteAllEnemies,
 } = gameSlice.actions;

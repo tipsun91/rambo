@@ -8,7 +8,6 @@ import './GameMenu.css';
 function GameMenu() {
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  console.log(user);
 
   const onClick = useCallback(() => {
     dispatch(signOut());
@@ -23,10 +22,7 @@ function GameMenu() {
               <Link to="/game">Начать игру</Link>
             </li>
             <li>
-              <Link to="/">Настройки</Link>
-            </li>
-            <li>
-              <Link to="/profile">Личный кабинет</Link>
+              <Link to="/profile">Настройки профиля</Link>
             </li>
             <li>
               <Link to="/rating">Рейтинг игроков</Link>
