@@ -22,7 +22,7 @@ export default function Signin() {
   useEffect(
     () => {
       if (user && user.id) {
-        navigate('/main');
+        navigate('/');
       }
     },
     [user],

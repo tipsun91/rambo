@@ -43,6 +43,7 @@ export default function Map() {
                 <Route path="page/:page" element={<Rating />} />
               </Route>
               <Route path="sign">
+                <Route path="out" element={<GameMenu />} />
                 <Route path="in" element={<Signin />} />
                 <Route path="up" element={<Signup />} />
               </Route>
