@@ -38,7 +38,7 @@ export default function Profile() {
             />
           </div>
         </div>
-        <div className="edit-user-profile">
+        <div className="edit-user-profile nes-container is-rounded">
           <form className="edit-form" ref={editProfileForm} onSubmit={onSubmit}>
             <div className="edit-profile">
               <input
@@ -48,6 +48,7 @@ export default function Profile() {
                 type="name"
                 placeholder="Name"
                 defaultValue={user.name}
+                style={{ color: 'black' }}
               />
             </div>
             <div className="edit-profile">
@@ -58,6 +59,7 @@ export default function Profile() {
                 type="email"
                 placeholder="Email"
                 defaultValue={user.email}
+                style={{ color: 'black' }}
               />
             </div>
             <div className="edit-profile">
