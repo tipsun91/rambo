@@ -1,0 +1,9 @@
+.span-update {
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+}
+.update {
+  align-self: center;
+  margin-left: 30px;
+}

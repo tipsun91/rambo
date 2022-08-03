@@ -9,16 +9,16 @@ function GameMenu() {
   return (
     <nav className="anim-show-gamemenu">
       <ul>
-        {user ? (
+        {user.id ? (
           <>
             <li>
               <Link to="/game">Начать игру</Link>
             </li>
             <li>
-              <Link to="/">Настройки</Link>
+              <Link to="/profile">Настройки</Link>
             </li>
             <li>
-              <Link to="/profile">Личный кабинет</Link>
+              <Link to="/profileHero">Ваш герой</Link>
             </li>
             <li>
               <Link to="/rating">Рейтинг игроков</Link>

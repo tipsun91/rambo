@@ -14,6 +14,7 @@ import Rating from './components/Rating/Rating';
 import NoPage from './components/NoPage/NoPage';
 import GameMenu from './components/GameMenu/GameMenu';
 import NavBar from './components/NavBar/NavBar';
+import ProfileHero from './components/ProfileHero/ProfileHero';
 
 export default function Map() {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ export default function Map() {
             <>
               <Route path="/" element={<GameMenu />} />
               <Route index path="game" element={<App />} />
+              <Route path="profileHero" element={<ProfileHero />} />
               <Route path="main" element={<Main />} />
               <Route path="profile" element={<Profile />}>
                 <Route path=":id" element={<Profile />} />

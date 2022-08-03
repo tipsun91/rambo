@@ -1,7 +1,7 @@
-'use strict';
 const {
-  Model
+  Model,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Hero extends Model {
     /**
@@ -27,15 +27,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     hp: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.TEXT,
     },
     speed: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.TEXT,
     },
     damage: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.TEXT,
     },
     coolDown: {
       allowNull: false,
@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     lvl: {
       allowNull: false,
       type: DataTypes.INTEGER,
-    }
+    },
   }, {
     sequelize,
     modelName: 'Hero',

@@ -11,6 +11,66 @@ import calcCollisionsEnemie from './functions/calcCollisionsEnemie';
 import calcCollisionBullets from './functions/calcCollisionBullets';
 import upGameLoop from './functions/upGameLoop';
 
+export const updateHeroHp = createAsyncThunk(
+  '/hero/updateHp',
+  async (_, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/hero/updateHp', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await responce.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const updateHeroDamage = createAsyncThunk(
+  '/hero/updateDamage',
+  async (_, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/hero/updateDamage', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await responce.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const updateHeroSpeed = createAsyncThunk(
+  '/hero/updateSpeed',
+  async (speed, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/hero/updateSpeed', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          speed,
+        }),
+      });
+      const data = await responce.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 export const sendStatistic = createAsyncThunk(
   '/api/statistics',
   async (statGame, { rejectWithValue }) => {
@@ -47,7 +107,9 @@ const gameSlice = createSlice({
       h: 150, // ширина
       skin: '/animations/hero1.gif',
       move: 1,
-      speed: 4, // скорость передвижения
+      score: 0,
+      lvl: 1,
+      speed: 5, // скорость передвижения
       hp: 100, // здоровье
       damage: 2, // урон
       weapon: ['trunk'],
@@ -285,7 +347,33 @@ const gameSlice = createSlice({
       // calcCollisionBullets(state, state.enemies4); // рассчитывает контакт моба и пули
     },
   },
-  extraReducers: {},
+  extraReducers: {
+    [updateHeroHp.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [updateHeroHp.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      console.log(action.payload);
+      state.player.hp = action.payload.hp;
+    },
+    [updateHeroDamage.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [updateHeroDamage.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.player.damage = action.payload.damage;
+    },
+    [updateHeroSpeed.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [updateHeroSpeed.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.player.speed = action.payload.speed;
+    },
+  },
 });
 
 export const {
