@@ -1,7 +1,6 @@
 const userRouter = require('express').Router();
 const { User } = require('../db/models');
 const bcrypt = require('bcrypt');
-const user = require('../db/models/user');
 
 userRouter.route('/').put(async (req, res) => {
   const { id } = res.locals.user;

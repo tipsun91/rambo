@@ -42,10 +42,12 @@ const gameSlice = createSlice({
   initialState: {
     player: {
       x: 0, // горизонталь
-      y: 100, // вертикаль
-      w: 30, // высота
-      h: 30, // ширина
-      speed: 5, // скорость передвижения
+      y: 500, // вертикаль
+      w: 150, // высота
+      h: 150, // ширина
+      skin: '/animations/hero1.gif',
+      move: 1,
+      speed: 4, // скорость передвижения
       hp: 100, // здоровье
       damage: 2, // урон
       weapon: ['trunk'],
@@ -59,13 +61,143 @@ const gameSlice = createSlice({
     enemies: [ // массив врагов
       {
         id: 1,
-        w: 30, // высота
-        h: 30, // ширина
-        x: 600, // горизонталь
-        y: 30, // вертикаль
+        type: 1,
+        w: 150, // высота
+        h: 150, // ширина
+        x: 500, // горизонталь
+        y: 300, // вертикаль
         hp: 100, // здоровье
+        speed: 0.7,
         damage: 5, // урон
         coolDown: 30, // скорость удара
+        skin: '/animations/enemie0move.gif',
+        move: 1,
+      },
+      // }, {
+      //   id: 2,
+      //   type: 1,
+      //   w: 150, // высота
+      //   h: 150, // ширина
+      //   x: 300, // горизонталь
+      //   y: 60, // вертикаль
+      //   hp: 100, // здоровье
+      //   speed: 0.7,
+      //   damage: 5, // урон
+      //   coolDown: 30, // скорость удара
+      //   skin: '/animations/enemie0move.gif',
+      //   move: 1,
+      // }, {
+      //   id: 3,
+      //   type: 1,
+      //   w: 200, // высота
+      //   h: 200, // ширина
+      //   x: 400, // горизонталь
+      //   y: 50, // вертикаль
+      //   hp: 100, // здоровье
+      //   speed: 0.7,
+      //   damage: 5, // урон
+      //   coolDown: 30, // скорость удара
+      //   skin: '/animations/enemie0move.gif',
+      //   move: 1,
+      // },
+    ],
+    enemies2: [
+      {
+        id: 1,
+        type: 2,
+        w: 80, // высота
+        h: 80, // ширина
+        x: 600, // горизонталь
+        y: 45, // вертикаль
+        hp: 100, // здоровье
+        speed: 0.9,
+        damage: 5, // урон
+        coolDown: 20, // скорость удара
+        skin: '/animations/enemie1move.gif',
+        move: 1,
+      }, {
+        id: 2,
+        type: 2,
+        w: 80, // высота
+        h: 80, // ширина
+        x: 300, // горизонталь
+        y: 70, // вертикаль
+        hp: 100, // здоровье
+        speed: 0.9,
+        damage: 5, // урон
+        coolDown: 20, // скорость удара
+        skin: '/animations/enemie1move.gif',
+        move: 1,
+      }, {
+        id: 3,
+        type: 2,
+        w: 80, // высота
+        h: 80, // ширина
+        x: 400, // горизонталь
+        y: 40, // вертикаль
+        hp: 100, // здоровье
+        speed: 0.9,
+        damage: 5, // урон
+        coolDown: 20, // скорость удара
+        skin: '/animations/enemie1move.gif',
+        move: 1,
+      },
+    ],
+    enemies3: [{
+      id: 1,
+      type: 3,
+      w: 120, // высота
+      h: 120, // ширина
+      x: 600, // горизонталь
+      y: 30, // вертикаль
+      hp: 100, // здоровье
+      speed: 0.7,
+      damage: 5, // урон
+      coolDown: 30, // скорость удара
+      skin: '/animations/enemie2move.gif',
+      move: 1,
+    }, {
+      id: 2,
+      type: 3,
+      w: 120, // высота
+      h: 120, // ширина
+      x: 300, // горизонталь
+      y: 60, // вертикаль
+      hp: 100, // здоровье
+      speed: 0.7,
+      damage: 5, // урон
+      coolDown: 30, // скорость удара
+      skin: '/animations/enemie2move.gif',
+      move: 1,
+    }, {
+      id: 3,
+      type: 3,
+      w: 120, // высота
+      h: 120, // ширина
+      x: 400, // горизонталь
+      y: 50, // вертикаль
+      hp: 100, // здоровье
+      speed: 0.7,
+      damage: 5, // урон
+      coolDown: 30, // скорость удара
+      skin: '/animations/enemie2move.gif',
+      move: 1,
+    },
+    ],
+    enemies4: [
+      {
+        id: 1,
+        type: 4,
+        w: 180, // высота
+        h: 180, // ширина
+        x: 400, // горизонталь
+        y: 50, // вертикаль
+        hp: 500, // здоровье
+        speed: 0.7,
+        damage: 5, // урон
+        coolDown: 30, // скорость удара
+        skin: '/animations/enemie3move.gif',
+        move: 1,
       },
     ],
     weapon: { // НЕ ИСПОЛЬЗУЕТСЯ
@@ -138,10 +270,19 @@ const gameSlice = createSlice({
     updateFrame(state, action) {
       upGameLoop(state); // прибовляет 1 каждый цикл;
       calcEnemies(state, state.enemies, state.player); // рассчитывает поведение мобов
+      // calcEnemies(state, state.enemies2, state.player);
+      // calcEnemies(state, state.enemies3, state.player);
+      // calcEnemies(state, state.enemies4, state.player);
       calcPlayer(state, action); // рассчитывает функционал героя, внутри скорость пуль по Х и У
       calcBullets(state); // рассчитыввает длинну полета пули
-      calcCollisionsEnemie(state, state.enemies, state.player); // рассчитывает контакт героя и моба
-      calcCollisionBullets(state); // рассчитывает контакт моба и пули
+      calcCollisionsEnemie(state, state.enemies, state.player);
+      // calcCollisionsEnemie(state, state.enemies2, state.player);
+      // calcCollisionsEnemie(state, state.enemies3, state.player);
+      // calcCollisionsEnemie(state, state.enemies4, state.player); // рассчит контакт героя и моба
+      calcCollisionBullets(state, state.enemies);
+      // calcCollisionBullets(state, state.enemies2);
+      // calcCollisionBullets(state, state.enemies3);
+      // calcCollisionBullets(state, state.enemies4); // рассчитывает контакт моба и пули
     },
   },
   extraReducers: {},

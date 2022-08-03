@@ -1,10 +1,18 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { signOut } from '../../store/userReducer/reducer';
+
 import './GameMenu.css';
 
 function GameMenu() {
   const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  console.log(user);
+
+  const onClick = useCallback(() => {
+    dispatch(signOut());
+  }, []);
 
   return (
     <nav className="anim-show-gamemenu">
@@ -12,10 +20,10 @@ function GameMenu() {
         {user ? (
           <>
             <li>
-              <Link to="/">Начать игру</Link>
+              <Link to="/game">Начать игру</Link>
             </li>
             <li>
-              <Link to="/game">Настройки</Link>
+              <Link to="/">Настройки</Link>
             </li>
             <li>
               <Link to="/profile">Личный кабинет</Link>
@@ -24,7 +32,9 @@ function GameMenu() {
               <Link to="/rating">Рейтинг игроков</Link>
             </li>
             <li>
-              <Link to="/logout">Сменить пользователя</Link>
+              <Link to="/sign/in" onClick={onClick}>
+                Сменить пользователя
+              </Link>
             </li>
           </>
         ) : (

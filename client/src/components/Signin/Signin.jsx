@@ -14,7 +14,6 @@ export default function Signin() {
     (event) => {
       event.preventDefault();
       event.stopPropagation();
-
       dispatch(signIn(event));
     },
     [signInForm],
@@ -23,7 +22,7 @@ export default function Signin() {
   useEffect(
     () => {
       if (user && user.id) {
-        navigate('/main');
+        navigate('/');
       }
     },
     [user],

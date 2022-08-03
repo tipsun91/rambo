@@ -53,18 +53,22 @@ function calcEnemies(state, arr, hero) {
         }
       }
       if (hero.x >= el.x) {
-        el.x += 1;
+        el.x += el.speed;
+        el.move = 1;
       }
       if (hero.x <= el.x) {
-        el.x -= 1;
+        el.x -= el.speed;
+        el.move = -1;
       }
     } else {
       const cord = randomCord(state.player);
       if (cord[0] >= el.x) {
-        el.x += 0.7;
+        el.x += el.speed;
+        el.move = 1;
       }
       if (cord[0] <= el.x) {
-        el.x -= 0.7;
+        el.x -= el.speed;
+        el.move = -1;
       }
       if (cord[1] > el.y) {
         el.y += 0.7;
