@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.hasMany(models.Hero, { foreignKey: 'userId' });
       this.hasMany(models.Game, { foreignKey: 'userId' });
+      this.hasMany(models.Chat, { foreignKey: 'user_id' });
     }
   }
   User.init({
