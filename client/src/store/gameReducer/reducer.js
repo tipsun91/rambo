@@ -43,15 +43,20 @@ const gameSlice = createSlice({
   name: 'game',
   initialState: {
     player: {
+      // Database values
+      hp: 100, // здоровье
+      speed: 7, // скорость передвижения
+      damage: 20, // урон
+      score: 0,
+      lvl: 1,
+
+      // Client only
       x: 0, // горизонталь
       y: 500, // вертикаль
       w: 150, // высота
       h: 150, // ширина
       skin: '/animations/hero1.gif',
       move: 1,
-      speed: 4, // скорость передвижения
-      hp: 100, // здоровье
-      damage: 2, // урон
       weapon: ['trunk'],
       ammunition: [
         {
@@ -250,13 +255,13 @@ const gameSlice = createSlice({
       }
     },
     // передвигаем бэкграунд при прохождении первой волны
-    updateBackgroundWawes2(state, action) {
+    updateBackgroundWaves2(state, action) {
       if (state.backgroundPositionLeft > -2600) {
         state.backgroundPositionLeft -= 10;
       }
     },
     // передвигаем бэкграунд при прохождении второй волны
-    updateBackgroundWawes3(state, action) {
+    updateBackgroundWaves3(state, action) {
       if (state.backgroundPositionLeft > -5600) {
         state.backgroundPositionLeft -= 10;
       }
@@ -275,12 +280,12 @@ const gameSlice = createSlice({
       state.display.width = action.payload.width;
     },
     // обновляем игроавую волну
-    updateWawes(state, action) {
+    updateWaves(state, action) {
       state.game.countWaves += 1;
     },
     updateFrame(state, action) {
       upGameLoop(state); // прибовляет 1 каждый цикл;
-      calcEnemies(state, state.enemies, state.player); // рассчитывает поведение мобов
+      // calcEnemies(state, state.enemies, state.player); // рассчитывает поведение мобов
       // calcEnemies(state, state.enemies2, state.player);
       // calcEnemies(state, state.enemies3, state.player);
       // calcEnemies(state, state.enemies4, state.player);
@@ -302,10 +307,10 @@ const gameSlice = createSlice({
 export const {
   display,
   updateFrame,
-  updateWawes,
+  updateWaves,
   updateEnemies,
-  updateBackgroundWawes2,
-  updateBackgroundWawes3,
+  updateBackgroundWaves2,
+  updateBackgroundWaves3,
   updatePositionPlayer,
   deleteAllEnemies,
 } = gameSlice.actions;

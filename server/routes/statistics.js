@@ -13,8 +13,44 @@ const gameData = (data) => ({
 
 const { sequelize, User, Game } = require('../db/models');
 
-router
-  .route('/')
+router.route('/:id')
+  .get(async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      const user = await User.findByPk(id);
+      if (!user || !user.id) {
+        res.status(404).json({ message: `User with id=${id} not found!` });
+        return;
+      }
+
+      const statistics = await Game.findAll({
+        where: {
+          userId: id,
+        },
+        raw: true,
+        group: ['User.id'],
+        attributes: [
+          [sequelize.fn('COUNT', sequelize.col('Game.id')), 'Game.countGames'],
+          [sequelize.fn('SUM', sequelize.col('countEnemies')), 'Game.countEnemies'],
+          [sequelize.fn('SUM', sequelize.col('countMoney')), 'Game.countMoney'],
+          [sequelize.fn('SUM', sequelize.col('countDamage')), 'Game.countDamage'],
+          [sequelize.fn('SUM', sequelize.col('timeGame')), 'Game.timeGame'],
+          [sequelize.fn('SUM', sequelize.col('countWaves')), 'Game.countWaves'],
+        ],
+        include: {
+          raw: true,
+          model: User,
+          attributes: ['id', 'name'],
+        },
+      });
+
+      res.status(200).json({ statistics });
+    } catch (e) {
+      res.status(502).json({ message: e.message });
+    }
+  });
+
+router.route('/')
   .get(async (req, res) => {
     try {
       const statistics = await Game.findAll({

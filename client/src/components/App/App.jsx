@@ -16,10 +16,10 @@ import {
   display,
   updateFrame,
   sendStatistic,
-  updateWawes,
+  updateWaves,
   updateEnemies,
-  updateBackgroundWawes2,
-  updateBackgroundWawes3,
+  updateBackgroundWaves2,
+  updateBackgroundWaves3,
   updatePositionPlayer,
   deleteAllEnemies,
 } from '../../store/gameReducer/reducer';
@@ -38,7 +38,7 @@ function App() {
     game,
     backgroundPositionLeft,
   } = useSelector((state) => state.game);
-  const [passageWawes, setPassageWawes] = useState(1);
+  const [passageWaves, setPassageWaves] = useState(1);
   const [countWaves, setCountWaves] = useState(1);
   const [playGame, setPlayGame] = useState('play');
   const [arrowRight, setArrowRight] = useState(false);
@@ -162,25 +162,25 @@ function App() {
 
     // логика смены волн врагов
     if (playGame === 'play') {
-      if (game.countEnemies === 2 && passageWawes === 1) {
+      if (game.countEnemies === 2 && passageWaves === 1) {
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
-        dispatch(updateWawes());
+        dispatch(updateWaves());
         // увеличиваем характеристики врагов
         dispatch(updateEnemies());
         // стейт чтобы предотвартить заход в этот if каждыем 20 млск
-        setPassageWawes(2);
+        setPassageWaves(2);
       }
-      if (game.countEnemies === 4 && passageWawes === 2) {
+      if (game.countEnemies === 4 && passageWaves === 2) {
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
-        dispatch(updateWawes());
+        dispatch(updateWaves());
         // увеличиваем характеристики врагов
         dispatch(updateEnemies());
         // стейт чтобы предотвартить заход в этот if каждыем 20 млск
-        setPassageWawes(3);
+        setPassageWaves(3);
       }
       // логика выгрыша
       if (game.countEnemies === 5) {
@@ -194,7 +194,7 @@ function App() {
     if (playGame === 'waiting' && game.countWaves === 2) {
       dispatch(deleteAllEnemies());
       // переходт на вторую локацию
-      dispatch(updateBackgroundWawes2());
+      dispatch(updateBackgroundWaves2());
       // меняем позицию героя для прохождения в ворота
       dispatch(updatePositionPlayer());
       // когда анимация смены локации закончилась меням стейт снова на 'play'
@@ -206,7 +206,7 @@ function App() {
     if (playGame === 'waiting' && game.countWaves === 3) {
       dispatch(deleteAllEnemies());
       // переходт на третью локацию
-      dispatch(updateBackgroundWawes3());
+      dispatch(updateBackgroundWaves3());
       // меняем позицию героя для прохождения в ворота
       dispatch(updatePositionPlayer());
       // когда анимация смены локации закончилась меням стейт снова на 'play'
