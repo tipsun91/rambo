@@ -3,7 +3,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const SIGN_IN_URL = '/api/sign/in/';
 const SIGN_UP_URL = '/api/sign/up/';
-const URL2 = '/api/user/';
+const SIGN_OUT_URL = '/api/sign/out/';
+const USR_UPD_URL = '/api/user/';
 
 export const signData = createAsyncThunk(
   '/api/sign/in',
@@ -68,11 +69,27 @@ export const signUp = createAsyncThunk(
   },
 );
 
+export const signOut = createAsyncThunk(
+  '/api/sign/out',
+  async (event, { rejectWithValue }) => {
+    try {
+      const responce = await fetch(SIGN_OUT_URL, {
+        method: 'GET',
+        credentials: 'include',
+      });
+      const data = await responce.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 export const editUser = createAsyncThunk(
   '/api/user',
   async (event, { rejectWithValue }) => {
     try {
-      const responce = await fetch(URL2, {
+      const response = await fetch(USR_UPD_URL, {
         method: 'PUT',
         credentials: 'include',
         headers: {
@@ -84,7 +101,7 @@ export const editUser = createAsyncThunk(
           password: event.target.password.value,
         }),
       });
-      const data = await responce.json();
+      const data = await response.json();
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -122,6 +139,22 @@ const userSlice = createSlice({
     [signUp.fulfilled]: (state, action) => {
       state.status = 'resolved';
       state.user = action.payload.user;
+    },
+    [editUser.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [editUser.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.user = action.payload;
+    },
+    [signOut.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [signOut.fulfilled]: (state) => {
+      state.status = 'resolved';
+      state.user = undefined;
     },
   },
 });

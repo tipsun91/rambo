@@ -27,15 +27,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     hp: {
       allowNull: false,
-      type: DataTypes.TEXT,
+      type: DataTypes.FLOAT,
     },
     speed: {
       allowNull: false,
-      type: DataTypes.TEXT,
+      type: DataTypes.FLOAT,
     },
     damage: {
       allowNull: false,
-      type: DataTypes.TEXT,
+      type: DataTypes.FLOAT,
+    },
+    score: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
     },
     coolDown: {
       allowNull: false,

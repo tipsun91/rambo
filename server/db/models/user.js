@@ -27,9 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       allowNull: false,
       type: DataTypes.TEXT,
-      validate: {
-        is: /^[a-zA-Zа-яА-ЯёЁ]{3,20}$/,
-      },
+    //   validate: {
+    //     is: /^[a-zA-Zа-яА-ЯёЁ]{3,20}$/,
+    //   },
     },
     password: {
       allowNull: false,
