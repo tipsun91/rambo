@@ -12,10 +12,10 @@ function GameMenu() {
         {user ? (
           <>
             <li>
-              <Link to="/">Начать игру</Link>
+              <Link to="/game">Начать игру</Link>
             </li>
             <li>
-              <Link to="/game">Настройки</Link>
+              <Link to="/">Настройки</Link>
             </li>
             <li>
               <Link to="/profile">Личный кабинет</Link>

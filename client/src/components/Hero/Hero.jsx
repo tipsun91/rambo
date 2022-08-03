@@ -9,12 +9,15 @@ function Hero() {
     <div
       className="hero"
       style={{
-        transform: ` translate(${player.x.toString()}px, ${player.y.toString()}px)`,
+        transform: ` translate(${player.x}px, ${player.y}px) scale(${player.move}, 1)`,
         width: `${player.w}px`,
         height: `${player.h}px`,
       }}
     >
-      1
+      <img
+        src={`${player.skin}`} // скин игрока
+        alt={`${player.move}`} // зеркалим скин
+      />
     </div>
   );
 }

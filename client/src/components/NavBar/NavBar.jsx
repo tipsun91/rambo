@@ -10,7 +10,7 @@ export default function NavBar() {
       <div className="lk">
         <h2>
           Привет
-          {user && user.name ? `, ${user.name}` : ', Гость'}
+          { user && user.name ? `, ${user.name}` : ', Гость' }
         </h2>
       </div>
     </nav>
