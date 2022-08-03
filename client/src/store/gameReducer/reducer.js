@@ -15,7 +15,6 @@ import calcGoldCoin from './functions/calcGoldCoin';
 export const sendStatistic = createAsyncThunk(
   '/api/statistics/',
   async (statGame, { rejectWithValue }) => {
-    console.log('🚀 statGame', statGame);
     try {
       const responce = await fetch('/api/statistics/', {
         method: 'POST',
@@ -32,7 +31,6 @@ export const sendStatistic = createAsyncThunk(
         credentials: 'include',
       });
       const data = await responce.json();
-      console.log('🚀data', data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
