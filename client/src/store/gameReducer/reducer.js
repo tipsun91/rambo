@@ -274,7 +274,7 @@ const gameSlice = createSlice({
     },
     updateFrame(state, action) {
       upGameLoop(state); // прибовляет 1 каждый цикл;
-      calcEnemies(state, state.enemies, state.player); // рассчитывает поведение мобов
+      // calcEnemies(state, state.enemies, state.player); // рассчитывает поведение мобов
       // calcEnemies(state, state.enemies2, state.player);
       // calcEnemies(state, state.enemies3, state.player);
       // calcEnemies(state, state.enemies4, state.player);
