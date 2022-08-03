@@ -41,15 +41,20 @@ const gameSlice = createSlice({
   name: 'game',
   initialState: {
     player: {
+      // Database values
+      hp: 100, // здоровье
+      speed: 7, // скорость передвижения
+      damage: 20, // урон
+      score: 0,
+      lvl: 1,
+
+      // Client only
       x: 0, // горизонталь
       y: 500, // вертикаль
       w: 150, // высота
       h: 150, // ширина
       skin: '/animations/hero1.gif',
       move: 1,
-      speed: 4, // скорость передвижения
-      hp: 100, // здоровье
-      damage: 2, // урон
       weapon: ['trunk'],
       ammunition: [
         {
