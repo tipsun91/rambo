@@ -13,11 +13,12 @@ import upGameLoop from './functions/upGameLoop';
 import calcGoldCoin from './functions/calcGoldCoin';
 
 export const sendStatistic = createAsyncThunk(
-  '/api/statistics',
+  '/api/statistics/',
   async (statGame, { rejectWithValue }) => {
+    console.log('🚀 statGame', statGame);
     try {
-      const responce = await fetch('/api/statistics', {
-        method: 'PATCH',
+      const responce = await fetch('/api/statistics/', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -25,12 +26,13 @@ export const sendStatistic = createAsyncThunk(
           countEnemies: statGame.countEnemies,
           countMoney: statGame.countMoney,
           countDamage: statGame.countDamage,
-          countWawes: statGame.countWawes,
+          countWaves: statGame.countWaves,
           timeGame: statGame.timeGame,
         }),
-        credentials: true,
+        credentials: 'include',
       });
       const data = await responce.json();
+      console.log('🚀data', data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -50,15 +52,23 @@ const gameSlice = createSlice({
       waves3Count: 0,
     },
     player: {
+      // Database values
+      hp: 100, // здоровье
+      speed: 7, // скорость передвижения
+      damage: 20, // урон
+      score: 0,
+      lvl: 1,
+
+      // Client only
       x: 0, // горизонталь
       y: 100, // вертикаль
       w: 180, // высота
       h: 180, // ширина
       skin: '/animations/hero1.gif',
       move: 1,
-      speed: 4, // скорость передвижения
-      hp: 1000, // здоровье
-      damage: 2, // урон
+      // speed: 4, // скорость передвижения
+      // hp: 1000, // здоровье
+      // damage: 2, // урон
       weapon: ['trunk'],
       ammunition: [
         {
@@ -144,15 +154,17 @@ const gameSlice = createSlice({
       skin: '/animations/gold.gif',
     }],
     bullets: [], // массив в который мы пушим пули
-    game: { // объект для сбора статистики за игру
+    game: {
+      // объект для сбора статистики за игру
       countEnemies: 0,
       countMoney: 0,
       countDamage: 0,
       timeGame: 0,
-      countWawes: 1,
+      countWaves: 1,
     },
     gameLoop: 0, // игровой цик
-    display: { // размеры экрана юзера
+    display: {
+      // размеры экрана юзера
       width: 0,
       height: 0,
     },
@@ -175,13 +187,13 @@ const gameSlice = createSlice({
       }
     },
     // передвигаем бэкграунд при прохождении первой волны
-    updateBackgroundWawes2(state, action) {
+    updateBackgroundWaves2(state, action) {
       if (state.backgroundPositionLeft > -2600) {
         state.backgroundPositionLeft -= 10;
       }
     },
     // передвигаем бэкграунд при прохождении второй волны
-    updateBackgroundWawes3(state, action) {
+    updateBackgroundWaves3(state, action) {
       if (state.backgroundPositionLeft > -5600) {
         state.backgroundPositionLeft -= 10;
       }
@@ -200,8 +212,8 @@ const gameSlice = createSlice({
       state.display.width = action.payload.width;
     },
     // обновляем игроавую волну
-    updateWawes(state, action) {
-      state.game.countWawes += 1;
+    updateWaves(state, action) {
+      state.game.countWaves += 1;
     },
     updateFrame(state, action) {
       // console.log(state.player.x);
@@ -220,10 +232,10 @@ const gameSlice = createSlice({
 export const {
   display,
   updateFrame,
-  updateWawes,
+  updateWaves,
   updateEnemies,
-  updateBackgroundWawes2,
-  updateBackgroundWawes3,
+  updateBackgroundWaves2,
+  updateBackgroundWaves3,
   updatePositionPlayer,
   deleteAllEnemies,
 } = gameSlice.actions;

@@ -7,7 +7,7 @@ export default function Main() {
     <nav className="anim-show-main">
       <ul>
         <li>
-          <Link to="/game">Start</Link>
+          <Link to="/">Start</Link>
         </li>
       </ul>
     </nav>

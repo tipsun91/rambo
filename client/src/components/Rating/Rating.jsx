@@ -68,7 +68,7 @@ function Rating() {
       </table>
       <div className="score-box-rating">
         <p className="score-rating" />
-        <Link className="return-rating" to="/game">
+        <Link className="return-rating" to="/">
           &lt;&lt; НАЗАД
         </Link>
       </div>

@@ -14,10 +14,10 @@ import {
   display,
   updateFrame,
   sendStatistic,
-  updateWawes,
+  updateWaves,
   updateEnemies,
-  updateBackgroundWawes2,
-  updateBackgroundWawes3,
+  updateBackgroundWaves2,
+  updateBackgroundWaves3,
   updatePositionPlayer,
   deleteAllEnemies,
 } from '../../store/gameReducer/reducer';
@@ -35,8 +35,8 @@ function App() {
     golds,
     gamePlay,
   } = useSelector((state) => state.game);
-  const [passageWawes, setPassageWawes] = useState(1);
-  const [countWawes, setCountWawes] = useState(1);
+  const [passageWaves, setPassageWaves] = useState(1);
+  const [countWaves, setCountWaves] = useState(1);
   const [playGame, setPlayGame] = useState('play');
   const [arrowRight, setArrowRight] = useState(false);
   const [arrowLeft, setArrowLeft] = useState(false);
@@ -158,27 +158,30 @@ function App() {
     }
     // логика смены волн врагов
     if (playGame === 'play') {
-      if (game.countEnemies === gamePlay.waves1 && passageWawes === 1 && player.x > 1050) {
-        // console.log(111);gamePlay.waves1
+      if (game.countEnemies === gamePlay.waves1 && passageWaves === 1 && player.x > 1050) {
+      // if (game.countEnemies === 2 && passageWaves === 1) {
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
-        dispatch(updateWawes());
+        dispatch(updateWaves());
         // увеличиваем характеристики врагов
         dispatch(updateEnemies());
         // стейт чтобы предотвартить заход в этот if каждыем 20 млск
-        setPassageWawes(2);
+        setPassageWaves(2);
       }
+
       if (game.countEnemies >= 3
-        && passageWawes === 2 && player.x > 1050) {
+        && passageWaves === 2 && player.x > 1050) {
+        // if (game.countEnemies === 4 && passageWaves === 2) {
+
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
-        dispatch(updateWawes());
+        dispatch(updateWaves());
         // увеличиваем характеристики врагов
         dispatch(updateEnemies());
         // стейт чтобы предотвартить заход в этот if каждыем 20 млск
-        setPassageWawes(3);
+        setPassageWaves(3);
       }
       // логика выгрыша
       if (game.countEnemies === gamePlay.waves2 + gamePlay.waves1 + gamePlay.waves3) {
@@ -189,10 +192,10 @@ function App() {
     dispatch(updateFrame({ player: pressedButtons, mouseCord }));
 
     // логика для смены локации при прохождении первой волны
-    if (playGame === 'waiting' && game.countWawes === 2) {
+    if (playGame === 'waiting' && game.countWaves === 2) {
       dispatch(deleteAllEnemies());
       // переходт на вторую локацию
-      dispatch(updateBackgroundWawes2());
+      dispatch(updateBackgroundWaves2());
       // меняем позицию героя для прохождения в ворота
       dispatch(updatePositionPlayer());
       // когда анимация смены локации закончилась меням стейт снова на 'play'
@@ -201,10 +204,10 @@ function App() {
       }
     }
     // логика для смены локации при прохождении первой волны
-    if (playGame === 'waiting' && game.countWawes === 3) {
+    if (playGame === 'waiting' && game.countWaves === 3) {
       dispatch(deleteAllEnemies());
       // переходт на третью локацию
-      dispatch(updateBackgroundWawes3());
+      dispatch(updateBackgroundWaves3());
       // меняем позицию героя для прохождения в ворота
       dispatch(updatePositionPlayer());
       // когда анимация смены локации закончилась меням стейт снова на 'play'
@@ -229,7 +232,7 @@ function App() {
 
   useEffect(() => {
     // логика завершения игры
-    if (playGame === 'game-over') {
+    if (playGame === 'game-over' || playGame === 'vin') {
       // записываем время проведенное в игре
       const time = (+Date.now() - +startTime) / 1000;
       // диспатч для сбора статистики за игру
@@ -238,7 +241,7 @@ function App() {
           countEnemies: game.countEnemies,
           countMoney: game.countMoney,
           countDamage: game.countDamage,
-          countWawes,
+          countWaves,
           timeGame: time,
         }),
       );
@@ -246,10 +249,12 @@ function App() {
   }, [playGame]);
 
   return (
-    <div style={{ backgroundPosition: backgroundPositionLeft }} className="app-back">
+    <div
+      style={{ backgroundPosition: backgroundPositionLeft }}
+      className="app-back"
+    >
       <div ref={app} className="App">
-        {playGame === 'play'
-          && (
+        {playGame === 'play' && (
           <div>
             <GameBar />
             <Hero />
@@ -257,37 +262,34 @@ function App() {
             {enemies && enemies.map((el) => <Enemy key={el.id} enemy={el} />)}
             {golds && golds.map((el) => <GoldCoin key={el.id} coin={el} />)}
           </div>
-          )}
-        {playGame === 'game-over'
-          && (
+        )}
+        {playGame === 'game-over' && (
           <div className="gameOver">
             <h1>GAME OVER</h1>
-            <Link className="nes-btn is-primary" to="/">
+            <Link className="nes-btn is-primary" to="/game">
               Играть еще раз
             </Link>
-            <Link className="nes-btn is-warning" to="/game">
+            <Link className="nes-btn is-warning" to="/">
               Вернуться в главное меню
             </Link>
           </div>
-          )}
-        {playGame === 'vin'
-            && (
-              <div className="gameOver">
-                <h1>VINNER</h1>
-                <Link className="nes-btn is-primary" to="/">
-                  Играть еще раз
-                </Link>
-                <Link className="nes-btn is-warning" to="/game">
-                  Вернуться в главное меню
-                </Link>
-              </div>
-            )}
-        {playGame === 'waiting'
-        && (
-        <div className="App">
-          <GameBar />
-          <Hero />
-        </div>
+        )}
+        {playGame === 'vin' && (
+          <div className="gameOver">
+            <h1>VINNER</h1>
+            <Link className="nes-btn is-primary" to="/game">
+              Играть еще раз
+            </Link>
+            <Link className="nes-btn is-warning" to="/">
+              Вернуться в главное меню
+            </Link>
+          </div>
+        )}
+        {playGame === 'waiting' && (
+          <div className="App">
+            <GameBar />
+            <Hero />
+          </div>
         )}
       </div>
     </div>

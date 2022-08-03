@@ -8,8 +8,9 @@ module.exports = {
       {
         userId: 1,
         hp: 100,
-        speed: 7,
-        damage: 20,
+        speed: 1,
+        damage: 10,
+        score: 0,
         coolDown: 0,
         lvl: 1,
         createdAt: new Date(),
