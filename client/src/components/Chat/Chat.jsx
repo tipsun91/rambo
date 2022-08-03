@@ -1,16 +1,23 @@
 /* eslint-disable no-unused-vars */
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { v4 } from 'uuid';
 
 function Chat() {
   const [messages, setMessages] = useState([]);
+  const [history, setHistory] = useState([]);
   const [value, setValue] = useState('');
   const socket = useRef();
   const [connected, setConnected] = useState(false);
   const [username, setUsername] = useState('');
 
   const { user } = useSelector((state) => state.user); // подключаем юзера из реакт редакса
+
+  useEffect(() => {
+    fetch('http://localhost:4000/api/chat')
+      .then((data) => data.json())
+      .then((data) => setHistory(data));
+  }, []);
 
   function connect() {
     socket.current = new WebSocket('ws://localhost:4000');
@@ -83,6 +90,13 @@ function Chat() {
                     {mess.message}
                   </div>
                 )}
+            </div>
+          ))}
+          {history.chats.map((message) => (
+            <div>
+              {message.User.name}
+              :
+              {message.message}
             </div>
           ))}
         </div>
