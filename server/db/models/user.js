@@ -36,6 +36,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.TEXT,
     },
+    avatar_url: {
+      allowNull: true,
+      type: DataTypes.TEXT,
+    },
     money: {
       allowNull: false,
       defaultValue: 0,
