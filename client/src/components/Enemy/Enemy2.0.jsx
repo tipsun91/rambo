@@ -10,6 +10,7 @@ function Enemy2({ enemy2 }) {
         transform: ` translate(${enemy2.x}px, ${enemy2.y}px) scale(${enemy2.move}, 1)`,
         width: `${enemy2.w}px`,
         height: `${enemy2.h}px`,
+        zIndex: `${enemy2.y}`,
       }}
     >
       <img

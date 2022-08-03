@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { v4 } from 'uuid';
 import { addMessage } from '../../store/chatReducer/reducer';
 import './Chat.css';
-import Messages from './Messages';
 
 function Chat() {
   const dispatch = useDispatch();
