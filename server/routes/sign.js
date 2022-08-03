@@ -4,7 +4,7 @@ const {
   AUTHENTICATED,
   UNAUTHENTICATED,
 } = require('../middlewares/access');
-const { User } = require('../db/models');
+const { User, Hero } = require('../db/models');
 const bcrypt = require('bcrypt');
 
 function heroDefaultValues(userId) {
@@ -92,11 +92,12 @@ router.route('/up').post(access(UNAUTHENTICATED), async (req, res) => {
     req.session.userId = user.id;
 
     // Create Hero for new User
-    const hero = await Hero.create(heroDefaultValues(User.id));
+    const hero = await Hero.create(heroDefaultValues(user.id));
     await hero.save();
 
     res.status(200).json(clientUser(user));
   } catch (error) {
+    console.log(error);
     res.status(500).json(error);
   }
 });
