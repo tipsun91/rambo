@@ -9,11 +9,12 @@ const server = createServer(); // поля
 app.use(require('morgan')('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(require('cors')({
-  origin: ['http://localhost:3000'],
-  credentials: true,
-}));
-
+app.use(
+  require('cors')({
+    origin: ['http://localhost:3000'],
+    credentials: true,
+  })
+);
 
 // Static content: web-client path AS virtual, server path
 app.use(express.static(path.join(__dirname, '../client/build')));
@@ -26,14 +27,12 @@ const { sequelize } = require('./db/models');
 
 server.on('request', app);
 server.listen(process.env.PORT, async () => {
-  console.log(`Сервер отлично шуршит на ${process.env.PORT}`)
+  console.log(`Сервер работает на порту ${process.env.PORT}`);
   try {
-        await sequelize.authenticate();
-        console.log('База зашуршала');
-      } catch (error) {
-        console.error('Unable to connect to the database:', error);
-      }
-
-})
+    await sequelize.authenticate();
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+});
 
 createSocketServer(server);
