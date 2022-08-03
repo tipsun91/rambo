@@ -10,6 +10,10 @@ body {
   font-family: 'Press Start 2P', sans-serif;
 }
 
+.body {
+  margin-bottom: 50px;
+}
+
 h1 {
   font-size: 3em;
   font-weight: 300;
@@ -59,16 +63,14 @@ h1 {
 
 .container__profile tr:nth-child(odd) {
   background-color: #323c50;
-  opacity: 0.8;
 }
 
 .container__profile tr:nth-child(even) {
   background-color: #2c3446;
-  opacity: 0.8;
 }
 
 .container__profile th {
-  background-color: rgba(31, 39, 57, 0.8);
+  background-color: rgba(31, 39, 57, 1);
 }
 
 .container__profile td:first-child {
