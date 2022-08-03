@@ -21,4 +21,22 @@ router.route('/')
        }
    });
 
+router.route('/')
+   .post(async (req, res) => {
+      console.log(req.body)
+   //   const {
+   //     title, url, price, info,
+   //   } = req.body;
+   //   const newCard = await Card.create({
+   //     title,
+   //     url,
+   //     price,
+   //     user_id: req.session.userId,
+   //     info,
+   //   });
+   //   newCard.save();
+   //   res.status(200);
+   //   res.end();
+   });
+
 module.exports = router;

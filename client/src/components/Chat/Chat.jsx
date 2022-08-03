@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 } from 'uuid';
+import { addMessage } from '../../store/chatReducer/reducer';
 
 function Chat() {
+  const dispatch = useDispatch();
   const [messages, setMessages] = useState([]);
   const [history, setHistory] = useState([]);
   const [value, setValue] = useState('');
@@ -46,7 +48,8 @@ function Chat() {
     };
   }
 
-  const sendMessage = async () => {
+  const sendMessage = async (event) => {
+    event.preventDefault();
     const message = {
       username: user.name,
       message: value,
@@ -55,6 +58,7 @@ function Chat() {
     };
     socket.current.send(JSON.stringify(message));
     setValue('');
+    dispatch(addMessage(event.target.messText.value));
   };
 
   if (!connected) {
@@ -65,10 +69,10 @@ function Chat() {
 
   return (
     <div className="center">
-      <div className="form">
-        <input value={value} onChange={(e) => setValue(e.target.value)} type="text" />
-        <button onClick={sendMessage} type="button">Отправить</button>
-      </div>
+      <form className="form" onSubmit={sendMessage}>
+        <input value={value} onChange={(e) => setValue(e.target.value)} type="text" name="messText" />
+        <button type="submit">Отправить</button>
+      </form>
       <div>
         <div className="messages">
           {messages.map((mess) => (
