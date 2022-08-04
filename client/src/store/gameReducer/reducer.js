@@ -148,12 +148,14 @@ const gameSlice = createSlice({
   name: 'game',
   initialState: {
     gamePlay: {
-      waves1: 5, // кол-во мобов
+      waves1: 15, // кол-во мобов
       waves1Count: 0,
-      waves2: 5, // кол-во мобов
+      waves2: 15, // кол-во мобов
       waves2Count: 0,
-      waves3: 5, // кол-во мобов
+      waves3: 15, // кол-во мобов
       waves3Count: 0,
+      boss: 1,
+      bossCount: 0,
     },
     player: {
       // Client only
@@ -181,8 +183,8 @@ const gameSlice = createSlice({
       x: 500, // горизонталь
       y: 300, // вертикаль
       hp: 100, // здоровье
-      speed: 1.3, // скорость
-      damage: 5, // урон
+      speed: 3, // скорость
+      damage: 1, // урон
       coolDown: 30, // скорость удара
       skin: '/animations/enemie0move.gif',
       move: 1,
@@ -194,8 +196,8 @@ const gameSlice = createSlice({
       x: 600, // горизонталь
       y: 45, // вертикаль
       hp: 100, // здоровье
-      speed: 0.9, // скорость
-      damage: 5, // урон
+      speed: 4, // скорость
+      damage: 1, // урон
       coolDown: 20, // скорость удара
       skin: '/animations/enemie1move.gif',
       move: 1,
@@ -207,20 +209,20 @@ const gameSlice = createSlice({
       x: 600, // горизонталь
       y: 30, // вертикаль
       hp: 100, // здоровье
-      speed: 1.2,
-      damage: 5, // урон
+      speed: 4,
+      damage: 2, // урон
       coolDown: 30, // скорость удара
       skin: '/animations/enemie2move.gif',
       move: 1,
     },
     enemies4: {
       type: 4,
-      w: 180, // высота
-      h: 180, // ширина
+      w: 350, // высота
+      h: 350, // ширина
       x: 400, // горизонталь
       y: 50, // вертикаль
       hp: 500, // здоровье
-      speed: 0.7,
+      speed: 2,
       damage: 5, // урон
       coolDown: 30, // скорость удара
       skin: '/animations/enemie3move.gif',
@@ -242,16 +244,7 @@ const gameSlice = createSlice({
       w: 50,
       skin: '/animations/gold.gif',
     },
-    golds: [
-      {
-        id: 1,
-        x: 400,
-        y: 70,
-        h: 50,
-        w: 50,
-        skin: '/animations/gold.gif',
-      },
-    ],
+    golds: [],
     bullets: [], // массив в который мы пушим пули
     game: {
       // объект для сбора статистики за игру

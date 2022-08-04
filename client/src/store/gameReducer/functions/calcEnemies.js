@@ -34,17 +34,17 @@ function calcEnemies(state, arr, hero) {
         const cord = randomCord(state.player);
         // console.log('ближе 50 влево');
         if (el.type === 1) {
-          el.skin = '/animations/enemie0attack.gif';
+          // el.skin = '/animations/enemie0attack.gif';
         }
         if (el.type === 2) {
-          el.skin = '/animations/enemie1attack.gif';
+          // el.skin = '/animations/enemie1attack.gif';
         }
         if (el.type === 3) {
-          el.skin = '/animations/enemie2attack.gif';
+          // el.skin = '/animations/enemie2attack.gif';
         }
         if (cord[0] <= el.x) {
           el.x -= el.speed;
-          el.move = -1;
+          // el.move = -1;
         }
         if (cord[1] >= el.y) {
           el.y += 0.7;
@@ -89,6 +89,10 @@ function calcEnemies(state, arr, hero) {
             el.skin = '/animations/enemie2move.gif';
             el.move = -1;
           }
+          if (el.type === 4) {
+            el.skin = '/animations/enemie3move.gif';
+            el.move = 5;
+          }
           el.x += el.speed;
         }
         if (hero.x <= el.x) {
@@ -104,6 +108,10 @@ function calcEnemies(state, arr, hero) {
             el.skin = '/animations/enemie2move.gif';
             el.move = 1;
           }
+          if (el.type === 4) {
+            el.skin = '/animations/enemie3move.gif';
+            el.move = 1;
+          }
           el.x -= el.speed;
         }
         // console.log('дальше 50 влево');
@@ -112,16 +120,16 @@ function calcEnemies(state, arr, hero) {
       const cord = randomCord(state.player);
       // console.log('ближе 50 вправо');
       if (el.type === 1) {
-        el.skin = '/animations/enemie0attack.gif';
-        // el.move = 1;
+        // el.skin = '/animations/enemie0attack.gif';
+        el.move = 1;
       }
       if (el.type === 2) {
-        el.skin = '/animations/enemie1attack.gif';
-        // el.move = 1;
+        // el.skin = '/animations/enemie1attack.gif';
+        el.move = 1;
       }
       if (el.type === 3) {
-        el.skin = '/animations/enemie2attack.gif';
-        // el.move = -1;
+        // el.skin = '/animations/enemie2attack.gif';
+        el.move = -1;
       }
       if (cord[0] >= el.x) {
         el.x += el.speed;
@@ -169,6 +177,10 @@ function calcEnemies(state, arr, hero) {
           el.skin = '/animations/enemie2move.gif';
           el.move = -1;
         }
+        if (el.type === 4) {
+          el.skin = '/animations/enemie3move.gif';
+          el.move = -5;
+        }
         el.x += el.speed;
       }
       if (hero.x <= el.x) {
@@ -182,6 +194,10 @@ function calcEnemies(state, arr, hero) {
         }
         if (el.type === 3) {
           el.skin = '/animations/enemie2attack.gif';
+          el.move = 1;
+        }
+        if (el.type === 4) {
+          // el.skin = '/animations/enemie3attack.gif';
           el.move = 1;
         }
         el.x -= el.speed;

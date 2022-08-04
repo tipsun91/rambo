@@ -27,6 +27,9 @@ function calcPlayer(state, action) {
       state.player.y += state.player.speed; // идем вниз
     }
   }
+  if (action.payload.player.includes('stop')) {
+    state.player.skin = '/animations/hero1.gif';
+  }
 
   if (action.payload.mouseCord.length > 0) {
     const [speedX, speedY, g] = calcBulletTrajectory(state, action); // скорость пуль по Х и У
@@ -88,7 +91,7 @@ function calcPlayer(state, action) {
         state.enemies.push({
           id: uuidv4(),
           type: state.enemies2.type, // тип врага
-          x: state.display.width - 50,
+          x: -50,
           y: Math.floor(Math.random() * (300 - 100)) + 100, // вертикаль
           // y: 300,
           w: state.enemies2.w, // высота
@@ -107,7 +110,7 @@ function calcPlayer(state, action) {
           type: state.enemies2.type, // тип врага
           w: state.enemies2.w, // высота
           h: state.enemies2.h, // ширина
-          x: state.display.width - 50, // горизонталь
+          x: state.display.width + 50, // горизонталь
           y: Math.floor(Math.random() * (300 - 100)) + 100, // вертикаль
           // y: 200,
           hp: +state.enemies2.hp, // здоровьее
@@ -142,7 +145,7 @@ function calcPlayer(state, action) {
         state.enemies.push({
           id: uuidv4(),
           type: state.enemies3.type, // тип врага
-          x: state.display.width - 60, // горизонталь
+          x: -60, // горизонталь
           y: Math.floor(Math.random() * (300 - 100)) + 50, // вертикаль
           w: state.enemies3.w, // высота
           h: state.enemies3.h, // ширина
@@ -154,6 +157,25 @@ function calcPlayer(state, action) {
           move: -1,
         });
       }
+    }
+    if (state.game.countWaves === 3 && state.game.countEnemies
+      === state.gamePlay.waves3 + state.gamePlay.waves2 + state.gamePlay.waves1
+      && state.gamePlay.bossCount < state.gamePlay.boss) {
+      state.gamePlay.bossCount += 1;
+      state.enemies.push({
+        id: uuidv4(),
+        type: 4,
+        x: state.display.width + 50,
+        y: 100, // вертикаль
+        w: state.enemies4.w, // высота
+        h: state.enemies4.h, // ширина
+        hp: state.enemies4.hp, // здоровьее
+        speed: state.enemies4.speed, // скорость перемещения
+        damage: state.enemies4.damage, // урон
+        coolDown: state.enemies4.coolDown, // скорость удара
+        skin: '/animations/enemie3move.gif',
+        move: 1,
+      });
     }
   }
 }
