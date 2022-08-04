@@ -139,12 +139,12 @@ export default function Profile() {
             </tr>
           </tbody>
         </table>
-      </div>
-      <div className="score-box-profile">
-        <p className="score-profile" />
-        <Link className="return-profile" to="/">
-          &lt;&lt; НАЗАД
-        </Link>
+        <div className="score-box-profile">
+          <p className="score-profile" />
+          <Link className="return-profile" to="/">
+            &lt;&lt; НАЗАД
+          </Link>
+        </div>
       </div>
     </div>
   );
