@@ -15,7 +15,7 @@ import calcGoldCoin from './functions/calcGoldCoin';
 export const sendStatistic = createAsyncThunk(
   '/api/statistics/',
   async (statGame, { rejectWithValue }) => {
-    console.log('🚀 statGame', statGame);
+    // console.log('🚀 statGame', statGame);
     try {
       const responce = await fetch('/api/statistics/', {
         method: 'POST',
@@ -32,7 +32,7 @@ export const sendStatistic = createAsyncThunk(
         credentials: 'include',
       });
       const data = await responce.json();
-      console.log('🚀data', data);
+      // console.log('🚀data', data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -44,7 +44,7 @@ const gameSlice = createSlice({
   name: 'game',
   initialState: {
     gamePlay: {
-      waves1: 1, // кол-во мобов
+      waves1: 5, // кол-во мобов
       waves1Count: 0,
       waves2: 5, // кол-во мобов
       waves2Count: 0,
