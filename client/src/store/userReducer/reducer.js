@@ -115,7 +115,7 @@ export const uploadAvatar = createAsyncThunk(
   async (event, { rejectWithValue }) => {
     try {
       const formData = new FormData(event.target);
-      const response = await fetch('http://httpbin.org/anything', {
+      const response = await fetch(USR_UPLOAD_AVATAR, {
         method: 'POST',
         credentials: 'include',
         body: formData,
