@@ -8,8 +8,6 @@ import Main from './components/Main/Main';
 import Signin from './components/Signin/Signin';
 import Signup from './components/Signup/Signup';
 import Profile from './components/Profile/Profile';
-import Dialogues from './components/Dialogues/Dialogues';
-import Dialog from './components/Dialog/Dialog';
 import Rating from './components/Rating/Rating';
 import NoPage from './components/NoPage/NoPage';
 import GameMenu from './components/GameMenu/GameMenu';
@@ -36,9 +34,6 @@ export default function Map() {
               <Route path="main" element={<Main />} />
               <Route path="profile" element={<Profile />}>
                 <Route path=":id" element={<Profile />} />
-              </Route>
-              <Route path="dialogues" element={<Dialogues />}>
-                <Route path=":id" element={<Dialog />} />
               </Route>
               <Route path="rating" element={<Rating />}>
                 <Route path="page/:page" element={<Rating />} />

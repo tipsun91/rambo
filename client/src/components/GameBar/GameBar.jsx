@@ -20,6 +20,7 @@ function GameBar() {
             speed-
             {player.speed}
           </p>
+          <p className="gamebar__progress__enemies__number">{`enemies: ${game.countEnemies}`}</p>
         </div>
         <div className="gamebar__center">
           <div
@@ -28,7 +29,7 @@ function GameBar() {
           >
             <p className="gamebar__progress__number">{`${player.hp}💔`}</p>
           </div>
-          <p className="gamebar__progress__number">1000 lvl</p>
+          <p className="gamebar__progress__number">lvl: 1000</p>
         </div>
         <div className="gamebar__right">
           <p className="gamebar__progress__money__number">{`gold${game.countMoney}`}</p>

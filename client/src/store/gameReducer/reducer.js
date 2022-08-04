@@ -112,6 +112,38 @@ export const sendStatistic = createAsyncThunk(
   },
 );
 
+export const userAllStats = createAsyncThunk(
+  '/api/statistics',
+  async (event, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/api/statistics', {
+        method: 'GET',
+      });
+      const data = await responce.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const userOneStats = createAsyncThunk(
+  '/api/statistics/:id',
+  async (payload, { rejectWithValue }) => {
+    const { event, id } = payload;
+    try {
+      const responce = await fetch(`/api/statistics/${id}`, {
+        method: 'GET',
+      });
+      const data = await responce.json();
+      console.log('🚀 line 139 ~ data', data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const gameSlice = createSlice({
   name: 'game',
   initialState: {
@@ -141,6 +173,8 @@ const gameSlice = createSlice({
         },
       ],
     },
+    statistic: [],
+    oneStatistic: [],
     enemies: [], // массив врагов
     enemies1: {
       type: 1,
@@ -194,7 +228,8 @@ const gameSlice = createSlice({
       skin: '/animations/enemie3move.gif',
       move: 1,
     },
-    weapon: { // НЕ ИСПОЛЬЗУЕТСЯ
+    weapon: {
+      // НЕ ИСПОЛЬЗУЕТСЯ
       name: 'trunk', // название
       damage: 20, // урон
       clip: 30, // обойма
@@ -318,6 +353,22 @@ const gameSlice = createSlice({
     [updateHeroSpeed.fulfilled]: (state, action) => {
       state.status = 'resolved';
       state.player.speed = action.payload.speed;
+    },
+    [userAllStats.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [userAllStats.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.statistic = action.payload.statistics;
+    },
+    [userOneStats.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [userOneStats.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.oneStatistic = action.payload.statistics;
     },
   },
 });
