@@ -22,12 +22,10 @@ import {
   updateBackgroundWaves2,
   updateBackgroundWaves3,
   updatePositionPlayer,
-  deleteAllEnemies,
   deleteAllGolds,
 } from '../../store/gameReducer/reducer';
 
 function App() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const app = useRef();
   const { user } = useSelector((state) => state.user);
@@ -168,9 +166,7 @@ function App() {
     }
     // логика смены волн врагов
     if (playGame === 'play') {
-
       if (game.countEnemies === gamePlay.waves1 && passageWaves === 1 && player.x > 1050) {
-
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
@@ -205,7 +201,6 @@ function App() {
 
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWaves === 2) {
-      // dispatch(deleteAllEnemies());
       dispatch(deleteAllGolds());
       // переходт на вторую локацию
       dispatch(updateBackgroundWaves2());
@@ -218,7 +213,6 @@ function App() {
     }
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWaves === 3) {
-      // dispatch(deleteAllEnemies());
       dispatch(deleteAllGolds());
       // переходт на третью локацию
       dispatch(updateBackgroundWaves3());
@@ -264,7 +258,7 @@ function App() {
   }, [playGame]);
 
   const restart = () => {
-    setPlayGame('play');
+    window.location.reload();
   };
 
   return (
@@ -292,7 +286,7 @@ function App() {
             <Link className="nes-btn is-primary" to="/game" onClick={restart}>
               Играть еще раз
             </Link>
-            <Link className="nes-btn is-warning" to="/" onClick={restart}>
+            <Link className="nes-btn is-warning" to="/">
               Вернуться в главное меню
             </Link>
           </div>
@@ -303,7 +297,7 @@ function App() {
             <Link className="nes-btn is-primary" to="/game" onClick={restart}>
               Играть еще раз
             </Link>
-            <Link className="nes-btn is-warning" to="/" onClick={restart}>
+            <Link className="nes-btn is-warning" to="/">
               Вернуться в главное меню
             </Link>
           </div>
