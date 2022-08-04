@@ -150,7 +150,7 @@ function App() {
       }
     }
     // логика появления врагов
-    if (Date.now() - timeEnemy > 2000) {
+    if (Date.now() - timeEnemy > 2000 && playGame === 'play') {
       pressedButtons.push('enemy');
       setTimeEnemy(Date.now());
     }
@@ -173,7 +173,7 @@ function App() {
         setPassageWaves(2);
       }
 
-      if (game.countEnemies >= 3
+      if (game.countEnemies === gamePlay.waves2 + gamePlay.waves1
         && passageWaves === 2 && player.x > 1050) {
         // if (game.countEnemies === 4 && passageWaves === 2) {
 
