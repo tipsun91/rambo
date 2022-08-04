@@ -286,7 +286,7 @@ function App() {
         )}
         {playGame === 'vin' && (
           <div className="gameOver">
-            <h1>VINNER</h1>
+            <h1>YOU WON!</h1>
             <Link className="nes-btn is-primary" to="/game">
               Играть еще раз
             </Link>

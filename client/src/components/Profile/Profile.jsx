@@ -29,7 +29,7 @@ export default function Profile() {
 
   return (
     <div className="container__stats anim-show-profile flex">
-      <div className="profile__wrapper">
+      <div className="user__wrapper">
         <div className="user-profile">
           <img
             className="avatar"
@@ -44,11 +44,13 @@ export default function Profile() {
               name="file"
               type="file"
               defaultValue=""
+              style={{ color: 'transparent', width: '200px', marginTop: '20px' }}
             />
           </div>
         </div>
         <div className="edit-user-profile nes-container is-rounded is-dark">
           <form className="edit-form" ref={editProfileForm} onSubmit={onSubmit}>
+            <h3 className="edit-title">Изменить почту и пароль:</h3>
             <div className="edit-profile">
               <input
                 required
@@ -57,7 +59,7 @@ export default function Profile() {
                 type="name"
                 placeholder="Name"
                 defaultValue={user.name}
-                style={{ color: 'black' }}
+                className="edit__input"
               />
             </div>
             <div className="edit-profile">
@@ -68,7 +70,7 @@ export default function Profile() {
                 type="email"
                 placeholder="Email"
                 defaultValue={user.email}
-                style={{ color: 'black' }}
+                className="edit__input"
               />
             </div>
             <div className="edit-profile">
@@ -80,13 +82,13 @@ export default function Profile() {
                 placeholder="New password"
               />
             </div>
-            <button type="submit" className="btn-2 nes-btn is-primary">
-              Изменить данные
+            <button type="submit" className="btn-2 nes-btn is-primary edit-btn">
+              Изменить
             </button>
           </form>
         </div>
       </div>
-      <div className="body">
+      <div className="score__table">
         <table className="container__profile">
           <thead>
             <tr>
@@ -141,7 +143,7 @@ export default function Profile() {
         </table>
         <div className="score-box-profile">
           <p className="score-profile" />
-          <Link className="return-profile" to="/">
+          <Link className="return-profile btn-back" to="/">
             &lt;&lt; НАЗАД
           </Link>
         </div>
