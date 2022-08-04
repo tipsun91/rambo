@@ -41,14 +41,15 @@ function ProfileHero() {
     }
   }
   return (
-    <div className="nes-container is-rounded is-dark profile__wrapper anim-show-profile__hero">
-      <h1>
-        <span className="blue">UPGRADE</span>
-        {' '}
-        <span className="yellow">HERO!</span>
-      </h1>
-      <div className="form__wrapper">
-        {player && (
+    <>
+      <div className="nes-container is-rounded is-dark profile__wrapper anim-show-profile__hero">
+        <h1>
+          <span className="blue">UPGRADE</span>
+          {' '}
+          <span className="yellow">HERO!</span>
+        </h1>
+        <div className="form__wrapper">
+          {player && (
           <>
             <span className="span-update">
               <div className="update">LVL</div>
@@ -127,25 +128,27 @@ function ProfileHero() {
                 </button>
               )}
               {player.speed >= 10 && (
-                <button
-                  disabled
-                  type="button"
-                  className="update btn-2 nes-btn is-primary"
-                >
-                  Макс
-                </button>
+              <button
+                disabled
+                type="button"
+                className="update nes-btn is-primary"
+              >
+                Макс
+              </button>
               )}
             </span>
-            <div className="score-box-profile">
-              <p className="score-profile" />
-              <Link className="return-profile btn-back" to="/">
-                &lt;&lt; НАЗАД
-              </Link>
-            </div>
           </>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+      <div className="score-box-profile">
+        <p className="score-profile" />
+        <Link className="return-rating btn-back" to="/">
+          &lt;&lt; НАЗАД
+        </Link>
+      </div>
+
+    </>
   );
 }
 

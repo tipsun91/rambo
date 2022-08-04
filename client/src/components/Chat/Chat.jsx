@@ -77,7 +77,7 @@ function Chat() {
           {' '}
           <span className="yellow">COMMUNITY</span>
         </h1>
-        <form className="form" onSubmit={sendMessage}>
+        <form className="form__chat" onSubmit={sendMessage}>
           <input value={value} onChange={(e) => setValue(e.target.value)} type="text" name="messText" />
           <button type="submit">Отправить</button>
         </form>
@@ -113,7 +113,7 @@ function Chat() {
           </div>
         </div>
       </div>
-      <Link className="return-profile btn-back" to="/">
+      <Link className="return-rating btn-back" to="/">
         &lt;&lt; НАЗАД
       </Link>
 
