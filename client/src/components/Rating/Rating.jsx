@@ -6,8 +6,9 @@ function Rating() {
   return (
     <div className="center anim-show-rating">
       <h1>
-        <span className="blue">GAME</span>
-        <span className="yellow">SCORE</span>
+        <span className="blue">TOP</span>
+        {' '}
+        <span className="yellow">USERS</span>
       </h1>
 
       <table className="container-rating">
@@ -20,10 +21,10 @@ function Rating() {
               <h1>Score</h1>
             </th>
             <th>
-              <h1>Number of Games</h1>
+              <h1>Games</h1>
             </th>
             <th>
-              <h1>Kill</h1>
+              <h1>Enemies</h1>
             </th>
           </tr>
         </thead>

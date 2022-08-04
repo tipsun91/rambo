@@ -9,6 +9,15 @@ export default function Profile() {
   const dispatch = useDispatch();
   const editProfileForm = useRef();
 
+  // функция преобразования секунд в формат 00:00:00
+  function format(seconds) {
+    const s = (seconds % 60).toString();
+    const m = Math.floor((seconds / 60) % 60).toString();
+    const h = Math.floor((seconds / 60 / 60) % 60).toString();
+    return `${h.padStart(2, '0')}:${m.padStart(2, '0')}:${s.padStart(2, '0')}`;
+  }
+  console.log(format(100));
+
   const onSubmit = useCallback(
     (event) => {
       event.preventDefault();
@@ -38,7 +47,7 @@ export default function Profile() {
             />
           </div>
         </div>
-        <div className="edit-user-profile">
+        <div className="edit-user-profile nes-container is-rounded">
           <form className="edit-form" ref={editProfileForm} onSubmit={onSubmit}>
             <div className="edit-profile">
               <input
@@ -48,6 +57,7 @@ export default function Profile() {
                 type="name"
                 placeholder="Name"
                 defaultValue={user.name}
+                style={{ color: 'black' }}
               />
             </div>
             <div className="edit-profile">
@@ -58,6 +68,7 @@ export default function Profile() {
                 type="email"
                 placeholder="Email"
                 defaultValue={user.email}
+                style={{ color: 'black' }}
               />
             </div>
             <div className="edit-profile">
