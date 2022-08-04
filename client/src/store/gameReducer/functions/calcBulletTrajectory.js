@@ -1,7 +1,7 @@
 /* eslint-disable no-mixed-operators */
 function calcBulletTrajectory(state, cord) {
   const codrX = cord.payload.mouseCord[0] + state.player.w / 5; // корды клика мышки по Х
-  const codrY = cord.payload.mouseCord[1] - 150; // корды клика мышки по У
+  const codrY = cord.payload.mouseCord[1] - 50; // корды клика мышки по У
   // console.log(codrX);
   // console.log(codrY);
   const speed = 50; // скорость пули
@@ -17,7 +17,10 @@ function calcBulletTrajectory(state, cord) {
   let g = (corner * 180 / Math.PI);
   if (heroX > codrX) {
     g = -g;
+    //   state.player.skin =
+    // } else {
   }
+  // }
   return [speedX, speedY, g];
 }
 export default calcBulletTrajectory;
