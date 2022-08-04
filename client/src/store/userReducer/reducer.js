@@ -5,6 +5,7 @@ const SIGN_IN_URL = '/api/sign/in/';
 const SIGN_UP_URL = '/api/sign/up/';
 const SIGN_OUT_URL = '/api/sign/out/';
 const USR_UPD_URL = '/api/user/';
+const USR_UPLOAD_AVATAR = '/api/avatar/';
 
 export const sendMoney = createAsyncThunk(
   '/api/user/money',
@@ -131,6 +132,24 @@ export const editUser = createAsyncThunk(
   },
 );
 
+export const uploadAvatar = createAsyncThunk(
+  '/api/avatar',
+  async (event, { rejectWithValue }) => {
+    try {
+      const formData = new FormData(event.target);
+      const response = await fetch(USR_UPLOAD_AVATAR, {
+        method: 'POST',
+        credentials: 'include',
+        body: formData,
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -190,6 +209,14 @@ const userSlice = createSlice({
     [signOut.fulfilled]: (state) => {
       state.status = 'resolved';
       state.user = undefined;
+    },
+    [uploadAvatar.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [uploadAvatar.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.user.avatar = action.payload.avatar;
     },
     [sendMoney.pending]: (state) => {
       state.status = 'loading';
