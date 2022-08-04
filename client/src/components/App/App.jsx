@@ -12,11 +12,13 @@ import Bullet from '../Bullet/Bullet';
 import Enemy from '../Enemy/Enemy';
 import GoldCoin from '../GoldCoin/GoldCoin';
 import './App.css';
+import { sendMoney } from '../../store/userReducer/reducer';
 import {
   getPlayer,
   display,
   updateFrame,
   sendStatistic,
+  sendScoreLvl,
   updateWaves,
   updateEnemies,
   updateBackgroundWaves2,
@@ -32,6 +34,7 @@ function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const app = useRef();
+  const { user } = useSelector((state) => state.user);
   const {
     enemies,
     bullets,
@@ -181,8 +184,9 @@ function App() {
     }
     // логика смены волн врагов
     if (playGame === 'play') {
+
       if (game.countEnemies === gamePlay.waves1 && passageWaves === 1 && player.x > 1050) {
-      // if (game.countEnemies === 2 && passageWaves === 1) {
+
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
@@ -195,8 +199,6 @@ function App() {
 
       if (game.countEnemies === gamePlay.waves2 + gamePlay.waves1
         && passageWaves === 2 && player.x > 1050) {
-        // if (game.countEnemies === 4 && passageWaves === 2) {
-
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
@@ -207,8 +209,10 @@ function App() {
         setPassageWaves(3);
       }
       // логика выгрыша
-      if (game.countEnemies === gamePlay.waves2 + gamePlay.waves1
-        + gamePlay.waves3 + gamePlay.boss) {
+      if (
+        game.countEnemies
+        === gamePlay.waves2 + gamePlay.waves1 + gamePlay.waves3 + gamePlay.boss
+      ) {
         setPlayGame('vin');
       }
     }
@@ -262,17 +266,22 @@ function App() {
       // записываем время проведенное в игре
       const time = (+Date.now() - +startTime) / 1000;
       // диспатч для сбора статистики за игру
+      dispatch(sendMoney({ gameMoney: game.countMoney, userMoney: user.money }));
       dispatch(
         sendStatistic({
           countEnemies: game.countEnemies,
-          countMoney: game.countMoney,
           countDamage: game.countDamage,
           countWaves,
           timeGame: time,
         }),
       );
+      dispatch(sendScoreLvl({ lvl: player.lvl, score: player.score }));
     }
   }, [playGame]);
+
+  const restart = () => {
+    setPlayGame('play');
+  };
 
   return (
     <div
@@ -296,10 +305,10 @@ function App() {
               {' '}
               <span className="yellow">OVER</span>
             </h1>
-            <Link className="nes-btn is-primary" to="/game">
+            <Link className="nes-btn is-primary" to="/game" onClick={restart}>
               Играть еще раз
             </Link>
-            <Link className="nes-btn is-warning" to="/">
+            <Link className="nes-btn is-warning" to="/" onClick={restart}>
               Вернуться в главное меню
             </Link>
           </div>
@@ -307,10 +316,10 @@ function App() {
         {playGame === 'vin' && (
           <div className="gameOver">
             <h1>YOU WON!</h1>
-            <Link className="nes-btn is-primary" to="/game">
+            <Link className="nes-btn is-primary" to="/game" onClick={restart}>
               Играть еще раз
             </Link>
-            <Link className="nes-btn is-warning" to="/">
+            <Link className="nes-btn is-warning" to="/" onClick={restart}>
               Вернуться в главное меню
             </Link>
           </div>
