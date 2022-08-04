@@ -1,11 +1,11 @@
 const router = require('express').Router();
+const bcrypt = require('bcrypt');
 const {
   access,
   AUTHENTICATED,
   UNAUTHENTICATED,
 } = require('../middlewares/access');
 const { User, Hero } = require('../db/models');
-const bcrypt = require('bcrypt');
 
 function heroDefaultValues(userId) {
   return {
@@ -25,6 +25,7 @@ function clientUser(data) {
       id: data.id,
       email: data.email,
       name: data.name,
+      money: data.money,
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
     },
@@ -87,7 +88,9 @@ router.route('/up').post(access(UNAUTHENTICATED), async (req, res) => {
 
     // Create User
     const hash = await bcrypt.hash(password[0], 2);
-    const user = await User.create({ email, name, password: hash });
+    const user = await User.create({
+      email, name, password: hash,
+    });
     await user.save();
     req.session.userId = user.id;
 

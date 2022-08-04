@@ -11,6 +11,7 @@ import Enemy from '../Enemy/Enemy';
 import GoldCoin from '../GoldCoin/GoldCoin';
 import './App.css';
 import {
+  getPlayer,
   display,
   updateFrame,
   sendStatistic,
@@ -96,6 +97,8 @@ function App() {
 
     document.addEventListener('mousedown', mouseClickDown);
     document.addEventListener('mouseup', mouseClickUp);
+
+    dispatch(getPlayer());
 
     dispatch(
       display({
@@ -184,7 +187,8 @@ function App() {
         setPassageWaves(3);
       }
       // логика выгрыша
-      if (game.countEnemies === gamePlay.waves2 + gamePlay.waves1 + gamePlay.waves3) {
+      if (game.countEnemies === gamePlay.waves2 + gamePlay.waves1
+        + gamePlay.waves3v + gamePlay.boss) {
         setPlayGame('vin');
       }
     }

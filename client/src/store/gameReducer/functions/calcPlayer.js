@@ -38,7 +38,7 @@ function calcPlayer(state, action) {
       h: 3, // высота пули
       speedX, // скорость пуль по Х
       speedY, // скорость пуль по У
-      damage: state.weapon.damage, // нанисенный урон
+      damage: state.player.damage, // нанисенный урон
       corner: g,
     });
   }
@@ -154,6 +154,22 @@ function calcPlayer(state, action) {
           move: -1,
         });
       }
+    }
+    if (state.game.countWaves === 3 && state.gamePlay.waves3Count === state.gamePlay.waves3
+      && state.gamePlay.bossCount < state.gamePlay.boss) {
+      state.enemies.push({
+        type: uuidv4(),
+        x: state.display.width + 50,
+        y: Math.floor(Math.random() * (300 - 100)) + 100, // вертикаль
+        w: state.enemies4.w, // высота
+        h: state.enemies4.h, // ширина
+        hp: state.enemies4.hp, // здоровьее
+        speed: state.enemies4.speed, // скорость перемещения
+        damage: state.enemies4.damage, // урон
+        coolDown: state.enemies4.coolDown, // скорость удара
+        skin: '/animations/enemie4move.gif',
+        move: 1,
+      });
     }
   }
 }

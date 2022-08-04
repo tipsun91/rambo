@@ -47,7 +47,7 @@ export default function Profile() {
             />
           </div>
         </div>
-        <div className="edit-user-profile nes-container is-rounded">
+        <div className="edit-user-profile nes-container is-rounded is-dark">
           <form className="edit-form" ref={editProfileForm} onSubmit={onSubmit}>
             <div className="edit-profile">
               <input
@@ -139,12 +139,12 @@ export default function Profile() {
             </tr>
           </tbody>
         </table>
-      </div>
-      <div className="score-box-profile">
-        <p className="score-profile" />
-        <Link className="return-profile" to="/">
-          &lt;&lt; НАЗАД
-        </Link>
+        <div className="score-box-profile">
+          <p className="score-profile" />
+          <Link className="return-profile" to="/">
+            &lt;&lt; НАЗАД
+          </Link>
+        </div>
       </div>
     </div>
   );
