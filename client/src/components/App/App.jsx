@@ -21,6 +21,7 @@ import {
   updateBackgroundWaves3,
   updatePositionPlayer,
   deleteAllEnemies,
+  deleteAllGolds,
 } from '../../store/gameReducer/reducer';
 
 function App() {
@@ -197,6 +198,7 @@ function App() {
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWaves === 2) {
       dispatch(deleteAllEnemies());
+      dispatch(deleteAllGolds());
       // переходт на вторую локацию
       dispatch(updateBackgroundWaves2());
       // меняем позицию героя для прохождения в ворота
@@ -209,6 +211,7 @@ function App() {
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWaves === 3) {
       dispatch(deleteAllEnemies());
+      dispatch(deleteAllGolds());
       // переходт на третью локацию
       dispatch(updateBackgroundWaves3());
       // меняем позицию героя для прохождения в ворота

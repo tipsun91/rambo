@@ -126,14 +126,11 @@ const gameSlice = createSlice({
     player: {
       // Client only
       x: 0, // горизонталь
-      y: 100, // вертикаль
+      y: 500, // вертикаль
       w: 180, // высота
       h: 180, // ширина
       skin: '/animations/hero1.gif',
       move: 1,
-      // speed: 4, // скорость передвижения
-      // hp: 1000, // здоровье
-      // damage: 2, // урон
       weapon: ['trunk'],
       ammunition: [
         {
@@ -238,6 +235,9 @@ const gameSlice = createSlice({
     calcEnemiesFlag1: false, // ии врагов
   },
   reducers: {
+    deleteAllGolds(state, action) {
+      state.golds = [];
+    },
     deleteAllEnemies(state, action) {
       state.enemies = [];
     },
@@ -336,6 +336,7 @@ export const {
   updateBackgroundWaves3,
   updatePositionPlayer,
   deleteAllEnemies,
+  deleteAllGolds,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
