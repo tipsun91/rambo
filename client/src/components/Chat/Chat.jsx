@@ -85,10 +85,7 @@ function Chat() {
             <div key={v4()}>
               {mess.event === 'connection'
                 ? (
-                  <div className="message">
-                    Пользователь
-                    подключен
-                  </div>
+                  <div className="message" />
                 )
                 : (
                   <div className="message" key={v4()}>

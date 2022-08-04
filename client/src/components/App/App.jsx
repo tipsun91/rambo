@@ -271,7 +271,11 @@ function App() {
         )}
         {playGame === 'game-over' && (
           <div className="gameOver">
-            <h1>GAME OVER</h1>
+            <h1>
+              <span className="blue">GAME</span>
+              {' '}
+              <span className="yellow">OVER</span>
+            </h1>
             <Link className="nes-btn is-primary" to="/game">
               Играть еще раз
             </Link>

@@ -19,19 +19,22 @@ function GameMenu() {
         {user ? (
           <>
             <li>
-              <Link to="/game" className="lists__items nes-btn nes-btn__oth is-success btn-menu">Начать игру</Link>
+              <Link to="/game" className="lists__items">Начать игру</Link>
             </li>
             <li>
-              <Link to="/profile" className="lists__items nes-btn nes-btn__oth is-primary btn-menu">Настройки профиля</Link>
+              <Link to="/chat" className="lists__items">Войти в чат</Link>
             </li>
             <li>
-              <Link to="/profileHero" className="lists__items nes-btn nes-btn__oth is-primary btn-menu">Ваш герой</Link>
+              <Link to="/profile" className="lists__items">Настройки профиля</Link>
             </li>
             <li>
-              <Link to="/rating" className="lists__items nes-btn nes-btn__oth is-primary btn-menu">Рейтинг игроков</Link>
+              <Link to="/profileHero" className="lists__items">Ваш герой</Link>
             </li>
             <li>
-              <Link to="/sign/in" onClick={onClick} className="lists__items nes-btn nes-btn__oth is-error btn-menu">
+              <Link to="/rating" className="lists__items">Рейтинг игроков</Link>
+            </li>
+            <li>
+              <Link to="/sign/in" onClick={onClick} className="lists__items">
                 Сменить пользователя
               </Link>
             </li>
@@ -39,10 +42,10 @@ function GameMenu() {
         ) : (
           <>
             <li>
-              <Link to="/sign/in" className="lists__items nes-btn nes-btn__oth is-primary">Войти</Link>
+              <Link to="/sign/in" className="lists__items">Войти</Link>
             </li>
             <li>
-              <Link to="/sign/up" className="lists__items nes-btn nes-btn__oth is-primary">Зарегистрироваться</Link>
+              <Link to="/sign/up" className="lists__items">Зарегистрироваться</Link>
             </li>
           </>
         )}
