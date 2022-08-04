@@ -106,13 +106,6 @@ h1 {
   }
 }
 
-.score-box-profile {
-  position: absolute;
-  top: 110%;
-  left: 6%;
-  transform: translate(-50%, -50%);
-}
-
 .score-profile {
   display: inline-block;
   color: #ddd;
