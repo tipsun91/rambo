@@ -93,7 +93,7 @@ router
         gameData({
           userId: res.locals.user.id,
           ...req.body,
-        })
+        }),
       );
       await gameResult.save();
       if (gameResult.id) {
