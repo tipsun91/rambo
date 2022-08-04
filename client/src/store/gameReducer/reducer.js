@@ -112,6 +112,22 @@ export const sendStatistic = createAsyncThunk(
   },
 );
 
+export const userAllStats = createAsyncThunk(
+  '/api/statistics',
+  async (event, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/api/statistics', {
+        method: 'GET',
+      });
+      const data = await responce.json();
+      console.log('🚀 data', data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const gameSlice = createSlice({
   name: 'game',
   initialState: {
@@ -139,6 +155,7 @@ const gameSlice = createSlice({
         },
       ],
     },
+    statistic: [],
     enemies: [], // массив врагов
     enemies1: {
       type: 1,
@@ -192,7 +209,8 @@ const gameSlice = createSlice({
       skin: '/animations/enemie3move.gif',
       move: 1,
     },
-    weapon: { // НЕ ИСПОЛЬЗУЕТСЯ
+    weapon: {
+      // НЕ ИСПОЛЬЗУЕТСЯ
       name: 'trunk', // название
       damage: 20, // урон
       clip: 30, // обойма
@@ -207,14 +225,16 @@ const gameSlice = createSlice({
       w: 50,
       skin: '/animations/gold.gif',
     },
-    golds: [{
-      id: 1,
-      x: 400,
-      y: 70,
-      h: 50,
-      w: 50,
-      skin: '/animations/gold.gif',
-    }],
+    golds: [
+      {
+        id: 1,
+        x: 400,
+        y: 70,
+        h: 50,
+        w: 50,
+        skin: '/animations/gold.gif',
+      },
+    ],
     bullets: [], // массив в который мы пушим пули
     game: {
       // объект для сбора статистики за игру
@@ -323,6 +343,14 @@ const gameSlice = createSlice({
     [updateHeroSpeed.fulfilled]: (state, action) => {
       state.status = 'resolved';
       state.player.speed = action.payload.speed;
+    },
+    [userAllStats.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [userAllStats.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.statistic = action.payload.statistics;
     },
   },
 });

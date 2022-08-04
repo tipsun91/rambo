@@ -2,21 +2,21 @@ import React, { useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { editUser } from '../../store/userReducer/reducer';
+// import { userStats } from '../../store/gameReducer/reducer';
 import './Profile.css';
+
+// функция преобразования секунд в формат 00:00:00
+export const format = (seconds) => {
+  const s = (seconds % 60).toString();
+  const m = Math.floor((seconds / 60) % 60).toString();
+  const h = Math.floor((seconds / 60 / 60) % 60).toString();
+  return `${h.padStart(2, '0')}:${m.padStart(2, '0')}:${s.padStart(2, '0')}`;
+};
 
 export default function Profile() {
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const editProfileForm = useRef();
-
-  // функция преобразования секунд в формат 00:00:00
-  function format(seconds) {
-    const s = (seconds % 60).toString();
-    const m = Math.floor((seconds / 60) % 60).toString();
-    const h = Math.floor((seconds / 60 / 60) % 60).toString();
-    return `${h.padStart(2, '0')}:${m.padStart(2, '0')}:${s.padStart(2, '0')}`;
-  }
-  console.log(format(100));
 
   const onSubmit = useCallback(
     (event) => {
@@ -26,6 +26,11 @@ export default function Profile() {
     },
     [editProfileForm],
   );
+
+  //   useEffect((event) => {
+  //     dispatch(userStats(event));
+  //     console.log('aaa');
+  //   }, []);
 
   return (
     <div className="container__stats anim-show-profile flex">
