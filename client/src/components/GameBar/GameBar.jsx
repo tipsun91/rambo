@@ -13,11 +13,11 @@ function GameBar() {
       <div className="gamebar">
         <div className="gamebar__left">
           <p className="gamebar__progress__damage__number">
-            damage-
-            {player.damage}
+            damage:
+            {Math.floor(player.damage)}
           </p>
           <p className="gamebar__progress__damage__number">
-            speed-
+            speed:
             {player.speed}
           </p>
           <p className="gamebar__progress__enemies__number">{`enemies: ${game.countEnemies}`}</p>
@@ -27,13 +27,15 @@ function GameBar() {
             className="gamebar__progress__hp"
             style={{ width: `${player.hp}%` }}
           >
-            <p className="gamebar__progress__number">{`${player.hp}💔`}</p>
+            <p className="gamebar__progress__number">{`${Math.floor(player.hp)}💔`}</p>
           </div>
-          <p className="gamebar__progress__number">lvl: 1000</p>
+          <p className="gamebar__progress__number">{`lvl: ${player.lvl}`}</p>
+          <p className="gamebar__progress__number">{`score: ${player.score}`}</p>
         </div>
         <div className="gamebar__right">
-          <p className="gamebar__progress__money__number">{`gold${game.countMoney}`}</p>
-          <p className="gamebar__progress__enemies__number">{`kill${game.countEnemies}`}</p>
+          <p className="gamebar__progress__enemies__number">{`damage: ${Math.floor(game.countDamage)}`}</p>
+          <p className="gamebar__progress__money__number">{`gold: ${game.countMoney}`}</p>
+          <p className="gamebar__progress__enemies__number">{`kill: ${game.countEnemies}`}</p>
         </div>
       </div>
     </div>

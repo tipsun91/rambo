@@ -5,7 +5,6 @@ const { access, AUTHENTICATED } = require('../middlewares/access');
 const gameData = (data) => ({
   userId: data.userId,
   countEnemies: data.countEnemies,
-  countMoney: data.countMoney,
   countDamage: data.countDamage,
   countWaves: data.countWaves,
   timeGame: Math.round(data.timeGame),
