@@ -25,6 +25,9 @@ function GameMenu() {
               <Link to="/profile">Настройки профиля</Link>
             </li>
             <li>
+              <Link to="/profileHero">Ваш герой</Link>
+            </li>
+            <li>
               <Link to="/rating" className="lists__items">Рейтинг игроков</Link>
             </li>
             <li>

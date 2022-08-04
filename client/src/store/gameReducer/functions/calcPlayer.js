@@ -38,12 +38,12 @@ function calcPlayer(state, action) {
       h: 3, // высота пули
       speedX, // скорость пуль по Х
       speedY, // скорость пуль по У
-      damage: state.weapon.damage, // нанисенный урон
+      damage: state.player.damage, // нанисенный урон
       corner: g,
     });
   }
   if (action.payload.player.includes('enemy')) { // рожаем врагов
-    if (state.game.countWawes === 1 && state.gamePlay.waves1Count < state.gamePlay.waves1) {
+    if (state.game.countWaves === 1 && state.gamePlay.waves1Count < state.gamePlay.waves1) {
       const randomNum = Math.floor(Math.random() * (10 - 1)) + 1;
       if (randomNum < 6) {
         state.gamePlay.waves1Count += 1;
@@ -81,7 +81,7 @@ function calcPlayer(state, action) {
     }
     // console.log(state.gamePlay.waves2Count);
     // console.log(state.gamePlay.waves2);
-    if (state.game.countWawes === 2 && state.gamePlay.waves2Count < state.gamePlay.waves2) {
+    if (state.game.countWaves === 2 && state.gamePlay.waves2Count < state.gamePlay.waves2) {
       const randomNum = Math.floor(Math.random() * (10 - 1)) + 1;
       if (randomNum < 6) {
         state.gamePlay.waves2Count += 1;
@@ -89,8 +89,8 @@ function calcPlayer(state, action) {
           id: uuidv4(),
           type: state.enemies2.type, // тип врага
           x: state.display.width - 50,
-          // y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
-          y: 300,
+          y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
+          // y: 300,
           w: state.enemies2.w, // высота
           h: state.enemies2.h, // ширина
           hp: state.enemies2.hp, // здоровьее
@@ -108,8 +108,8 @@ function calcPlayer(state, action) {
           w: state.enemies2.w, // высота
           h: state.enemies2.h, // ширина
           x: 50, // горизонталь
-          // y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
-          y: 200,
+          y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
+          // y: 200,
           hp: state.enemies2.hp, // здоровьее
           speed: state.enemies2.speed, // скорость перемещения
           damage: state.enemies2.damage, // урон
@@ -119,7 +119,7 @@ function calcPlayer(state, action) {
         });
       }
     }
-    if (state.game.countWawes === 3 && state.gamePlay.waves3Count < state.gamePlay.waves3) {
+    if (state.game.countWaves === 3 && state.gamePlay.waves3Count < state.gamePlay.waves3) {
       const randomNum = Math.floor(Math.random() * (10 - 1)) + 1;
       if (randomNum < 6) {
         state.gamePlay.waves3Count += 1;

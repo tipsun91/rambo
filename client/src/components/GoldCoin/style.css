@@ -1,6 +1,6 @@
 .coin 
 {
   position: absolute;
-  background-color: black;
+  background-color: transparent;
   display: flex;
 }

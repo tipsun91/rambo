@@ -4,22 +4,16 @@ import { v4 as uuidv4 } from 'uuid';
 function calcCollisionBullets(state, arr) {
   state.bullets.forEach((bullet) => {
     arr.forEach((enemie) => {
-      // if (enemy.x > state.player.x) {
-      //   if (
-      //     bullet.x >= enemy.x
-      //     && bullet.y >= enemy.y
-      //     && bullet.y <= enemy.y + state.player.w
-      //   ) {
       if (bullet.x + bullet.w / 2 >= enemie.x - enemie.w / 2
         && bullet.x - bullet.w / 2 <= enemie.x + enemie.w / 2
         && bullet.y - bullet.h <= enemie.y + enemie.h
         && bullet.y >= enemie.y) {
+        if (bullet.damage > enemie.hp) {
+          state.game.countDamage += enemie.hp;
+        } else {
+          state.game.countDamage += +bullet.damage.toFixed(0);
+        }
         enemie.hp -= bullet.damage;
-        // console.log(enemie.hp);
-        state.game.countDamage += bullet.damage;
-        // console.log(state.game.countDamage);
-        // state.bullets.splice(bullet, 1);
-        // enemie.skin1 = '/animations/boom2.gif';
         state.bullets.splice(
           arr.findIndex((el) => el.id === bullet.id),
           1,
