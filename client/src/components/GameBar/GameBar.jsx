@@ -23,11 +23,12 @@ function GameBar() {
           >
             <p className="gamebar__progress__number">{`${player.hp}💔`}</p>
           </div>
-          <p className="gamebar__progress__number">lvl: 1000</p>
+          <p className="gamebar__progress__number">{`lvl: ${player.lvl}`}</p>
+          <p className="gamebar__progress__number">{`score: ${player.score}`}</p>
         </div>
         <div className="gamebar__right">
           <p className="gamebar__progress__money__number">{`gold: ${game.countMoney}`}</p>
-          <p className="gamebar__progress__enemies__number">{`score: ${game.countDamage}`}</p>
+          <p className="gamebar__progress__enemies__number">{`damage: ${game.countDamage}`}</p>
         </div>
       </div>
     </div>

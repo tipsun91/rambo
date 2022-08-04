@@ -8,18 +8,24 @@ function calcCollisionBullets(state, arr) {
         && bullet.x - bullet.w / 2 <= enemie.x + enemie.w / 2
         && bullet.y - bullet.h <= enemie.y + enemie.h
         && bullet.y >= enemie.y) {
-        if (bullet.damage >= enemie.hp) {
-          state.game.countDamage += +enemie.hp.toFixed(0);
-          enemie.hp -= +enemie.hp;
+        if (+bullet.damage >= +enemie.hp) {
+          state.game.countDamage = +state.game.countDamage + +enemie.hp;
+          enemie.hp = 0;
         } else {
-          state.game.countDamage += +bullet.damage.toFixed(0);
-          enemie.hp -= +bullet.damage;
+          state.game.countDamage = +state.game.countDamage + +bullet.damage;
+          enemie.hp = +enemie.hp - +bullet.damage;
         }
         state.bullets.splice(
           arr.findIndex((el) => el.id === bullet.id),
           1,
         );
         if (enemie.hp <= 0) {
+          if (state.player.score % 100) {
+            state.player.lvl += 1;
+            state.player.score += 10;
+          } else {
+            state.player.score += 10;
+          }
           state.golds.push({
             id: uuidv4(),
             x: enemie.x,
@@ -29,7 +35,6 @@ function calcCollisionBullets(state, arr) {
             skin: state.gold.skin,
           });
           state.game.countEnemies += 1;
-          // state.game.countMoney += 15;
           arr.splice(
             arr.findIndex((el) => el.id === enemie.id),
             1,

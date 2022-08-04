@@ -105,8 +105,8 @@ function ProfileHero() {
                   )}
                 { user.money < 100 && player.speed < 10
                   && (
-                    <button disabled type="button" className="update btn-2 nes-btn is-primary">
-                      100 💰
+                    <button disabled type="button" className="update__button btn-2 nes-btn is-disabled">
+                      нужны деньги
                     </button>
                   )}
                 {player.speed >= 10
