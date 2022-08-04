@@ -17,7 +17,7 @@ function GameMenu() {
   return (
     <nav className="anim-show-gamemenu">
       <ul>
-        {user.id ? (
+        {user ? (
           <>
             <li>
               <Link to="/game">Начать игру</Link>

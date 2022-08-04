@@ -11,6 +11,22 @@ import calcCollisionsEnemie from './functions/calcCollisionsEnemie';
 import calcCollisionBullets from './functions/calcCollisionBullets';
 import upGameLoop from './functions/upGameLoop';
 
+export const getPlayer = createAsyncThunk(
+  '/hero/getPlayer',
+  async (_, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/hero/getPlayer', {
+        method: 'GET',
+        credentials: 'include',
+      });
+      const data = await responce.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 export const updateHeroHp = createAsyncThunk(
   '/hero/updateHp',
   async (_, { rejectWithValue }) => {
@@ -41,7 +57,6 @@ export const updateHeroDamage = createAsyncThunk(
         },
       });
       const data = await responce.json();
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -63,7 +78,6 @@ export const updateHeroSpeed = createAsyncThunk(
         }),
       });
       const data = await responce.json();
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -101,13 +115,6 @@ const gameSlice = createSlice({
   name: 'game',
   initialState: {
     player: {
-      // Database values
-      hp: 100, // здоровье
-      speed: 7, // скорость передвижения
-      damage: 20, // урон
-      score: 0,
-      lvl: 1,
-
       // Client only
       x: 0, // горизонталь
       y: 500, // вертикаль
@@ -334,7 +341,7 @@ const gameSlice = createSlice({
     },
     updateFrame(state, action) {
       upGameLoop(state); // прибовляет 1 каждый цикл;
-      calcEnemies(state, state.enemies, state.player); // рассчитывает поведение мобов
+      // calcEnemies(state, state.enemies, state.player); // рассчитывает поведение мобов
       // calcEnemies(state, state.enemies2, state.player);
       // calcEnemies(state, state.enemies3, state.player);
       // calcEnemies(state, state.enemies4, state.player);
@@ -351,13 +358,20 @@ const gameSlice = createSlice({
     },
   },
   extraReducers: {
+    [getPlayer.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [getPlayer.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.player = { ...state.player, ...action.payload.player };
+    },
     [updateHeroHp.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
     },
     [updateHeroHp.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      console.log(action.payload);
       state.player.hp = action.payload.hp;
     },
     [updateHeroDamage.pending]: (state) => {

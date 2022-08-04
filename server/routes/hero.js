@@ -1,6 +1,21 @@
 const routerHero = require('express').Router();
 const { Hero, User } = require('../db/models');
 
+routerHero.route('/getPlayer')
+  .get(async (req, res) => {
+    try {
+      const id = req.session.userId;
+      const hero = await Hero.findOne({
+        where: {
+          userId: id,
+        },
+      });
+      res.send({ player: hero });
+    } catch (error) {
+      console.log(error.message);
+    }
+  });
+
 routerHero.route('/updateHp')
   .put(async (req, res) => {
     try {
@@ -16,10 +31,15 @@ routerHero.route('/updateHp')
             userId: id,
           },
         });
-        const update = +hero.hp * 1.2;
+        const update = (+hero.hp * 1.2).toFixed(1);
         await Hero.update({ hp: update }, {
           where: {
             userId: id,
+          },
+        });
+        await User.update({ money: +user.money - 100 }, {
+          where: {
+            id,
           },
         });
         res.send({ hp: update });
@@ -46,10 +66,15 @@ routerHero.route('/updateDamage')
             userId: id,
           },
         });
-        const update = +hero.damage * 1.2;
+        const update = (+hero.damage * 1.2).toFixed(1);
         await Hero.update({ damage: update }, {
           where: {
             userId: id,
+          },
+        });
+        await User.update({ money: +user.money - 100 }, {
+          where: {
+            id,
           },
         });
         res.send({ damage: update });
@@ -70,19 +95,26 @@ routerHero.route('/updateSpeed')
           id,
         },
       });
-      if (user.money >= 100 && req.body.speed <= 10) {
+      if (user.money >= 100) {
         const hero = await Hero.findOne({
           where: {
             userId: id,
           },
         });
-        const update = +hero.speed * 1.2;
-        await Hero.update({ speed: update }, {
-          where: {
-            userId: id,
-          },
-        });
-        res.send({ speed: update });
+        const update = +hero.speed + 1;
+        if (update <= 10) {
+          await Hero.update({ speed: update }, {
+            where: {
+              userId: id,
+            },
+          });
+          await User.update({ money: +user.money - 100 }, {
+            where: {
+              id,
+            },
+          });
+          res.send({ speed: update });
+        }
       } else {
         res.send({ status: false });
       }

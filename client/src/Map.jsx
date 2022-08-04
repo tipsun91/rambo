@@ -15,6 +15,7 @@ import NoPage from './components/NoPage/NoPage';
 import GameMenu from './components/GameMenu/GameMenu';
 import NavBar from './components/NavBar/NavBar';
 import ProfileHero from './components/ProfileHero/ProfileHero';
+import Chat from './components/Chat/Chat';
 
 export default function Map() {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ export default function Map() {
                 <Route path="in" element={<Signin />} />
                 <Route path="up" element={<Signup />} />
               </Route>
+              <Route path="chat" element={<Chat />} />
             </>
           )
           : (

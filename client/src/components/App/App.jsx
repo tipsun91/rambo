@@ -13,6 +13,7 @@ import Enemy3 from '../Enemy/Enemy3.0';
 import Enemy4 from '../Enemy/Enemy4.0';
 import './App.css';
 import {
+  getPlayer,
   display,
   updateFrame,
   sendStatistic,
@@ -99,6 +100,8 @@ function App() {
 
     document.addEventListener('mousedown', mouseClickDown);
     document.addEventListener('mouseup', mouseClickUp);
+
+    dispatch(getPlayer());
 
     dispatch(
       display({
