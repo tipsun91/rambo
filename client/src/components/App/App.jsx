@@ -168,7 +168,9 @@ function App() {
     }
     // логика смены волн врагов
     if (playGame === 'play') {
+
       if (game.countEnemies === gamePlay.waves1 && passageWaves === 1 && player.x > 1050) {
+
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
@@ -191,8 +193,10 @@ function App() {
         setPassageWaves(3);
       }
       // логика выгрыша
-      if (game.countEnemies === gamePlay.waves2 + gamePlay.waves1
-        + gamePlay.waves3 + gamePlay.boss) {
+      if (
+        game.countEnemies
+        === gamePlay.waves2 + gamePlay.waves1 + gamePlay.waves3 + gamePlay.boss
+      ) {
         setPlayGame('vin');
       }
     }
@@ -259,6 +263,10 @@ function App() {
     }
   }, [playGame]);
 
+  const restart = () => {
+    setPlayGame('play');
+  };
+
   return (
     <div
       style={{ backgroundPosition: backgroundPositionLeft }}
@@ -281,10 +289,10 @@ function App() {
               {' '}
               <span className="yellow">OVER</span>
             </h1>
-            <Link className="nes-btn is-primary" to="/game">
+            <Link className="nes-btn is-primary" to="/game" onClick={restart}>
               Играть еще раз
             </Link>
-            <Link className="nes-btn is-warning" to="/">
+            <Link className="nes-btn is-warning" to="/" onClick={restart}>
               Вернуться в главное меню
             </Link>
           </div>
@@ -292,10 +300,10 @@ function App() {
         {playGame === 'vin' && (
           <div className="gameOver">
             <h1>YOU WON!</h1>
-            <Link className="nes-btn is-primary" to="/game">
+            <Link className="nes-btn is-primary" to="/game" onClick={restart}>
               Играть еще раз
             </Link>
-            <Link className="nes-btn is-warning" to="/">
+            <Link className="nes-btn is-warning" to="/" onClick={restart}>
               Вернуться в главное меню
             </Link>
           </div>

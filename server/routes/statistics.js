@@ -15,7 +15,7 @@ const { sequelize, User, Game } = require('../db/models');
 // Статистика по конкретному пользователю
 router.route('/:id').get(async (req, res) => {
   try {
-    const id = Number(req.params.id);
+    const id = req.session.userId;
     const user = await User.findByPk(id);
     if (!user || !user.id) {
       res.status(404).json({ message: `User with id=${id} not found!` });
