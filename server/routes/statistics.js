@@ -3,53 +3,58 @@ const router = require('express').Router();
 const { access, AUTHENTICATED } = require('../middlewares/access');
 
 const gameData = (data) => ({
+  userId: data.userId,
   countEnemies: data.countEnemies,
-  countMoney: data.countMoney,
   countDamage: data.countDamage,
-  countWawes: data.countWawes,
-  timeGame: data.timeGame,
+  countWaves: data.countWaves,
+  timeGame: Math.round(data.timeGame),
 });
 
 const { sequelize, User, Game } = require('../db/models');
 
-router.route('/:id')
-  .get(async (req, res) => {
-    try {
-      const id = Number(req.params.id);
-      const user = await User.findByPk(id);
-      if (!user || !user.id) {
-        res.status(404).json({ message: `User with id=${id} not found!` });
-        return;
-      }
-
-      const statistics = await Game.findAll({
-        where: {
-          userId: id,
-        },
-        raw: true,
-        group: ['User.id'],
-        attributes: [
-          [sequelize.fn('COUNT', sequelize.col('Game.id')), 'Game.countGames'],
-          [sequelize.fn('SUM', sequelize.col('countEnemies')), 'Game.countEnemies'],
-          [sequelize.fn('SUM', sequelize.col('countMoney')), 'Game.countMoney'],
-          [sequelize.fn('SUM', sequelize.col('countDamage')), 'Game.countDamage'],
-          [sequelize.fn('SUM', sequelize.col('timeGame')), 'Game.timeGame'],
-          [sequelize.fn('SUM', sequelize.col('countWaves')), 'Game.countWaves'],
-        ],
-        include: {
-          raw: true,
-          model: User,
-          attributes: ['id', 'name'],
-        },
-      });
-
-      res.status(200).json({ statistics });
-    } catch (e) {
-      res.status(502).json({ message: e.message });
+// Статистика по конкретному пользователю
+router.route('/:id').get(async (req, res) => {
+  try {
+    const id = req.session.userId;
+    const user = await User.findByPk(id);
+    if (!user || !user.id) {
+      res.status(404).json({ message: `User with id=${id} not found!` });
+      return;
     }
-  });
 
-router.route('/')
+    const statistics = await Game.findAll({
+      where: {
+        userId: id,
+      },
+      raw: true,
+      group: ['User.id'],
+      attributes: [
+        [sequelize.fn('COUNT', sequelize.col('Game.id')), 'Game.countGames'],
+        [
+          sequelize.fn('SUM', sequelize.col('countEnemies')),
+          'Game.countEnemies',
+        ],
+        [sequelize.fn('SUM', sequelize.col('countMoney')), 'Game.countMoney'],
+        [sequelize.fn('SUM', sequelize.col('countDamage')), 'Game.countDamage'],
+        [sequelize.fn('SUM', sequelize.col('timeGame')), 'Game.timeGame'],
+        [sequelize.fn('SUM', sequelize.col('countWaves')), 'Game.countWaves'],
+      ],
+      include: {
+        raw: true,
+        model: User,
+        attributes: ['id', 'name'],
+      },
+    });
+
+    res.status(200).json({ statistics });
+  } catch (e) {
+    res.status(502).json({ message: e.message });
+  }
+});
+
+router
+  .route('/')
+  // Статистика общая
   .get(async (req, res) => {
     try {
       const statistics = await Game.findAll({
@@ -57,9 +62,15 @@ router.route('/')
         group: ['User.id'],
         attributes: [
           [sequelize.fn('COUNT', sequelize.col('Game.id')), 'Game.countGames'],
-          [sequelize.fn('SUM', sequelize.col('countEnemies')), 'Game.countEnemies'],
+          [
+            sequelize.fn('SUM', sequelize.col('countEnemies')),
+            'Game.countEnemies',
+          ],
           [sequelize.fn('SUM', sequelize.col('countMoney')), 'Game.countMoney'],
-          [sequelize.fn('SUM', sequelize.col('countDamage')), 'Game.countDamage'],
+          [
+            sequelize.fn('SUM', sequelize.col('countDamage')),
+            'Game.countDamage',
+          ],
           [sequelize.fn('SUM', sequelize.col('timeGame')), 'Game.timeGame'],
           [sequelize.fn('SUM', sequelize.col('countWaves')), 'Game.countWaves'],
         ],
@@ -72,16 +83,18 @@ router.route('/')
 
       res.status(200).json({ statistics });
     } catch (e) {
+      console.log('🚀 ~ file: statistics.js ~ line 88 ~ .get ~ e', e);
       res.status(502).json({ message: e.message });
     }
   })
   .post(access(AUTHENTICATED), async (req, res) => {
-    console.log(req.body);
     try {
       const gameResult = await Game.create(
-        gameData(req.body),
+        gameData({
+          userId: res.locals.user.id,
+          ...req.body,
+        })
       );
-
       await gameResult.save();
       if (gameResult.id) {
         res.status(201).json({ message: 'Created!' });
@@ -103,7 +116,6 @@ router.route('/')
         res.status(404).json({ message: 'Not found!' });
         return;
       }
-
       const { updatedAt } = gameResult;
       gameResult = gameData(req.body);
       await gameResult.save();

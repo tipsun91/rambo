@@ -8,7 +8,6 @@ import './GameMenu.css';
 function GameMenu() {
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  console.log(user);
 
   const onClick = useCallback(() => {
     dispatch(signOut());
@@ -16,23 +15,26 @@ function GameMenu() {
 
   return (
     <nav className="anim-show-gamemenu">
-      <ul>
+      <ul className="game-menu nes-container is-dark with-title">
         {user ? (
           <>
             <li>
-              <Link to="/game">Начать игру</Link>
+              <Link to="/game" className="lists__items">Начать игру</Link>
             </li>
             <li>
-              <Link to="/">Настройки</Link>
+              <Link to="/chat" className="lists__items">Войти в чат</Link>
             </li>
             <li>
-              <Link to="/profile">Личный кабинет</Link>
+              <Link to="/profile" className="lists__items">Настройки профиля</Link>
             </li>
             <li>
-              <Link to="/rating">Рейтинг игроков</Link>
+              <Link to="/profileHero" className="lists__items">Ваш герой</Link>
             </li>
             <li>
-              <Link to="/sign/in" onClick={onClick}>
+              <Link to="/rating" className="lists__items">Рейтинг игроков</Link>
+            </li>
+            <li>
+              <Link to="/sign/in" onClick={onClick} className="lists__items">
                 Сменить пользователя
               </Link>
             </li>
@@ -40,10 +42,10 @@ function GameMenu() {
         ) : (
           <>
             <li>
-              <Link to="/sign/in">Войти</Link>
+              <Link to="/sign/in" className="lists__items">Войти</Link>
             </li>
             <li>
-              <Link to="/sign/up">Зарегистрироваться</Link>
+              <Link to="/sign/up" className="lists__items">Зарегистрироваться</Link>
             </li>
           </>
         )}

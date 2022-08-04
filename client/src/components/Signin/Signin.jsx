@@ -7,7 +7,7 @@ import './Signin.css';
 export default function Signin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const { user, error } = useSelector((state) => state.user);
   const signInForm = useRef();
 
   const onSubmit = useCallback(
@@ -29,31 +29,39 @@ export default function Signin() {
   );
 
   return (
-    <div className="login-box anim-show-singin">
+    <div className="login-box anim-show-singin nes-container is-rounded is-dark forms">
+      <h1>
+        <span className="blue">WELCOME</span>
+        {' '}
+        <span className="yellow">BACK!</span>
+      </h1>
       <form className="form_login" autoComplete="off" ref={signInForm} onSubmit={onSubmit}>
-        <div className="input-section">
+        <div className="input-section nes-field">
           <i className="far" />
           <input
             required
             name="email"
-            className="input-area"
+            className="nes-input"
             type="email"
             placeholder="Email"
+            style={{ color: 'black' }}
           />
         </div>
-        <div className="input-section">
+        <div className="input-section nes-field">
           <i className="fas" />
           <input
             name="password"
             required
-            className="input-area"
+            className="nes-input"
             type="password"
             placeholder="Password"
+            style={{ color: 'black' }}
           />
         </div>
-        <button type="submit" className="btn" id="login-btn">
+        <button type="submit" className="nes-btn is-primary nes-up" id="login-btn">
           Войти
         </button>
+        { error && <div className="error_mes">Неверный логин или пароль</div> }
       </form>
     </div>
   );

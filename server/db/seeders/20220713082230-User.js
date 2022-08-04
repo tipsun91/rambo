@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 const { sequelize } = require('../models');
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -5,37 +7,49 @@ module.exports = {
       'Users',
       [
         {
-          email: 'yurij@elbrus-boot.camp',
           name: 'Юрий',
-          password:
-            '$2b$04$cY7DA5sPv6Xd4Jpd5Aczheue.9d3gGv/ryoBUJ76tedO0OItjOC.W', // test
+          email: 'yurij@elbrus-boot.camp',
+          password: await bcrypt.hash('112233Aaa', 2), // test
           money: 100,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          email: 'polechkapo@yandex.ru',
           name: 'Поля',
-          password:
-            '$2b$04$cY7DA5sPv6Xd4Jpd5Aczheue.9d3gGv/ryoBUJ76tedO0OItjOC.W', // test
+          email: 'polechkapo@yandex.ru',
+          password: await bcrypt.hash('test', 2), // test
           money: 100,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          email: 'vovan@yandex.ru',
           name: 'Вован',
-          password:
-            '$2b$04$cY7DA5sPv6Xd4Jpd5Aczheue.9d3gGv/ryoBUJ76tedO0OItjOC.W', // test
+          email: 'vovan@yandex.ru',
+          password: await bcrypt.hash('112233Aaa', 2), // test
           money: 100,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          email: 'maxim@yandex.ru',
           name: 'Максим',
-          password:
-            '$2b$04$cY7DA5sPv6Xd4Jpd5Aczheue.9d3gGv/ryoBUJ76tedO0OItjOC.W', // test
+          email: 'maxim@yandex.ru',
+          password: await bcrypt.hash('112233Aaa', 2), // test
+          money: 100,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Саня',
+          email: 'sanya@yandex.ru',
+          password: await bcrypt.hash('112233Aaa', 2), // test
+          money: 100,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Абдулла',
+          email: 'abdylla@yandex.ru',
+          password: await bcrypt.hash('112233Aaa', 2), // test
           money: 100,
           createdAt: new Date(),
           updatedAt: new Date(),

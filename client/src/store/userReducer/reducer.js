@@ -7,6 +7,28 @@ const SIGN_OUT_URL = '/api/sign/out/';
 const USR_UPD_URL = '/api/user/';
 const USR_UPLOAD_AVATAR = '/api/avatar/';
 
+export const sendMoney = createAsyncThunk(
+  '/api/user/money',
+  async (money, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/api/user/money', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          gameMoney: money.gameMoney,
+          userMoney: money.userMoney,
+        }),
+      });
+      const data = await responce.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 export const signData = createAsyncThunk(
   '/api/sign/in',
   async (event, { rejectWithValue }) => {
@@ -132,8 +154,13 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     user: {},
+    error: false,
   },
-  reducers: {},
+  reducers: {
+    buy(state) {
+      state.user.money -= 100;
+    },
+  },
   extraReducers: {
     [signData.pending]: (state) => {
       state.status = 'loading';
@@ -149,7 +176,11 @@ const userSlice = createSlice({
     },
     [signIn.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.user = action.payload.user;
+      if (action.payload.message === 'Incorrect password!' || action.payload.message === 'User not found!') {
+        state.error = true;
+      } else {
+        state.user = action.payload.user;
+      }
     },
     [signUp.pending]: (state) => {
       state.status = 'loading';
@@ -157,7 +188,11 @@ const userSlice = createSlice({
     },
     [signUp.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.user = action.payload.user;
+      if (action.payload.message === 'Incorrect password!' || action.payload.message === 'User exists!') {
+        state.error = action.payload.message;
+      } else {
+        state.user = action.payload.user;
+      }
     },
     [editUser.pending]: (state) => {
       state.status = 'loading';
@@ -183,7 +218,17 @@ const userSlice = createSlice({
       state.status = 'resolved';
       state.user.avatar = action.payload.avatar;
     },
+    [sendMoney.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [sendMoney.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.user.money = action.payload.money;
+    },
   },
 });
+
+export const { buy } = userSlice.actions;
 
 export default userSlice.reducer;

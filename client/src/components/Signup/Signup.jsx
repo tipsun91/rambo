@@ -7,8 +7,9 @@ import './Signup.css';
 export default function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const { user, error } = useSelector((state) => state.user);
   const signUpForm = useRef();
+  console.log(error);
 
   const onSubmit = useCallback(
     (event) => {
@@ -29,56 +30,68 @@ export default function Signup() {
   );
 
   return (
-    <div className="registr-box anim-show-signup">
+    <div className="registr-box anim-show-signup nes-container is-rounded is-dark forms">
+      <h1>
+        <span className="blue">
+          LET&apos;S
+        </span>
+        {' '}
+        <span className="yellow">PLAY!</span>
+      </h1>
       <form
         className="form"
         autoComplete="off"
         ref={signUpForm}
         onSubmit={onSubmit}
       >
-        <div className="input-section">
+        <div className="input-section input-section nes-field">
           <i className="far" />
           <input
             required
             name="name"
-            className="input-area"
+            className="nes-input"
             type="text"
             placeholder="Name"
+            style={{ color: 'black' }}
           />
         </div>
-        <div className="input-section">
+        <div className="input-section input-section nes-field">
           <i className="far" />
           <input
             required
             name="email"
-            className="input-area"
+            className="nes-input"
             type="email"
             placeholder="Email"
+            style={{ color: 'black' }}
           />
         </div>
-        <div className="input-section">
+        <div className="input-section input-section nes-field">
           <i className="fas" />
           <input
             required
             name="password"
-            className="input-area"
+            className="nes-input"
             type="password"
             placeholder="Password"
+            style={{ color: 'black' }}
           />
         </div>
-        <div className="input-section">
+        <div className="input-section input-section nes-field">
           <i className="fas" />
           <input
             required
             name="pswdcfrm"
-            className="input-area"
+            className="nes-input"
             type="password"
             placeholder="Password confirm"
+            style={{ color: 'black' }}
           />
         </div>
-        <button type="submit" className="btn" id="login-btn">
+        <button type="submit" className="nes-btn is-primary nes-in nes-up" id="login-btn">
           Зарегистрироваться
         </button>
+        { error !== false && <div className="error_mes">{error}</div> }
       </form>
     </div>
   );
