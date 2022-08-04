@@ -31,3 +31,22 @@
 .nes-btn {
   margin: 0!important;
 }
+
+.anim-show-profile__hero {
+    color: #fff;
+    text-align: center;
+    opacity: 0;
+    transition: 1s;
+    animation: show 0.5s 1;
+    animation-fill-mode: forwards;
+    animation-delay: 0s;
+  }
+  
+  @keyframes show {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
