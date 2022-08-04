@@ -87,7 +87,7 @@ export default function Signup() {
             style={{ color: 'black' }}
           />
         </div>
-        <button type="submit" className="nes-btn is-primary" id="login-btn">
+        <button type="submit" className="nes-btn is-primary nes-in" id="login-btn">
           Зарегистрироваться
         </button>
       </form>
