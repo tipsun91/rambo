@@ -21,6 +21,7 @@ import {
   updateBackgroundWaves3,
   updatePositionPlayer,
   deleteAllEnemies,
+  deleteAllGolds,
 } from '../../store/gameReducer/reducer';
 
 function App() {
@@ -144,13 +145,13 @@ function App() {
     }
     // логика скорострельности
     if (bullet && playGame === 'play') {
-      if (Date.now() - timeBullet > 300) {
+      if (Date.now() - timeBullet > 30) {
         pressedButtons.push(' ');
         seTimeBullet(Date.now);
       }
     }
     // логика появления врагов
-    if (Date.now() - timeEnemy > 2000 && playGame === 'play') {
+    if (Date.now() - timeEnemy > 600 && playGame === 'play') {
       pressedButtons.push('enemy');
       setTimeEnemy(Date.now());
     }
@@ -188,7 +189,7 @@ function App() {
       }
       // логика выгрыша
       if (game.countEnemies === gamePlay.waves2 + gamePlay.waves1
-        + gamePlay.waves3v + gamePlay.boss) {
+        + gamePlay.waves3 + gamePlay.boss) {
         setPlayGame('vin');
       }
     }
@@ -197,7 +198,8 @@ function App() {
 
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWaves === 2) {
-      dispatch(deleteAllEnemies());
+      // dispatch(deleteAllEnemies());
+      dispatch(deleteAllGolds());
       // переходт на вторую локацию
       dispatch(updateBackgroundWaves2());
       // меняем позицию героя для прохождения в ворота
@@ -209,7 +211,8 @@ function App() {
     }
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWaves === 3) {
-      dispatch(deleteAllEnemies());
+      // dispatch(deleteAllEnemies());
+      dispatch(deleteAllGolds());
       // переходт на третью локацию
       dispatch(updateBackgroundWaves3());
       // меняем позицию героя для прохождения в ворота

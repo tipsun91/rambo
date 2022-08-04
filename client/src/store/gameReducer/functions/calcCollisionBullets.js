@@ -10,15 +10,18 @@ function calcCollisionBullets(state, arr) {
         && bullet.y >= enemie.y) {
         if (bullet.damage >= enemie.hp) {
           state.game.countDamage += +enemie.hp.toFixed(0);
+          enemie.hp -= +enemie.hp;
         } else {
           state.game.countDamage += +bullet.damage.toFixed(0);
+          enemie.hp -= +bullet.damage;
         }
-        console.log(enemie.hp);
-        enemie.hp -= +bullet.damage;
         state.bullets.splice(
           arr.findIndex((el) => el.id === bullet.id),
           1,
         );
+        if (enemie.hp <= 0 && enemie.type === 4) {
+          enemie.skin = '/animations/enemie3deeth.gif';
+        }
         if (enemie.hp <= 0) {
           state.golds.push({
             id: uuidv4(),

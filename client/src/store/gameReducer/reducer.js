@@ -116,11 +116,11 @@ const gameSlice = createSlice({
   name: 'game',
   initialState: {
     gamePlay: {
-      waves1: 3, // кол-во мобов
+      waves1: 15, // кол-во мобов
       waves1Count: 0,
-      waves2: 3, // кол-во мобов
+      waves2: 15, // кол-во мобов
       waves2Count: 0,
-      waves3: 3, // кол-во мобов
+      waves3: 15, // кол-во мобов
       waves3Count: 0,
       boss: 1,
       bossCount: 0,
@@ -128,14 +128,11 @@ const gameSlice = createSlice({
     player: {
       // Client only
       x: 0, // горизонталь
-      y: 100, // вертикаль
+      y: 500, // вертикаль
       w: 180, // высота
       h: 180, // ширина
       skin: '/animations/hero1.gif',
       move: 1,
-      // speed: 4, // скорость передвижения
-      // hp: 1000, // здоровье
-      // damage: 2, // урон
       weapon: ['trunk'],
       ammunition: [
         {
@@ -144,20 +141,7 @@ const gameSlice = createSlice({
         },
       ],
     },
-    enemies: [{
-      id: 1,
-      type: 4,
-      w: 280, // высота
-      h: 280, // ширина
-      x: 400, // горизонталь
-      y: 50, // вертикаль
-      hp: 500, // здоровье
-      speed: 0.7,
-      damage: 5, // урон
-      coolDown: 30, // скорость удара
-      skin: '/animations/enemie3move.gif',
-      move: 1,
-    }], // массив врагов
+    enemies: [], // массив врагов
     enemies1: {
       type: 1,
       w: 120, // высота
@@ -165,8 +149,8 @@ const gameSlice = createSlice({
       x: 500, // горизонталь
       y: 300, // вертикаль
       hp: 100, // здоровье
-      speed: 1.3, // скорость
-      damage: 5, // урон
+      speed: 3, // скорость
+      damage: 1, // урон
       coolDown: 30, // скорость удара
       skin: '/animations/enemie0move.gif',
       move: 1,
@@ -178,8 +162,8 @@ const gameSlice = createSlice({
       x: 600, // горизонталь
       y: 45, // вертикаль
       hp: 100, // здоровье
-      speed: 0.9, // скорость
-      damage: 5, // урон
+      speed: 4, // скорость
+      damage: 1, // урон
       coolDown: 20, // скорость удара
       skin: '/animations/enemie1move.gif',
       move: 1,
@@ -191,20 +175,20 @@ const gameSlice = createSlice({
       x: 600, // горизонталь
       y: 30, // вертикаль
       hp: 100, // здоровье
-      speed: 1.2,
-      damage: 5, // урон
+      speed: 4,
+      damage: 2, // урон
       coolDown: 30, // скорость удара
       skin: '/animations/enemie2move.gif',
       move: 1,
     },
     enemies4: {
       type: 4,
-      w: 280, // высота
-      h: 280, // ширина
+      w: 350, // высота
+      h: 350, // ширина
       x: 400, // горизонталь
       y: 50, // вертикаль
       hp: 500, // здоровье
-      speed: 0.7,
+      speed: 2,
       damage: 5, // урон
       coolDown: 30, // скорость удара
       skin: '/animations/enemie3move.gif',
@@ -246,6 +230,9 @@ const gameSlice = createSlice({
     calcEnemiesFlag1: false, // ии врагов
   },
   reducers: {
+    deleteAllGolds(state, action) {
+      state.golds = [];
+    },
     deleteAllEnemies(state, action) {
       state.enemies = [];
     },
@@ -344,6 +331,7 @@ export const {
   updateBackgroundWaves3,
   updatePositionPlayer,
   deleteAllEnemies,
+  deleteAllGolds,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

@@ -19,7 +19,13 @@ function calcCollisionsEnemie(state, arr, hero) {
           enemie.skin = '/animations/enemie2attack.gif'; // меняем скин врага при ударе третьего типа
         }
         if (enemie.type === 4) {
-          enemie.skin = '/animations/enemie3attack.gif'; // меняем скин врага при ударе третьего типа
+          if (enemie.x < hero.x) {
+            enemie.skin = '/animations/enemie3attack.gif';
+            enemie.move = -1;
+          } else {
+            enemie.skin = '/animations/enemie3attack.gif'; // меняем скин врага при ударе третьего типа
+            enemie.move = 1;
+          }
         }
       }
       enemie.hp -= hero.damage; // PVP damage

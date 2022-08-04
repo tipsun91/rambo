@@ -44,7 +44,7 @@ function calcEnemies(state, arr, hero) {
         }
         if (cord[0] <= el.x) {
           el.x -= el.speed;
-          el.move = -1;
+          // el.move = -1;
         }
         if (cord[1] >= el.y) {
           el.y += 0.7;
@@ -91,7 +91,7 @@ function calcEnemies(state, arr, hero) {
           }
           if (el.type === 4) {
             el.skin = '/animations/enemie3move.gif';
-            el.move = 1;
+            el.move = 5;
           }
           el.x += el.speed;
         }
@@ -179,7 +179,7 @@ function calcEnemies(state, arr, hero) {
         }
         if (el.type === 4) {
           el.skin = '/animations/enemie3move.gif';
-          el.move = -1;
+          el.move = -5;
         }
         el.x += el.speed;
       }
@@ -197,7 +197,7 @@ function calcEnemies(state, arr, hero) {
           el.move = 1;
         }
         if (el.type === 4) {
-          el.skin = '/animations/enemie3attack.gif';
+          // el.skin = '/animations/enemie3attack.gif';
           el.move = 1;
         }
         el.x -= el.speed;

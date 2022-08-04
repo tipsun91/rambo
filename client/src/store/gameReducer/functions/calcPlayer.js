@@ -51,10 +51,10 @@ function calcPlayer(state, action) {
           id: uuidv4(),
           type: state.enemies1.type, // тип врага
           x: state.display.width + 50,
-          y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
+          y: Math.floor(Math.random() * (300 - 100)) + 100, // вертикаль
           w: state.enemies1.w, // высота
           h: state.enemies1.h, // ширина
-          hp: state.enemies1.hp, // здоровьее
+          hp: +state.enemies1.hp, // здоровьее
           speed: state.enemies1.speed, // скорость перемещения
           damage: state.enemies1.damage, // урон
           coolDown: state.enemies1.coolDown, // скорость удара
@@ -67,10 +67,10 @@ function calcPlayer(state, action) {
           id: uuidv4(),
           type: state.enemies1.type, // тип врага
           x: -60, // горизонталь
-          y: Math.floor(Math.random() * (300 - 100)) + 50, // вертикаль
+          y: Math.floor(Math.random() * (300 - 100)) + 100, // вертикаль
           w: state.enemies1.w, // высота
           h: state.enemies1.h, // ширина
-          hp: state.enemies1.hp, // здоровьее
+          hp: +state.enemies1.hp, // здоровьее
           speed: state.enemies1.speed, // скорость перемещения
           damage: state.enemies1.damage, // урон
           coolDown: state.enemies1.coolDown, // скорость удара
@@ -83,17 +83,17 @@ function calcPlayer(state, action) {
     // console.log(state.gamePlay.waves2);
     if (state.game.countWaves === 2 && state.gamePlay.waves2Count < state.gamePlay.waves2) {
       const randomNum = Math.floor(Math.random() * (10 - 1)) + 1;
-      if (randomNum < 6) {
+      if (randomNum < 3) {
         state.gamePlay.waves2Count += 1;
         state.enemies.push({
           id: uuidv4(),
           type: state.enemies2.type, // тип врага
-          x: state.display.width - 50,
-          y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
+          x: -50,
+          y: Math.floor(Math.random() * (300 - 100)) + 100, // вертикаль
           // y: 300,
           w: state.enemies2.w, // высота
           h: state.enemies2.h, // ширина
-          hp: state.enemies2.hp, // здоровьее
+          hp: +state.enemies2.hp, // здоровьее
           speed: state.enemies2.speed, // скорость перемещения
           damage: state.enemies2.damage, // урон
           coolDown: state.enemies2.coolDown, // скорость удара
@@ -107,10 +107,10 @@ function calcPlayer(state, action) {
           type: state.enemies2.type, // тип врага
           w: state.enemies2.w, // высота
           h: state.enemies2.h, // ширина
-          x: 50, // горизонталь
-          y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
+          x: state.display.width + 50, // горизонталь
+          y: Math.floor(Math.random() * (300 - 100)) + 100, // вертикаль
           // y: 200,
-          hp: state.enemies2.hp, // здоровьее
+          hp: +state.enemies2.hp, // здоровьее
           speed: state.enemies2.speed, // скорость перемещения
           damage: state.enemies2.damage, // урон
           coolDown: state.enemies2.coolDown, // скорость удара
@@ -121,16 +121,16 @@ function calcPlayer(state, action) {
     }
     if (state.game.countWaves === 3 && state.gamePlay.waves3Count < state.gamePlay.waves3) {
       const randomNum = Math.floor(Math.random() * (10 - 1)) + 1;
-      if (randomNum < 6) {
+      if (randomNum < 3) {
         state.gamePlay.waves3Count += 1;
         state.enemies.push({
           id: uuidv4(),
           type: state.enemies3.type, // тип врага
           x: state.display.width + 50,
-          y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
+          y: Math.floor(Math.random() * (300 - 100)) + 100, // вертикаль
           w: state.enemies3.w, // высота
           h: state.enemies3.h, // ширина
-          hp: state.enemies3.hp, // здоровьее
+          hp: +state.enemies3.hp, // здоровьее
           speed: state.enemies3.speed, // скорость перемещения
           damage: state.enemies3.damage, // урон
           coolDown: state.enemies3.coolDown, // скорость удара
@@ -146,7 +146,7 @@ function calcPlayer(state, action) {
           y: Math.floor(Math.random() * (300 - 100)) + 50, // вертикаль
           w: state.enemies3.w, // высота
           h: state.enemies3.h, // ширина
-          hp: state.enemies3.hp, // здоровьее
+          hp: +state.enemies3.hp, // здоровьее
           speed: state.enemies3.speed, // скорость перемещения
           damage: state.enemies3.damage, // урон
           coolDown: state.enemies3.coolDown, // скорость удара
@@ -155,19 +155,22 @@ function calcPlayer(state, action) {
         });
       }
     }
-    if (state.game.countWaves === 3 && state.gamePlay.waves3Count === state.gamePlay.waves3
+    if (state.game.countWaves === 3 && state.game.countEnemies
+      === state.gamePlay.waves3 + state.gamePlay.waves2 + state.gamePlay.waves1
       && state.gamePlay.bossCount < state.gamePlay.boss) {
+      state.gamePlay.bossCount += 1;
       state.enemies.push({
-        type: uuidv4(),
+        id: uuidv4(),
+        type: 4,
         x: state.display.width + 50,
-        y: Math.floor(Math.random() * (300 - 100)) + 100, // вертикаль
+        y: 100, // вертикаль
         w: state.enemies4.w, // высота
         h: state.enemies4.h, // ширина
         hp: state.enemies4.hp, // здоровьее
         speed: state.enemies4.speed, // скорость перемещения
         damage: state.enemies4.damage, // урон
         coolDown: state.enemies4.coolDown, // скорость удара
-        skin: '/animations/enemie4move.gif',
+        skin: '/animations/enemie3move.gif',
         move: 1,
       });
     }

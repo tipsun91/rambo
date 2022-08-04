@@ -94,10 +94,24 @@ li a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 20px;
+  padding: 50px!important;
   align-items: center;
   gap: 20px;
   background-color: white;
   color: black;
-  width: 800px;
+  box-sizing: border-box;
+  width: 700px;
+}
+
+
+.btn-menu {
+  width: 500px!important;
+  white-space: nowrap;
+}
+
+.nes-btn__oth {
+  padding: 0!important;
+  margin: 0!important;
+  width: 500px!important;
+  left: 0%!important;
 }
