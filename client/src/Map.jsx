@@ -13,7 +13,6 @@ import Dialog from './components/Dialog/Dialog';
 import Rating from './components/Rating/Rating';
 import NoPage from './components/NoPage/NoPage';
 import GameMenu from './components/GameMenu/GameMenu';
-import NavBar from './components/NavBar/NavBar';
 import ProfileHero from './components/ProfileHero/ProfileHero';
 import Chat from './components/Chat/Chat';
 
@@ -27,7 +26,6 @@ export default function Map() {
 
   return (
     <BrowserRouter>
-      <NavBar />
       <Routes>
         {user
           ? (

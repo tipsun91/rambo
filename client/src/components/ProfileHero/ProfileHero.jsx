@@ -13,23 +13,22 @@ function ProfileHero() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { player } = useSelector((state) => state.game);
-  console.log(user.money);
+  console.log(player.damage);
 
   useEffect(() => {
     dispatch(getPlayer());
   }, []);
 
-  console.log(user);
   function updateHP() {
-    dispatch(updateHeroHp());
-    if (user.money > 100) {
+    if (user.money >= 100) {
+      dispatch(updateHeroHp());
       dispatch(buy());
     }
   }
 
   function updateDAMAGE() {
-    dispatch(updateHeroDamage());
-    if (user.money > 100) {
+    if (user.money >= 100) {
+      dispatch(updateHeroDamage());
       dispatch(buy());
     }
   }
@@ -53,7 +52,7 @@ function ProfileHero() {
               <span className="span-update">
                 <div className="update">HP</div>
                 <div className="update">{player.hp}</div>
-                { user.money > 100
+                { user.money >= 100
                   ? (
                     <button onClick={updateHP} type="button" className="update btn-2 nes-btn is-primary">
                       100 💰
@@ -61,14 +60,14 @@ function ProfileHero() {
                   )
                   : (
                     <button disabled type="button" className="update btn-2 nes-btn is-primary">
-                      100 💰
+                      ты бомж
                     </button>
                   )}
               </span>
               <span className="span-update">
                 <div className="update">DAMAGE</div>
                 <div className="update">{player.damage}</div>
-                { user.money > 100
+                { user.money >= 100
                   ? (
                     <button onClick={updateDAMAGE} type="button" className="update btn-2 nes-btn is-primary">
                       100 💰
@@ -76,7 +75,7 @@ function ProfileHero() {
                   )
                   : (
                     <button disabled type="button" className="update btn-2 nes-btn is-primary">
-                      100 💰
+                      ты бомж
                     </button>
                   )}
               </span>
@@ -89,13 +88,13 @@ function ProfileHero() {
                       100 💰
                     </button>
                   )}
-                {user.money < 100
-                    && (
+                { user.money < 100 && player.speed < 10
+                  && (
                     <button disabled type="button" className="update btn-2 nes-btn is-primary">
                       100 💰
                     </button>
-                    )}
-                {player.speed === 10
+                  )}
+                {player.speed >= 10
                     && (
                     <button disabled type="button" className="update btn-2 nes-btn is-primary">
                       Макс

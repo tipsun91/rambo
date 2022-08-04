@@ -62,16 +62,14 @@ h1 {
 
 .container-rating tr:nth-child(odd) {
   background-color: #323c50;
-  opacity: 0.8;
 }
 
 .container-rating tr:nth-child(even) {
   background-color: #2c3446;
-  opacity: 0.8;
 }
 
 .container-rating th {
-  background-color: rgba(31, 39, 57, 0.8);
+  background-color: rgba(31, 39, 57, 1);
 }
 
 .container-rating td:first-child {

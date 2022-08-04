@@ -29,54 +29,62 @@ export default function Signup() {
   );
 
   return (
-    <div className="registr-box anim-show-signup">
+    <div className="registr-box anim-show-signup nes-container is-rounded">
+      <h1>
+        <span className="blue">WELC</span>
+        <span className="yellow">OME</span>
+      </h1>
       <form
         className="form"
         autoComplete="off"
         ref={signUpForm}
         onSubmit={onSubmit}
       >
-        <div className="input-section">
+        <div className="input-section input-section nes-field">
           <i className="far" />
           <input
             required
             name="name"
-            className="input-area"
+            className="nes-input"
             type="text"
             placeholder="Name"
+            style={{ color: 'black' }}
           />
         </div>
-        <div className="input-section">
+        <div className="input-section input-section nes-field">
           <i className="far" />
           <input
             required
             name="email"
-            className="input-area"
+            className="nes-input"
             type="email"
             placeholder="Email"
+            style={{ color: 'black' }}
           />
         </div>
-        <div className="input-section">
+        <div className="input-section input-section nes-field">
           <i className="fas" />
           <input
             required
             name="password"
-            className="input-area"
+            className="nes-input"
             type="password"
             placeholder="Password"
+            style={{ color: 'black' }}
           />
         </div>
-        <div className="input-section">
+        <div className="input-section input-section nes-field">
           <i className="fas" />
           <input
             required
             name="pswdcfrm"
-            className="input-area"
+            className="nes-input"
             type="password"
             placeholder="Password confirm"
+            style={{ color: 'black' }}
           />
         </div>
-        <button type="submit" className="btn" id="login-btn">
+        <button type="submit" className="nes-btn is-primary" id="login-btn">
           Зарегистрироваться
         </button>
       </form>

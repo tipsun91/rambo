@@ -8,7 +8,6 @@ import './GameMenu.css';
 function GameMenu() {
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  console.log(user);
 
   const onClick = useCallback(() => {
     dispatch(signOut());
@@ -16,23 +15,23 @@ function GameMenu() {
 
   return (
     <nav className="anim-show-gamemenu">
-      <ul>
+      <ul className="game-menu nes-container is-dark with-title">
         {user ? (
           <>
             <li>
-              <Link to="/game">Начать игру</Link>
+              <Link to="/game" className="lists__items">Начать игру</Link>
             </li>
             <li>
-              <Link to="/profile">Настройки</Link>
+              <Link to="/profile">Настройки профиля</Link>
             </li>
             <li>
               <Link to="/profileHero">Ваш герой</Link>
             </li>
             <li>
-              <Link to="/rating">Рейтинг игроков</Link>
+              <Link to="/rating" className="lists__items">Рейтинг игроков</Link>
             </li>
             <li>
-              <Link to="/sign/in" onClick={onClick}>
+              <Link to="/sign/in" onClick={onClick} className="lists__items">
                 Сменить пользователя
               </Link>
             </li>
