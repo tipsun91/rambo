@@ -3,17 +3,25 @@ import { useSelector } from 'react-redux';
 import './GameBar.css';
 
 function GameBar() {
-  const { player, game } = useSelector((state) => state.game);
+  const { player, game, gamePlay } = useSelector((state) => state.game);
 
   return (
-    <div className="nes-container is-dark with-title">
-      <p className="title">Your game</p>
+    <div className="nes-container is-dark with-title gamebar__wrapper">
       <div className="gamebar">
         <div className="gamebar__left">
-          <p className="gamebar__progress__damage__number">
+          {/* <p className="gamebar__progress__damage__number">
             {`🎯${game.countDamage}`}
+          </p> */}
+          {/* <p>S:100</p> */}
+          <p>
+            {gamePlay.waves2}
+            волна
           </p>
-          <p>S:100</p>
+          <p>
+            {gamePlay.waves2Count}
+            каунт волны
+            {player.damage}
+          </p>
         </div>
         <div className="gamebar__center">
           <div

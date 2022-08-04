@@ -13,6 +13,7 @@ const gameData = (data) => ({
 
 const { sequelize, User, Game } = require('../db/models');
 
+// Статистика по конкретному пользователю
 router.route('/:id').get(async (req, res) => {
   try {
     const id = Number(req.params.id);
@@ -54,6 +55,7 @@ router.route('/:id').get(async (req, res) => {
 
 router
   .route('/')
+  // Статистика общая
   .get(async (req, res) => {
     try {
       const statistics = await Game.findAll({
@@ -87,7 +89,6 @@ router
   })
   .post(access(AUTHENTICATED), async (req, res) => {
     try {
-      console.log(req.body);
       const gameResult = await Game.create(
         gameData({
           userId: res.locals.user.id,
@@ -96,14 +97,11 @@ router
       );
       await gameResult.save();
       if (gameResult.id) {
-        console.log('====> 2');
         res.status(201).json({ message: 'Created!' });
       } else {
-        console.log('====> 3');
         res.status(501).json({ message: 'Can not create!' });
       }
     } catch (e) {
-      console.log('====> 4');
       res.status(502).json({ message: e.message });
     }
   })

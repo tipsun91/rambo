@@ -38,16 +38,15 @@ export const sendStatistic = createAsyncThunk(
   },
 );
 
-export const userStats = createAsyncThunk(
-  '/api/statistics/',
-  async (userStat, { rejectWithValue }) => {
+export const userAllStats = createAsyncThunk(
+  '/api/statistics',
+  async (event, { rejectWithValue }) => {
     try {
-      console.log('ebbbbbbbbbbbba');
-      const responce = await fetch('/api/statistics/', {
+      const responce = await fetch('/api/statistics', {
         method: 'GET',
-        credentials: 'include',
       });
       const data = await responce.json();
+      console.log('🚀 data', data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -59,7 +58,7 @@ const gameSlice = createSlice({
   name: 'game',
   initialState: {
     gamePlay: {
-      waves1: 1, // кол-во мобов
+      waves1: 5, // кол-во мобов
       waves1Count: 0,
       waves2: 5, // кол-во мобов
       waves2Count: 0,
@@ -92,6 +91,7 @@ const gameSlice = createSlice({
         },
       ],
     },
+    statistic: [],
     enemies: [], // массив врагов
     enemies1: {
       type: 1,
@@ -244,7 +244,16 @@ const gameSlice = createSlice({
       calcGoldCoin(state, state.golds, state.player);
     },
   },
-  extraReducers: {},
+  extraReducers: {
+    [userAllStats.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [userAllStats.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.statistic = action.payload.statistics;
+    },
+  },
 });
 
 export const {

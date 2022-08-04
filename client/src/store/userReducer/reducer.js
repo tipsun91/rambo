@@ -73,6 +73,7 @@ export const signOut = createAsyncThunk(
   '/api/sign/out',
   async (event, { rejectWithValue }) => {
     try {
+      console.log('eeeee');
       const responce = await fetch(SIGN_OUT_URL, {
         method: 'GET',
         credentials: 'include',
