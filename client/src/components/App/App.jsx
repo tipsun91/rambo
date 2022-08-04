@@ -4,6 +4,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import useSound from 'use-sound';
+import muzic from '../../sounds/Sound_15678.mp3';
 import Hero from '../Hero/Hero';
 import GameBar from '../GameBar/GameBar';
 import Bullet from '../Bullet/Bullet';
@@ -25,6 +27,8 @@ import {
 } from '../../store/gameReducer/reducer';
 
 function App() {
+  const [play] = useSound(muzic);
+  // play();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const app = useRef();
@@ -50,6 +54,17 @@ function App() {
   const [timeEnemy, setTimeEnemy] = useState(Date.now());
   const [shoot, setShoot] = useState(false);
   const [cordMouse, setCordMouse] = useState();
+  const [cordMouseOver, setCordMouseOver] = useState();
+
+  useEffect(() => {
+    const mouseOverFunc = (event) => {
+      setCordMouseOver([event.clientX - 36, event.clientY - 35]);
+    };
+    document.addEventListener('mouseover', mouseOverFunc);
+    return () => {
+      document.removeEventListener('mouseover', mouseOverFunc);
+    };
+  }, [cordMouseOver]);
 
   useEffect(() => {
     const mouseClickDown = (event) => {
@@ -112,6 +127,7 @@ function App() {
     document.addEventListener('keyup', function2);
 
     return () => {
+      // document.removeEventListener('mouseover', mouseOverFunc);
       document.removeEventListener('mousedown', mouseClickDown);
       document.removeEventListener('mouseup', mouseClickUp);
       document.removeEventListener('keydown', funtion1);
@@ -125,7 +141,7 @@ function App() {
     const mouseCord = [];
 
     if (shoot) {
-      if (Date.now() - timeBullet > 300) {
+      if (Date.now() - timeBullet > 200) {
         mouseCord.push(cordMouse[0], cordMouse[1]);
         seTimeBullet(Date.now);
       }
@@ -197,7 +213,7 @@ function App() {
       }
     }
     // главный диспатчэ
-    dispatch(updateFrame({ player: pressedButtons, mouseCord }));
+    dispatch(updateFrame({ player: pressedButtons, mouseCord, cordMouseOver }));
 
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWaves === 2) {

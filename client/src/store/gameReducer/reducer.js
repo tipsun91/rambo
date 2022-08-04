@@ -148,7 +148,7 @@ const gameSlice = createSlice({
   name: 'game',
   initialState: {
     gamePlay: {
-      waves1: 15, // кол-во мобов
+      waves1: 1, // кол-во мобов
       waves1Count: 0,
       waves2: 15, // кол-во мобов
       waves2Count: 0,
@@ -311,6 +311,7 @@ const gameSlice = createSlice({
       state.game.countWaves += 1;
     },
     updateFrame(state, action) {
+      // console.log(action.payload.cordMouseOver);
       // console.log(state.player.x);
       upGameLoop(state); // прибовляет 1 каждый цикл;
       calcEnemies(state, state.enemies, state.player); // рассчитывает поведение мобов
