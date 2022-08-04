@@ -47,7 +47,7 @@ export default function Profile() {
             />
           </div>
         </div>
-        <div className="edit-user-profile nes-container is-rounded">
+        <div className="edit-user-profile nes-container is-rounded is-dark">
           <form className="edit-form" ref={editProfileForm} onSubmit={onSubmit}>
             <div className="edit-profile">
               <input

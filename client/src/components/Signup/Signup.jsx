@@ -29,10 +29,13 @@ export default function Signup() {
   );
 
   return (
-    <div className="registr-box anim-show-signup nes-container is-rounded">
+    <div className="registr-box anim-show-signup nes-container is-rounded is-dark forms">
       <h1>
-        <span className="blue">WELC</span>
-        <span className="yellow">OME</span>
+        <span className="blue">
+          LET&apos;S
+        </span>
+        {' '}
+        <span className="yellow">PLAY!</span>
       </h1>
       <form
         className="form"
