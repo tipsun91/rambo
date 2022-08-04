@@ -120,7 +120,23 @@ export const userAllStats = createAsyncThunk(
         method: 'GET',
       });
       const data = await responce.json();
-      console.log('🚀 data', data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const userOneStats = createAsyncThunk(
+  '/api/statistics/:id',
+  async (payload, { rejectWithValue }) => {
+    const { event, id } = payload;
+    try {
+      const responce = await fetch(`/api/statistics/${id}`, {
+        method: 'GET',
+      });
+      const data = await responce.json();
+      console.log('🚀 line 139 ~ data', data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -156,6 +172,7 @@ const gameSlice = createSlice({
       ],
     },
     statistic: [],
+    oneStatistic: [],
     enemies: [], // массив врагов
     enemies1: {
       type: 1,
@@ -351,6 +368,14 @@ const gameSlice = createSlice({
     [userAllStats.fulfilled]: (state, action) => {
       state.status = 'resolved';
       state.statistic = action.payload.statistics;
+    },
+    [userOneStats.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [userOneStats.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.oneStatistic = action.payload.statistics;
     },
   },
 });

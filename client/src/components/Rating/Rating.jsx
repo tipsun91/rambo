@@ -7,7 +7,6 @@ import './Rating.css';
 
 function Rating() {
   const { statistic } = useSelector((state) => state.game);
-  console.log('🚀 game', statistic);
   const dispatch = useDispatch();
   useEffect((event) => {
     dispatch(userAllStats(event));
@@ -27,13 +26,13 @@ function Rating() {
               <h1>Player</h1>
             </th>
             <th>
-              <h1>TimeGame</h1>
+              <h1>Time Game</h1>
             </th>
             <th>
               <h1>Games</h1>
             </th>
             <th>
-              <h1>Enemies</h1>
+              <h1>Kill Enemies</h1>
             </th>
           </tr>
         </thead>

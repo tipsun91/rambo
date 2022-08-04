@@ -1,8 +1,8 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { editUser } from '../../store/userReducer/reducer';
-// import { userStats } from '../../store/gameReducer/reducer';
+import { userOneStats } from '../../store/gameReducer/reducer';
 import './Profile.css';
 
 // функция преобразования секунд в формат 00:00:00
@@ -15,8 +15,13 @@ export const format = (seconds) => {
 
 export default function Profile() {
   const { user } = useSelector((state) => state.user);
+  const { oneStatistic } = useSelector((state) => state.game);
   const dispatch = useDispatch();
   const editProfileForm = useRef();
+
+  useEffect((event) => {
+    dispatch(userOneStats({ event, id: user.id }));
+  }, []);
 
   const onSubmit = useCallback(
     (event) => {
@@ -26,11 +31,6 @@ export default function Profile() {
     },
     [editProfileForm],
   );
-
-  //   useEffect((event) => {
-  //     dispatch(userStats(event));
-  //     console.log('aaa');
-  //   }, []);
 
   return (
     <div className="container__stats anim-show-profile flex">
@@ -110,12 +110,14 @@ export default function Profile() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>100</td>
-              <td>200</td>
-              <td>300</td>
-              <td>400</td>
-            </tr>
+            {oneStatistic.map((o) => (
+              <tr>
+                <td>{o['User.name']}</td>
+                <td>{format(o['Game.timeGame'])}</td>
+                <td>{o['Game.countGames']}</td>
+                <td>{o['Game.countEnemies']}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
         <table className="container__profile">
