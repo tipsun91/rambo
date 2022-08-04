@@ -38,7 +38,7 @@ function calcPlayer(state, action) {
       h: 3, // высота пули
       speedX, // скорость пуль по Х
       speedY, // скорость пуль по У
-      damage: state.weapon.damage, // нанисенный урон
+      damage: state.player.damage, // нанисенный урон
       corner: g,
     });
   }
