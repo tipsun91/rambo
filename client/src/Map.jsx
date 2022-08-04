@@ -15,6 +15,7 @@ import NoPage from './components/NoPage/NoPage';
 import GameMenu from './components/GameMenu/GameMenu';
 import NavBar from './components/NavBar/NavBar';
 import Chat from './components/Chat/Chat';
+import Avatar from './components/Avatar/Avatar';
 
 export default function Map() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ export default function Map() {
     <BrowserRouter>
       <NavBar />
       <Routes>
+      <Route path="avatar" element={<Avatar />} />
         {user
           ? (
             <>
