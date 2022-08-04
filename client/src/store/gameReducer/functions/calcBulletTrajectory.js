@@ -17,7 +17,10 @@ function calcBulletTrajectory(state, cord) {
   let g = (corner * 180 / Math.PI);
   if (heroX > codrX) {
     g = -g;
+    //   state.player.skin =
+    // } else {
   }
+  // }
   return [speedX, speedY, g];
 }
 export default calcBulletTrajectory;

@@ -143,6 +143,9 @@ function App() {
     if (arrowDown && playGame === 'play') {
       pressedButtons.push('s');
     }
+    if (!arrowRight && !arrowLeft && !arrowUp && !arrowDown) {
+      pressedButtons.push('stop');
+    }
     // логика скорострельности
     if (bullet && playGame === 'play') {
       if (Date.now() - timeBullet > 30) {

@@ -28,7 +28,7 @@ function calcCollisionsEnemie(state, arr, hero) {
           }
         }
       }
-      enemie.hp -= hero.damage; // PVP damage
+      // enemie.hp -= hero.damage; // PVP damage
       // hero.damagevalue += hero.damage; // counts pvp damage into GameBar !
       // if (enemie.hp <= 0) {
       //   state.enemies.splice(

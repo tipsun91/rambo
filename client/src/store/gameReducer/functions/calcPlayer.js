@@ -27,6 +27,9 @@ function calcPlayer(state, action) {
       state.player.y += state.player.speed; // идем вниз
     }
   }
+  if (action.payload.player.includes('stop')) {
+    state.player.skin = '/animations/hero1.gif';
+  }
 
   if (action.payload.mouseCord.length > 0) {
     const [speedX, speedY, g] = calcBulletTrajectory(state, action); // скорость пуль по Х и У
@@ -83,7 +86,7 @@ function calcPlayer(state, action) {
     // console.log(state.gamePlay.waves2);
     if (state.game.countWaves === 2 && state.gamePlay.waves2Count < state.gamePlay.waves2) {
       const randomNum = Math.floor(Math.random() * (10 - 1)) + 1;
-      if (randomNum < 3) {
+      if (randomNum < 6) {
         state.gamePlay.waves2Count += 1;
         state.enemies.push({
           id: uuidv4(),
@@ -121,7 +124,7 @@ function calcPlayer(state, action) {
     }
     if (state.game.countWaves === 3 && state.gamePlay.waves3Count < state.gamePlay.waves3) {
       const randomNum = Math.floor(Math.random() * (10 - 1)) + 1;
-      if (randomNum < 3) {
+      if (randomNum < 6) {
         state.gamePlay.waves3Count += 1;
         state.enemies.push({
           id: uuidv4(),
