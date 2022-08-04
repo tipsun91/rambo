@@ -21,13 +21,12 @@ router.route('/')
 
     const fileFilter = function(req, file, cb) {
       // Accept images only
-      // if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.mimetype)) {
-      //   req.fileValidationError = 'Only jpeg/png/gif are allowed!';
-      //   return cb(new Error('Only jpeg/png/gif are allowed!'), false);
-      // }
+      if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.mimetype)) {
+        req.fileValidationError = 'Only jpeg/png/gif are allowed!';
+        return cb(new Error('Only jpeg/png/gif are allowed!'), false);
+      }
       if (!(/\.(jpg|jpeg|png|gif)$/i).test(file.originalname)) {
           req.fileValidationError = 'Only image files are allowed!';
-console.log('Only image files are allowed!');
           return cb(new Error('Only image files are allowed!'), false);
       }
       cb(null, true);
@@ -36,18 +35,13 @@ console.log('Only image files are allowed!');
     let upload = Multer({ storage, fileFilter }).single('avatar');
 
     upload(req, res, async (e) => {
-      console.log(req.body);
-      console.log(req.file);
-      console.log(req.files);
       // req.file contains information of uploaded file
       // req.body contains information of text fields, if there were any
 
       if (req.fileValidationError) {
-console.log('Only image files are allowed!');
         return res.status(500).json({ message: req.fileValidationError });
       }
       else if (!req.file) {
-console.log('Please select an image to upload!');
         return res.status(500).json({ message: 'Please select an image to upload!' });
       }
       else if (e instanceof Multer.MulterError) {
@@ -58,7 +52,6 @@ console.log('Please select an image to upload!');
       }
 
       // Display uploaded image for user validation
-console.log('You have uploaded this image!');
       res.status(200).json({ message: 'You have uploaded this image!' });
     });
   });
