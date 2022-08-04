@@ -14,8 +14,6 @@ body {
 }
 
 .anim-show-gamemenu {
-  height: 25%;
-  width: 30%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -90,4 +88,16 @@ li a {
   100% {
     opacity: 1;
   }
+}
+
+.game-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  align-items: center;
+  gap: 20px;
+  background-color: white;
+  color: black;
+  width: 800px;
 }
