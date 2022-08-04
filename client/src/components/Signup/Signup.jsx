@@ -19,21 +19,16 @@ export default function Signup() {
     [signUpForm],
   );
 
-  useEffect(
-    () => {
-      if (user && user.id) {
-        navigate('/');
-      }
-    },
-    [user],
-  );
+  useEffect(() => {
+    if (user && user.id) {
+      navigate('/');
+    }
+  }, [user]);
 
   return (
-    <div className="registr-box anim-show-signup nes-container is-rounded is-dark forms">
+    <div className="registr-box anim-show-signup nes-container is-rounded is-dark forms anim-show-singup">
       <h1>
-        <span className="blue">
-          LET&apos;S
-        </span>
+        <span className="blue">LET&apos;S</span>
         {' '}
         <span className="yellow">PLAY!</span>
       </h1>
@@ -87,7 +82,11 @@ export default function Signup() {
             style={{ color: 'black' }}
           />
         </div>
-        <button type="submit" className="nes-btn is-primary nes-in" id="login-btn">
+        <button
+          type="submit"
+          className="nes-btn is-primary nes-in"
+          id="login-btn"
+        >
           Зарегистрироваться
         </button>
       </form>
