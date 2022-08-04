@@ -29,7 +29,7 @@ export default function Signin() {
   );
 
   return (
-    <div className="login-box anim-show-singin nes-container is-rounded">
+    <div className="login-box anim-show-singin nes-container is-rounded is-dark forms">
       <h1>
         <span className="blue">WELCOME</span>
         {' '}
