@@ -1,3 +1,21 @@
 .message {
    color: black;
 }
+
+.nes-container_chat{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   width: 900px;
+   margin: 50px auto!important;
+   gap: 20px;
+   background-color: #212529;
+   padding-top: 20px;
+   overflow: auto;
+   height:600px;
+}
+
+.message {
+   word-break: break-all;
+   color: #fff;
+}

@@ -8,7 +8,7 @@ import './Chat.css';
 function Chat() {
   const dispatch = useDispatch();
   const [messages, setMessages] = useState([]);
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState({});
   const [value, setValue] = useState('');
   const socket = useRef();
   const [connected, setConnected] = useState(false);
@@ -16,18 +16,12 @@ function Chat() {
 
   const { user } = useSelector((state) => state.user); // подключаем юзера из реакт редакса
 
-  useEffect(() => {
-    fetch('http://localhost:4000/api/chat')
-      .then((data) => data.json())
-      .then((data) => setHistory(data));
-  }, []);
-
   function connect() {
     socket.current = new WebSocket('ws://localhost:4000');
 
     socket.current.onopen = () => {
       console.log('Socket открыт');
-      setConnected(true);
+      // setConnected(true);
       const message = {
         event: 'connection',
         username: user.name,
@@ -48,6 +42,18 @@ function Chat() {
       console.log('Socket произошла ошибка');
     };
   }
+  useEffect(() => {
+    connect();
+    setConnected(true);
+  }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:4000/api/chat')
+      .then((data) => data.json())
+      .then((data) => setHistory(data));
+  }, []);
+
+  console.log(history, '<=======');
 
   const sendMessage = async (event) => {
     event.preventDefault();
@@ -62,14 +68,8 @@ function Chat() {
     dispatch(addMessage(event.target.messText.value));
   };
 
-  if (!connected) {
-    return (
-      <button onClick={connect} type="button">Войти</button>
-    );
-  }
-
   return (
-    <div className="center nes-container is-rounded">
+    <div className="nes-container nes-container_chat is-rounded is-dark chat">
       <h1>
         <span className="blue">OUR</span>
         {' '}
@@ -82,15 +82,12 @@ function Chat() {
       <div>
         <div className="messages">
           {messages.map((mess) => (
-            <div key={mess.id}>
+            <div key={v4()}>
               {mess.event === 'connection'
                 ? (
                   <div className="message">
                     Пользователь
-                    {' '}
-                    {mess.username}
-                    {' '}
-                    подключился
+                    подключен
                   </div>
                 )
                 : (
@@ -102,13 +99,18 @@ function Chat() {
                 )}
             </div>
           ))}
-          {history.chats.map((message) => (
+          {history.chats !== undefined ? history.chats.map((message) => (
             <div className="message">
               {message.User.name}
               :
               {message.message}
             </div>
-          ))}
+          ))
+            : (
+              <div className="message">
+                Подожди немного
+              </div>
+            )}
         </div>
       </div>
     </div>

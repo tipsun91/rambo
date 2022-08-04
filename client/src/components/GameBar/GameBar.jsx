@@ -6,8 +6,7 @@ function GameBar() {
   const { player, game } = useSelector((state) => state.game);
 
   return (
-    <div className="nes-container is-dark with-title">
-      <p className="title">Your game</p>
+    <div className="nes-container is-dark with-title gamebar__wrapper">
       <div className="gamebar">
         <div className="gamebar__left">
           <p className="gamebar__progress__damage__number">
