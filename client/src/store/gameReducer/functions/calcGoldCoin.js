@@ -7,7 +7,7 @@ function calcGoldCoin(state, arr, hero) {
       && hero.y - hero.h <= coin.y + coin.h
       && hero.y >= coin.y
     ) {
-      state.game.countMoney += 2000;
+      state.game.countMoney += 15;
       arr.splice(
         arr.findIndex((el) => el.id === coin.id),
         1,

@@ -14,7 +14,6 @@ function ProfileHero() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { player } = useSelector((state) => state.game);
-  console.log(player.damage);
 
   useEffect(() => {
     dispatch(getPlayer());
@@ -35,8 +34,9 @@ function ProfileHero() {
   }
 
   function updateSPEED(speed) {
-    dispatch(updateHeroSpeed(speed));
-    if (user.money > 100 && player.speed >= 10) {
+    if (user.money >= 100 && player.speed < 10) {
+      console.log(2222);
+      dispatch(updateHeroSpeed(speed));
       dispatch(buy());
     }
   }
@@ -59,7 +59,7 @@ function ProfileHero() {
               <div className="update">
                 HP:
                 {' '}
-                {player.hp}
+                {Math.floor(player.hp)}
               </div>
               {user.money >= 100 ? (
                 <button
@@ -83,7 +83,7 @@ function ProfileHero() {
               <div className="update">
                 DAMAGE:
                 {' '}
-                {player.damage}
+                {Math.floor(player.damage)}
               </div>
               {user.money >= 100 ? (
                 <button
@@ -107,25 +107,25 @@ function ProfileHero() {
               <div className="update">
                 SPEED:
                 {' '}
-                {player.speed}
+                {Math.floor(player.speed)}
               </div>
-              {user.money > 100 && player.speed < 10 && (
-              <button
-                onClick={() => updateSPEED(player.speed)}
-                type="button"
-                className="update__button nes-btn is-primary"
-              >
-                100 💰
-              </button>
+              {user.money >= 100 && player.speed < 10 && (
+                <button
+                  onClick={() => updateSPEED(player.speed)}
+                  type="button"
+                  className="update__button btn-2 nes-btn is-primary"
+                >
+                  100 💰
+                </button>
               )}
               {user.money < 100 && player.speed < 10 && (
-              <button
-                disabled
-                type="button"
-                className="update nes-btn is-primary"
-              >
-                100 💰
-              </button>
+                <button
+                  disabled
+                  type="button"
+                  className="update btn-2 nes-btn is-disabled"
+                >
+                  нужны деньги
+                </button>
               )}
               {player.speed >= 10 && (
               <button

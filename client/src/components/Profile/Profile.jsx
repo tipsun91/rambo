@@ -16,6 +16,7 @@ export const format = (seconds) => {
 export default function Profile() {
   const { user } = useSelector((state) => state.user);
   const { oneStatistic } = useSelector((state) => state.game);
+  console.log('🚀 oneStatistic', oneStatistic);
   const dispatch = useDispatch();
   const editProfileForm = useRef();
 
