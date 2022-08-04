@@ -8,12 +8,13 @@ function calcCollisionBullets(state, arr) {
         && bullet.x - bullet.w / 2 <= enemie.x + enemie.w / 2
         && bullet.y - bullet.h <= enemie.y + enemie.h
         && bullet.y >= enemie.y) {
-        if (bullet.damage > enemie.hp) {
-          state.game.countDamage += enemie.hp;
+        if (bullet.damage >= enemie.hp) {
+          state.game.countDamage += +enemie.hp.toFixed(0);
+          enemie.hp -= +enemie.hp;
         } else {
           state.game.countDamage += +bullet.damage.toFixed(0);
+          enemie.hp -= +bullet.damage;
         }
-        enemie.hp -= bullet.damage;
         state.bullets.splice(
           arr.findIndex((el) => el.id === bullet.id),
           1,
