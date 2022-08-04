@@ -115,7 +115,11 @@ const userSlice = createSlice({
   initialState: {
     user: {},
   },
-  reducers: {},
+  reducers: {
+    buy(state) {
+      state.user.money -= 100;
+    },
+  },
   extraReducers: {
     [signData.pending]: (state) => {
       state.status = 'loading';
@@ -159,5 +163,7 @@ const userSlice = createSlice({
     },
   },
 });
+
+export const { buy } = userSlice.actions;
 
 export default userSlice.reducer;

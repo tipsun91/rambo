@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 } from 'uuid';
 import { addMessage } from '../../store/chatReducer/reducer';
@@ -69,51 +70,54 @@ function Chat() {
   };
 
   return (
-    <div className="nes-container nes-container_chat is-rounded is-dark chat">
-      <h1>
-        <span className="blue">OUR</span>
-        {' '}
-        <span className="yellow">COMMUNITY</span>
-      </h1>
-      <form className="form" onSubmit={sendMessage}>
-        <input value={value} onChange={(e) => setValue(e.target.value)} type="text" name="messText" />
-        <button type="submit">Отправить</button>
-      </form>
-      <div>
-        <div className="messages">
-          {messages.map((mess) => (
-            <div key={v4()}>
-              {mess.event === 'connection'
-                ? (
-                  <div className="message">
-                    Пользователь
-                    подключен
-                  </div>
-                )
-                : (
-                  <div className="message" key={v4()}>
-                    {mess.username}
-                    :
-                    {mess.message}
-                  </div>
-                )}
-            </div>
-          ))}
-          {history.chats !== undefined ? history.chats.map((message) => (
-            <div className="message">
-              {message.User.name}
-              :
-              {message.message}
-            </div>
-          ))
-            : (
-              <div className="message">
-                Подожди немного
+    <>
+      <div className="nes-container nes-container_chat is-rounded is-dark chat">
+        <h1>
+          <span className="blue">OUR</span>
+          {' '}
+          <span className="yellow">COMMUNITY</span>
+        </h1>
+        <form className="form" onSubmit={sendMessage}>
+          <input value={value} onChange={(e) => setValue(e.target.value)} type="text" name="messText" />
+          <button type="submit">Отправить</button>
+        </form>
+        <div>
+          <div className="messages">
+            {messages.map((mess) => (
+              <div key={v4()}>
+                {mess.event === 'connection'
+                  ? (
+                    <div className="message" />
+                  )
+                  : (
+                    <div className="message" key={v4()}>
+                      {mess.username}
+                      :
+                      {mess.message}
+                    </div>
+                  )}
               </div>
-            )}
+            ))}
+            {history.chats !== undefined ? history.chats.map((message) => (
+              <div className="message">
+                {message.User.name}
+                :
+                {message.message}
+              </div>
+            ))
+              : (
+                <div className="message">
+                  Подожди немного
+                </div>
+              )}
+          </div>
         </div>
       </div>
-    </div>
+      <Link className="return-profile btn-back" to="/">
+        &lt;&lt; НАЗАД
+      </Link>
+
+    </>
   );
 }
 

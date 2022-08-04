@@ -11,6 +11,7 @@ import Enemy from '../Enemy/Enemy';
 import GoldCoin from '../GoldCoin/GoldCoin';
 import './App.css';
 import {
+  getPlayer,
   display,
   updateFrame,
   sendStatistic,
@@ -20,6 +21,7 @@ import {
   updateBackgroundWaves3,
   updatePositionPlayer,
   deleteAllEnemies,
+  deleteAllGolds,
 } from '../../store/gameReducer/reducer';
 
 function App() {
@@ -96,6 +98,8 @@ function App() {
 
     document.addEventListener('mousedown', mouseClickDown);
     document.addEventListener('mouseup', mouseClickUp);
+
+    dispatch(getPlayer());
 
     dispatch(
       display({
@@ -194,6 +198,7 @@ function App() {
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWaves === 2) {
       dispatch(deleteAllEnemies());
+      dispatch(deleteAllGolds());
       // переходт на вторую локацию
       dispatch(updateBackgroundWaves2());
       // меняем позицию героя для прохождения в ворота
@@ -206,6 +211,7 @@ function App() {
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWaves === 3) {
       dispatch(deleteAllEnemies());
+      dispatch(deleteAllGolds());
       // переходт на третью локацию
       dispatch(updateBackgroundWaves3());
       // меняем позицию героя для прохождения в ворота
@@ -265,7 +271,11 @@ function App() {
         )}
         {playGame === 'game-over' && (
           <div className="gameOver">
-            <h1>GAME OVER</h1>
+            <h1>
+              <span className="blue">GAME</span>
+              {' '}
+              <span className="yellow">OVER</span>
+            </h1>
             <Link className="nes-btn is-primary" to="/game">
               Играть еще раз
             </Link>

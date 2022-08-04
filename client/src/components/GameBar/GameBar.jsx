@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import './GameBar.css';
@@ -9,19 +10,11 @@ function GameBar() {
     <div className="nes-container is-dark with-title gamebar__wrapper">
       <div className="gamebar">
         <div className="gamebar__left">
-          {/* <p className="gamebar__progress__damage__number">
-            {`🎯${game.countDamage}`}
-          </p> */}
-          {/* <p>S:100</p> */}
-          <p>
-            {gamePlay.waves2}
-            волна
+          <p className="gamebar__progress__damage__number">
+            speed:
+            {player.speed}
           </p>
-          <p>
-            {gamePlay.waves2Count}
-            каунт волны
-            {player.damage}
-          </p>
+          <p className="gamebar__progress__enemies__number">{`enemies: ${game.countEnemies}`}</p>
         </div>
         <div className="gamebar__center">
           <div
@@ -30,11 +23,11 @@ function GameBar() {
           >
             <p className="gamebar__progress__number">{`${player.hp}💔`}</p>
           </div>
-          <p className="gamebar__progress__number">1000 lvl</p>
+          <p className="gamebar__progress__number">lvl: 1000</p>
         </div>
         <div className="gamebar__right">
-          <p className="gamebar__progress__money__number">{`🥮${game.countMoney}`}</p>
-          <p className="gamebar__progress__enemies__number">{`👻${game.countEnemies}`}</p>
+          <p className="gamebar__progress__money__number">{`gold: ${game.countMoney}`}</p>
+          <p className="gamebar__progress__enemies__number">{`score: ${game.countDamage}`}</p>
         </div>
       </div>
     </div>

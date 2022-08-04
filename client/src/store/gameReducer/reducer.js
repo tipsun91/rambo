@@ -12,6 +12,80 @@ import calcCollisionBullets from './functions/calcCollisionBullets';
 import upGameLoop from './functions/upGameLoop';
 import calcGoldCoin from './functions/calcGoldCoin';
 
+export const getPlayer = createAsyncThunk(
+  '/hero/getPlayer',
+  async (_, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/hero/getPlayer', {
+        method: 'GET',
+        credentials: 'include',
+      });
+      const data = await responce.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const updateHeroHp = createAsyncThunk(
+  '/hero/updateHp',
+  async (_, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/hero/updateHp', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await responce.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const updateHeroDamage = createAsyncThunk(
+  '/hero/updateDamage',
+  async (_, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/hero/updateDamage', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await responce.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const updateHeroSpeed = createAsyncThunk(
+  '/hero/updateSpeed',
+  async (speed, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/hero/updateSpeed', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          speed,
+        }),
+      });
+      const data = await responce.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 export const sendStatistic = createAsyncThunk(
   '/api/statistics/',
   async (statGame, { rejectWithValue }) => {
@@ -66,23 +140,13 @@ const gameSlice = createSlice({
       waves3Count: 0,
     },
     player: {
-      // Database values
-      hp: 100, // здоровье
-      speed: 7, // скорость передвижения
-      damage: 20, // урон
-      score: 0,
-      lvl: 1,
-
       // Client only
       x: 0, // горизонталь
-      y: 100, // вертикаль
+      y: 500, // вертикаль
       w: 180, // высота
       h: 180, // ширина
       skin: '/animations/hero1.gif',
       move: 1,
-      // speed: 4, // скорость передвижения
-      // hp: 1000, // здоровье
-      // damage: 2, // урон
       weapon: ['trunk'],
       ammunition: [
         {
@@ -191,6 +255,9 @@ const gameSlice = createSlice({
     calcEnemiesFlag1: false, // ии врагов
   },
   reducers: {
+    deleteAllGolds(state, action) {
+      state.golds = [];
+    },
     deleteAllEnemies(state, action) {
       state.enemies = [];
     },
@@ -245,6 +312,38 @@ const gameSlice = createSlice({
     },
   },
   extraReducers: {
+    [getPlayer.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [getPlayer.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.player = { ...state.player, ...action.payload.player };
+    },
+    [updateHeroHp.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [updateHeroHp.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.player.hp = action.payload.hp;
+    },
+    [updateHeroDamage.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [updateHeroDamage.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.player.damage = action.payload.damage;
+    },
+    [updateHeroSpeed.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [updateHeroSpeed.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.player.speed = action.payload.speed;
+    },
     [userAllStats.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
@@ -265,6 +364,7 @@ export const {
   updateBackgroundWaves3,
   updatePositionPlayer,
   deleteAllEnemies,
+  deleteAllGolds,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

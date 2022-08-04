@@ -8,11 +8,10 @@ import Main from './components/Main/Main';
 import Signin from './components/Signin/Signin';
 import Signup from './components/Signup/Signup';
 import Profile from './components/Profile/Profile';
-import Dialogues from './components/Dialogues/Dialogues';
-import Dialog from './components/Dialog/Dialog';
 import Rating from './components/Rating/Rating';
 import NoPage from './components/NoPage/NoPage';
 import GameMenu from './components/GameMenu/GameMenu';
+import ProfileHero from './components/ProfileHero/ProfileHero';
 import Chat from './components/Chat/Chat';
 
 export default function Map() {
@@ -31,12 +30,10 @@ export default function Map() {
             <>
               <Route path="/" element={<GameMenu />} />
               <Route index path="game" element={<App />} />
+              <Route path="profileHero" element={<ProfileHero />} />
               <Route path="main" element={<Main />} />
               <Route path="profile" element={<Profile />}>
                 <Route path=":id" element={<Profile />} />
-              </Route>
-              <Route path="dialogues" element={<Dialogues />}>
-                <Route path=":id" element={<Dialog />} />
               </Route>
               <Route path="rating" element={<Rating />}>
                 <Route path="page/:page" element={<Rating />} />

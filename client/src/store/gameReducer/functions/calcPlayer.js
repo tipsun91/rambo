@@ -38,7 +38,7 @@ function calcPlayer(state, action) {
       h: 3, // высота пули
       speedX, // скорость пуль по Х
       speedY, // скорость пуль по У
-      damage: state.weapon.damage, // нанисенный урон
+      damage: state.player.damage, // нанисенный урон
       corner: g,
     });
   }
@@ -51,10 +51,10 @@ function calcPlayer(state, action) {
           id: uuidv4(),
           type: state.enemies1.type, // тип врага
           x: state.display.width + 50,
-          y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
+          y: Math.floor(Math.random() * (300 - 100)) + 100, // вертикаль
           w: state.enemies1.w, // высота
           h: state.enemies1.h, // ширина
-          hp: state.enemies1.hp, // здоровьее
+          hp: +state.enemies1.hp, // здоровьее
           speed: state.enemies1.speed, // скорость перемещения
           damage: state.enemies1.damage, // урон
           coolDown: state.enemies1.coolDown, // скорость удара
@@ -67,10 +67,10 @@ function calcPlayer(state, action) {
           id: uuidv4(),
           type: state.enemies1.type, // тип врага
           x: -60, // горизонталь
-          y: Math.floor(Math.random() * (300 - 100)) + 50, // вертикаль
+          y: Math.floor(Math.random() * (300 - 100)) + 100, // вертикаль
           w: state.enemies1.w, // высота
           h: state.enemies1.h, // ширина
-          hp: state.enemies1.hp, // здоровьее
+          hp: +state.enemies1.hp, // здоровьее
           speed: state.enemies1.speed, // скорость перемещения
           damage: state.enemies1.damage, // урон
           coolDown: state.enemies1.coolDown, // скорость удара
@@ -89,11 +89,11 @@ function calcPlayer(state, action) {
           id: uuidv4(),
           type: state.enemies2.type, // тип врага
           x: state.display.width - 50,
-          y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
+          y: Math.floor(Math.random() * (300 - 100)) + 100, // вертикаль
           // y: 300,
           w: state.enemies2.w, // высота
           h: state.enemies2.h, // ширина
-          hp: state.enemies2.hp, // здоровьее
+          hp: +state.enemies2.hp, // здоровьее
           speed: state.enemies2.speed, // скорость перемещения
           damage: state.enemies2.damage, // урон
           coolDown: state.enemies2.coolDown, // скорость удара
@@ -107,10 +107,10 @@ function calcPlayer(state, action) {
           type: state.enemies2.type, // тип врага
           w: state.enemies2.w, // высота
           h: state.enemies2.h, // ширина
-          x: 50, // горизонталь
-          y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
+          x: state.display.width - 50, // горизонталь
+          y: Math.floor(Math.random() * (300 - 100)) + 100, // вертикаль
           // y: 200,
-          hp: state.enemies2.hp, // здоровьее
+          hp: +state.enemies2.hp, // здоровьее
           speed: state.enemies2.speed, // скорость перемещения
           damage: state.enemies2.damage, // урон
           coolDown: state.enemies2.coolDown, // скорость удара
@@ -127,10 +127,10 @@ function calcPlayer(state, action) {
           id: uuidv4(),
           type: state.enemies3.type, // тип врага
           x: state.display.width + 50,
-          y: Math.floor(Math.random() * (state.display.height - 100)) + 100, // вертикаль
+          y: Math.floor(Math.random() * (300 - 100)) + 100, // вертикаль
           w: state.enemies3.w, // высота
           h: state.enemies3.h, // ширина
-          hp: state.enemies3.hp, // здоровьее
+          hp: +state.enemies3.hp, // здоровьее
           speed: state.enemies3.speed, // скорость перемещения
           damage: state.enemies3.damage, // урон
           coolDown: state.enemies3.coolDown, // скорость удара
@@ -142,11 +142,11 @@ function calcPlayer(state, action) {
         state.enemies.push({
           id: uuidv4(),
           type: state.enemies3.type, // тип врага
-          x: -60, // горизонталь
+          x: state.display.width - 60, // горизонталь
           y: Math.floor(Math.random() * (300 - 100)) + 50, // вертикаль
           w: state.enemies3.w, // высота
           h: state.enemies3.h, // ширина
-          hp: state.enemies3.hp, // здоровьее
+          hp: +state.enemies3.hp, // здоровьее
           speed: state.enemies3.speed, // скорость перемещения
           damage: state.enemies3.damage, // урон
           coolDown: state.enemies3.coolDown, // скорость удара
