@@ -57,3 +57,19 @@
   left: 3%!important;
   width: 350px!important;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form_login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nes-up {
+  left: 0%!important;
+}
