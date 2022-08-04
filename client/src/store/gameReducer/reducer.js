@@ -169,7 +169,7 @@ const gameSlice = createSlice({
   name: 'game',
   initialState: {
     gamePlay: {
-      waves1: 15, // кол-во мобов
+      waves1: 1, // кол-во мобов
       waves1Count: 0,
       waves2: 15, // кол-во мобов
       waves2Count: 0,
