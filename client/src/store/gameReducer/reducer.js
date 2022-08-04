@@ -38,6 +38,23 @@ export const sendStatistic = createAsyncThunk(
   },
 );
 
+export const userStats = createAsyncThunk(
+  '/api/statistics/',
+  async (userStat, { rejectWithValue }) => {
+    try {
+      console.log('ebbbbbbbbbbbba');
+      const responce = await fetch('/api/statistics/', {
+        method: 'GET',
+        credentials: 'include',
+      });
+      const data = await responce.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const gameSlice = createSlice({
   name: 'game',
   initialState: {
@@ -128,7 +145,8 @@ const gameSlice = createSlice({
       skin: '/animations/enemie3move.gif',
       move: 1,
     },
-    weapon: { // НЕ ИСПОЛЬЗУЕТСЯ
+    weapon: {
+      // НЕ ИСПОЛЬЗУЕТСЯ
       name: 'trunk', // название
       damage: 20, // урон
       clip: 30, // обойма
@@ -143,14 +161,16 @@ const gameSlice = createSlice({
       w: 50,
       skin: '/animations/gold.gif',
     },
-    golds: [{
-      id: 1,
-      x: 400,
-      y: 70,
-      h: 50,
-      w: 50,
-      skin: '/animations/gold.gif',
-    }],
+    golds: [
+      {
+        id: 1,
+        x: 400,
+        y: 70,
+        h: 50,
+        w: 50,
+        skin: '/animations/gold.gif',
+      },
+    ],
     bullets: [], // массив в который мы пушим пули
     game: {
       // объект для сбора статистики за игру

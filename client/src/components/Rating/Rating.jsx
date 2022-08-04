@@ -1,13 +1,15 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './Rating.css';
 
 function Rating() {
+  const { user } = useSelector((state) => state.user);
+  console.log('🚀 ~ file: Rating.jsx ~ line 8 ~ Rating ~ user', user);
   return (
     <div className="center anim-show-rating">
       <h1>
         <span className="blue">TOP</span>
-        {' '}
         <span className="yellow">USERS</span>
       </h1>
 

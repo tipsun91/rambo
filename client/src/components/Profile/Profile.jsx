@@ -10,13 +10,12 @@ export default function Profile() {
   const editProfileForm = useRef();
 
   // функция преобразования секунд в формат 00:00:00
-  function format(seconds) {
-    const s = (seconds % 60).toString();
-    const m = Math.floor((seconds / 60) % 60).toString();
-    const h = Math.floor((seconds / 60 / 60) % 60).toString();
-    return `${h.padStart(2, '0')}:${m.padStart(2, '0')}:${s.padStart(2, '0')}`;
-  }
-  console.log(format(100));
+  //   function format(seconds) {
+  //     const s = (seconds % 60).toString();
+  //     const m = Math.floor((seconds / 60) % 60).toString();
+  //     const h = Math.floor((seconds / 60 / 60) % 60).toString();
+  //     return `${h.padStart(2, '0')}:${m.padStart(2, '0')}:${s.padStart(2, '0')}`;
+  //   }
 
   const onSubmit = useCallback(
     (event) => {
@@ -26,6 +25,12 @@ export default function Profile() {
     },
     [editProfileForm],
   );
+
+  useCallback((event) => {
+    event.preventDefault();
+
+    dispatch(userStats(event));
+  }, []);
 
   return (
     <div className="container__stats anim-show-profile flex">
