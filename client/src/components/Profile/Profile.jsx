@@ -132,7 +132,7 @@ export default function Profile() {
         </table>
         <div className="score-box-profile">
           <p className="score-profile" />
-          <Link className="return-profile btn-back" to="/">
+          <Link className="return-rating btn-back" to="/">
             &lt;&lt; НАЗАД
           </Link>
         </div>

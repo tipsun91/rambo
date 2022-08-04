@@ -1,8 +1,9 @@
 .span-update {
-  width: 546px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 50px;
 }
 
 .profile__wrapper {
@@ -22,6 +23,8 @@
   flex-direction: column;
   gap: 30px;
   align-items: center;
+  justify-content: space-between;
+  width: 650px;
 }
 
 .is-disabled {
@@ -49,4 +52,10 @@
     100% {
       opacity: 1;
     }
+  }
+
+  .update {
+    text-align: left;
+    white-space: nowrap;
+    text-align: center;
   }

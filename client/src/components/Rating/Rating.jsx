@@ -16,6 +16,7 @@ function Rating() {
     <div className="center anim-show-rating">
       <h1>
         <span className="blue">TOP</span>
+        {' '}
         <span className="yellow">USERS</span>
       </h1>
 
