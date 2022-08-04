@@ -17,7 +17,7 @@ module.exports = {
         {
           name: 'Поля',
           email: 'polechkapo@yandex.ru',
-          password: await bcrypt.hash('112233Aaa', 2), // test
+          password: await bcrypt.hash('test', 2), // test
           money: 100,
           createdAt: new Date(),
           updatedAt: new Date(),

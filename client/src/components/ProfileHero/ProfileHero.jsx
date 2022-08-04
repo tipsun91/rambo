@@ -40,8 +40,14 @@ function ProfileHero() {
     }
   }
   return (
-    <div>
-      {
+    <div className="nes-container is-rounded is-dark profile__wrapper">
+      <h1>
+        <span className="blue">UPGRADE</span>
+        {' '}
+        <span className="yellow">HERO!</span>
+      </h1>
+      <div className="form__wrapper">
+        {
         player
           && (
             <>
@@ -50,8 +56,11 @@ function ProfileHero() {
                 <div className="update">{player.lvl}</div>
               </span>
               <span className="span-update">
-                <div className="update">HP</div>
-                <div className="update">{player.hp}</div>
+                <div className="update">
+                  HP:
+                  {' '}
+                  {player.hp}
+                </div>
                 { user.money >= 100
                   ? (
                     <button onClick={updateHP} type="button" className="update btn-2 nes-btn is-primary">
@@ -59,32 +68,38 @@ function ProfileHero() {
                     </button>
                   )
                   : (
-                    <button disabled type="button" className="update btn-2 nes-btn is-primary">
-                      ты бомж
+                    <button disabled type="button" className="update__button btn-2 nes-btn is-disabled">
+                      нужны деньги
                     </button>
                   )}
               </span>
               <span className="span-update">
-                <div className="update">DAMAGE</div>
-                <div className="update">{player.damage}</div>
+                <div className="update">
+                  DAMAGE:
+                  {' '}
+                  {player.damage}
+                </div>
                 { user.money >= 100
                   ? (
-                    <button onClick={updateDAMAGE} type="button" className="update btn-2 nes-btn is-primary">
+                    <button onClick={updateDAMAGE} type="button" className="update__button btn-2 nes-btn is-primary">
                       100 💰
                     </button>
                   )
                   : (
-                    <button disabled type="button" className="update btn-2 nes-btn is-primary">
-                      ты бомж
+                    <button disabled type="button" className="update__button btn-2 nes-btn is-disabled">
+                      нужны деньги
                     </button>
                   )}
               </span>
               <span className="span-update">
-                <div className="update">SPEED</div>
-                <div className="update">{player.speed}</div>
+                <div className="update">
+                  SPEED:
+                  {' '}
+                  {player.speed}
+                </div>
                 { user.money > 100 && player.speed < 10
                   && (
-                    <button onClick={() => updateSPEED(player.speed)} type="button" className="update btn-2 nes-btn is-primary">
+                    <button onClick={() => updateSPEED(player.speed)} type="button" className="update__button btn-2 nes-btn is-primary">
                       100 💰
                     </button>
                   )}
@@ -104,6 +119,7 @@ function ProfileHero() {
             </>
           )
       }
+      </div>
     </div>
   );
 }
