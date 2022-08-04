@@ -1,8 +1,8 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { editUser } from '../../store/userReducer/reducer';
-// import { userStats } from '../../store/gameReducer/reducer';
+import { userOneStats } from '../../store/gameReducer/reducer';
 import './Profile.css';
 
 // функция преобразования секунд в формат 00:00:00
@@ -15,8 +15,13 @@ export const format = (seconds) => {
 
 export default function Profile() {
   const { user } = useSelector((state) => state.user);
+  const { oneStatistic } = useSelector((state) => state.game);
   const dispatch = useDispatch();
   const editProfileForm = useRef();
+
+  useEffect((event) => {
+    dispatch(userOneStats({ event, id: user.id }));
+  }, []);
 
   const onSubmit = useCallback(
     (event) => {
@@ -26,11 +31,6 @@ export default function Profile() {
     },
     [editProfileForm],
   );
-
-  //   useEffect((event) => {
-  //     dispatch(userStats(event));
-  //     console.log('aaa');
-  //   }, []);
 
   return (
     <div className="container__stats anim-show-profile flex">
@@ -49,7 +49,11 @@ export default function Profile() {
               name="file"
               type="file"
               defaultValue=""
-              style={{ color: 'transparent', width: '200px', marginTop: '20px' }}
+              style={{
+                color: 'transparent',
+                width: '200px',
+                marginTop: '20px',
+              }}
             />
           </div>
         </div>
@@ -98,52 +102,32 @@ export default function Profile() {
           <thead>
             <tr>
               <th>
-                <h1>Уровень</h1>
-              </th>
-              <th>
-                <h1>Очки</h1>
-              </th>
-              <th>
-                <h1>Золото</h1>
-              </th>
-              <th>
-                <h1>Убийства</h1>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>100</td>
-              <td>200</td>
-              <td>300</td>
-              <td>400</td>
-            </tr>
-          </tbody>
-        </table>
-        <table className="container__profile">
-          <thead>
-            <tr>
-              <th>
                 <h1>Игр сыграно</h1>
               </th>
               <th>
                 <h1>Время в игре</h1>
               </th>
               <th>
-                <h1>Победы %</h1>
+                <h1>Золото</h1>
               </th>
               <th>
-                <h1>Средний урон</h1>
+                <h1>Убито врагов</h1>
+              </th>
+              <th>
+                <h1>Нанесено урона</h1>
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>500</td>
-              <td>600</td>
-              <td>700</td>
-              <td>800</td>
-            </tr>
+            {oneStatistic.map((o) => (
+              <tr>
+                <td>{o['Game.countGames']}</td>
+                <td>{format(o['Game.timeGame'])}</td>
+                <td>{o['Game.countMoney']}</td>
+                <td>{o['Game.countEnemies']}</td>
+                <td>{o['Game.countDamage']}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
         <div className="score-box-profile">
