@@ -7,7 +7,7 @@ import './Signin.css';
 export default function Signin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const { user, error } = useSelector((state) => state.user);
   const signInForm = useRef();
 
   const onSubmit = useCallback(
@@ -58,9 +58,10 @@ export default function Signin() {
             style={{ color: 'black' }}
           />
         </div>
-        <button type="submit" className="nes-btn is-primary nes-in" id="login-btn">
+        <button type="submit" className="nes-btn is-primary nes-up" id="login-btn">
           Войти
         </button>
+        { error && <div className="error_mes">Неверный логин или пароль</div> }
       </form>
     </div>
   );

@@ -1,22 +1,27 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { editUser } from '../../store/userReducer/reducer';
+import { userOneStats } from '../../store/gameReducer/reducer';
 import './Profile.css';
+
+// функция преобразования секунд в формат 00:00:00
+export const format = (seconds) => {
+  const s = (seconds % 60).toString();
+  const m = Math.floor((seconds / 60) % 60).toString();
+  const h = Math.floor((seconds / 60 / 60) % 60).toString();
+  return `${h.padStart(2, '0')}:${m.padStart(2, '0')}:${s.padStart(2, '0')}`;
+};
 
 export default function Profile() {
   const { user } = useSelector((state) => state.user);
+  const { oneStatistic } = useSelector((state) => state.game);
   const dispatch = useDispatch();
   const editProfileForm = useRef();
 
-  // функция преобразования секунд в формат 00:00:00
-  function format(seconds) {
-    const s = (seconds % 60).toString();
-    const m = Math.floor((seconds / 60) % 60).toString();
-    const h = Math.floor((seconds / 60 / 60) % 60).toString();
-    return `${h.padStart(2, '0')}:${m.padStart(2, '0')}:${s.padStart(2, '0')}`;
-  }
-  console.log(format(100));
+  useEffect((event) => {
+    dispatch(userOneStats({ event, id: user.id }));
+  }, []);
 
   const onSubmit = useCallback(
     (event) => {
@@ -29,7 +34,7 @@ export default function Profile() {
 
   return (
     <div className="container__stats anim-show-profile flex">
-      <div className="profile__wrapper">
+      <div className="user__wrapper">
         <div className="user-profile">
           <img
             className="avatar"
@@ -44,11 +49,17 @@ export default function Profile() {
               name="file"
               type="file"
               defaultValue=""
+              style={{
+                color: 'transparent',
+                width: '200px',
+                marginTop: '20px',
+              }}
             />
           </div>
         </div>
         <div className="edit-user-profile nes-container is-rounded is-dark">
           <form className="edit-form" ref={editProfileForm} onSubmit={onSubmit}>
+            <h3 className="edit-title">Изменить почту и пароль:</h3>
             <div className="edit-profile">
               <input
                 required
@@ -57,7 +68,7 @@ export default function Profile() {
                 type="name"
                 placeholder="Name"
                 defaultValue={user.name}
-                style={{ color: 'black' }}
+                className="edit__input"
               />
             </div>
             <div className="edit-profile">
@@ -68,7 +79,7 @@ export default function Profile() {
                 type="email"
                 placeholder="Email"
                 defaultValue={user.email}
-                style={{ color: 'black' }}
+                className="edit__input"
               />
             </div>
             <div className="edit-profile">
@@ -80,39 +91,13 @@ export default function Profile() {
                 placeholder="New password"
               />
             </div>
-            <button type="submit" className="btn-2 nes-btn is-primary">
-              Изменить данные
+            <button type="submit" className="btn-2 nes-btn is-primary edit-btn">
+              Изменить
             </button>
           </form>
         </div>
       </div>
-      <div className="body">
-        <table className="container__profile">
-          <thead>
-            <tr>
-              <th>
-                <h1>Уровень</h1>
-              </th>
-              <th>
-                <h1>Очки</h1>
-              </th>
-              <th>
-                <h1>Золото</h1>
-              </th>
-              <th>
-                <h1>Убийства</h1>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>100</td>
-              <td>200</td>
-              <td>300</td>
-              <td>400</td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="score__table">
         <table className="container__profile">
           <thead>
             <tr>
@@ -123,25 +108,31 @@ export default function Profile() {
                 <h1>Время в игре</h1>
               </th>
               <th>
-                <h1>Победы %</h1>
+                <h1>Золото</h1>
               </th>
               <th>
-                <h1>Средний урон</h1>
+                <h1>Убито врагов</h1>
+              </th>
+              <th>
+                <h1>Нанесено урона</h1>
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>500</td>
-              <td>600</td>
-              <td>700</td>
-              <td>800</td>
-            </tr>
+            {oneStatistic.map((o) => (
+              <tr>
+                <td>{o['Game.countGames']}</td>
+                <td>{format(o['Game.timeGame'])}</td>
+                <td>{o['Game.countMoney']}</td>
+                <td>{o['Game.countEnemies']}</td>
+                <td>{o['Game.countDamage']}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
         <div className="score-box-profile">
           <p className="score-profile" />
-          <Link className="return-profile" to="/">
+          <Link className="return-profile btn-back" to="/">
             &lt;&lt; НАЗАД
           </Link>
         </div>

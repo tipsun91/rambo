@@ -135,6 +135,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     user: {},
+    error: false,
   },
   reducers: {
     buy(state) {
@@ -156,7 +157,11 @@ const userSlice = createSlice({
     },
     [signIn.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.user = action.payload.user;
+      if (action.payload.message === 'Incorrect password!' || action.payload.message === 'User not found!') {
+        state.error = true;
+      } else {
+        state.user = action.payload.user;
+      }
     },
     [signUp.pending]: (state) => {
       state.status = 'loading';
@@ -164,7 +169,11 @@ const userSlice = createSlice({
     },
     [signUp.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.user = action.payload.user;
+      if (action.payload.message === 'Incorrect password!' || action.payload.message === 'User exists!') {
+        state.error = action.payload.message;
+      } else {
+        state.user = action.payload.user;
+      }
     },
     [editUser.pending]: (state) => {
       state.status = 'loading';

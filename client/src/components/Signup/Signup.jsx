@@ -7,8 +7,9 @@ import './Signup.css';
 export default function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const { user, error } = useSelector((state) => state.user);
   const signUpForm = useRef();
+  console.log(error);
 
   const onSubmit = useCallback(
     (event) => {
@@ -87,9 +88,10 @@ export default function Signup() {
             style={{ color: 'black' }}
           />
         </div>
-        <button type="submit" className="nes-btn is-primary nes-in" id="login-btn">
+        <button type="submit" className="nes-btn is-primary nes-in nes-up" id="login-btn">
           Зарегистрироваться
         </button>
+        { error !== false && <div className="error_mes">{error}</div> }
       </form>
     </div>
   );

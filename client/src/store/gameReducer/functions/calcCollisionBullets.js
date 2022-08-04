@@ -19,6 +19,9 @@ function calcCollisionBullets(state, arr) {
           arr.findIndex((el) => el.id === bullet.id),
           1,
         );
+        if (enemie.hp <= 0 && enemie.type === 4) {
+          enemie.skin = '/animations/enemie3deeth.gif';
+        }
         if (enemie.hp <= 0) {
           if (state.player.score % 100) {
             state.player.lvl += 1;
