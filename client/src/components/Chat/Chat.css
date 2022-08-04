@@ -19,3 +19,11 @@
    word-break: break-all;
    color: #fff;
 }
+
+.btn-back {
+   margin-left: 80px;
+}
+
+.messages {
+   width: 489px;
+}
