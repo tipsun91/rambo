@@ -307,7 +307,7 @@ function App() {
             <Link className="nes-btn is-primary" to="/game" onClick={restart}>
               Играть еще раз
             </Link>
-            <Link className="nes-btn is-warning" to="/" onClick={restart}>
+            <Link className="nes-btn is-warning" to="/">
               Вернуться в главное меню
             </Link>
           </div>
@@ -318,7 +318,7 @@ function App() {
             <Link className="nes-btn is-primary" to="/game" onClick={restart}>
               Играть еще раз
             </Link>
-            <Link className="nes-btn is-warning" to="/" onClick={restart}>
+            <Link className="nes-btn is-warning" to="/">
               Вернуться в главное меню
             </Link>
           </div>
