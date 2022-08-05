@@ -71,7 +71,7 @@ function Chat() {
 
   return (
     <>
-      <div className="nes-container nes-container_chat is-rounded is-dark chat">
+      <div className="nes-container nes-container_chat is-rounded is-dark chat anim-show-chat">
         <h1>
           <span className="blue">OUR</span>
           {' '}

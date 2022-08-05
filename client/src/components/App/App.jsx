@@ -4,30 +4,32 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import muzic from '../../sounds/Sound_15678.mp3';
 import Hero from '../Hero/Hero';
 import GameBar from '../GameBar/GameBar';
 import Bullet from '../Bullet/Bullet';
 import Enemy from '../Enemy/Enemy';
 import GoldCoin from '../GoldCoin/GoldCoin';
 import './App.css';
+import { sendMoney } from '../../store/userReducer/reducer';
 import {
   getPlayer,
   display,
   updateFrame,
   sendStatistic,
+  sendScoreLvl,
   updateWaves,
   updateEnemies,
   updateBackgroundWaves2,
   updateBackgroundWaves3,
   updatePositionPlayer,
-  deleteAllEnemies,
   deleteAllGolds,
 } from '../../store/gameReducer/reducer';
 
 function App() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const app = useRef();
+  const { user } = useSelector((state) => state.user);
   const {
     enemies,
     bullets,
@@ -51,6 +53,17 @@ function App() {
   const [timeEnemy, setTimeEnemy] = useState(Date.now());
   const [shoot, setShoot] = useState(false);
   const [cordMouse, setCordMouse] = useState();
+  const [cordMouseOver, setCordMouseOver] = useState();
+
+  useEffect(() => {
+    const mouseOverFunc = (event) => {
+      setCordMouseOver([event.clientX - 36, event.clientY - 35]);
+    };
+    document.addEventListener('mouseover', mouseOverFunc);
+    return () => {
+      document.removeEventListener('mouseover', mouseOverFunc);
+    };
+  }, [cordMouseOver]);
 
   useEffect(() => {
     const mouseClickDown = (event) => {
@@ -113,6 +126,7 @@ function App() {
     document.addEventListener('keyup', function2);
 
     return () => {
+      // document.removeEventListener('mouseover', mouseOverFunc);
       document.removeEventListener('mousedown', mouseClickDown);
       document.removeEventListener('mouseup', mouseClickUp);
       document.removeEventListener('keydown', funtion1);
@@ -126,7 +140,7 @@ function App() {
     const mouseCord = [];
 
     if (shoot) {
-      if (Date.now() - timeBullet > 300) {
+      if (Date.now() - timeBullet > 200) {
         mouseCord.push(cordMouse[0], cordMouse[1]);
         seTimeBullet(Date.now);
       }
@@ -167,7 +181,6 @@ function App() {
     // логика смены волн врагов
     if (playGame === 'play') {
       if (game.countEnemies === gamePlay.waves1 && passageWaves === 1 && player.x > 1050) {
-      // if (game.countEnemies === 2 && passageWaves === 1) {
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
@@ -180,8 +193,6 @@ function App() {
 
       if (game.countEnemies === gamePlay.waves2 + gamePlay.waves1
         && passageWaves === 2 && player.x > 1050) {
-        // if (game.countEnemies === 4 && passageWaves === 2) {
-
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
@@ -192,17 +203,18 @@ function App() {
         setPassageWaves(3);
       }
       // логика выгрыша
-      if (game.countEnemies === gamePlay.waves2 + gamePlay.waves1
-        + gamePlay.waves3 + gamePlay.boss) {
+      if (
+        game.countEnemies
+        === gamePlay.waves2 + gamePlay.waves1 + gamePlay.waves3 + gamePlay.boss
+      ) {
         setPlayGame('vin');
       }
     }
     // главный диспатчэ
-    dispatch(updateFrame({ player: pressedButtons, mouseCord }));
+    dispatch(updateFrame({ player: pressedButtons, mouseCord, cordMouseOver }));
 
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWaves === 2) {
-      // dispatch(deleteAllEnemies());
       dispatch(deleteAllGolds());
       // переходт на вторую локацию
       dispatch(updateBackgroundWaves2());
@@ -215,7 +227,6 @@ function App() {
     }
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWaves === 3) {
-      // dispatch(deleteAllEnemies());
       dispatch(deleteAllGolds());
       // переходт на третью локацию
       dispatch(updateBackgroundWaves3());
@@ -247,17 +258,23 @@ function App() {
       // записываем время проведенное в игре
       const time = (+Date.now() - +startTime) / 1000;
       // диспатч для сбора статистики за игру
+      dispatch(sendMoney({ gameMoney: game.countMoney, userMoney: user.money }));
       dispatch(
         sendStatistic({
           countEnemies: game.countEnemies,
-          countMoney: game.countMoney,
           countDamage: game.countDamage,
           countWaves,
-          timeGame: time,
+          timeGame: Math.floor(time),
+          countMoney: game.countMoney,
         }),
       );
+      dispatch(sendScoreLvl({ lvl: player.lvl, score: player.score }));
     }
   }, [playGame]);
+
+  const restart = () => {
+    window.location.reload();
+  };
 
   return (
     <div
@@ -281,7 +298,7 @@ function App() {
               {' '}
               <span className="yellow">OVER</span>
             </h1>
-            <Link className="nes-btn is-primary" to="/game">
+            <Link className="nes-btn is-primary" to="/game" onClick={restart}>
               Играть еще раз
             </Link>
             <Link className="nes-btn is-warning" to="/">
@@ -292,7 +309,7 @@ function App() {
         {playGame === 'vin' && (
           <div className="gameOver">
             <h1>YOU WON!</h1>
-            <Link className="nes-btn is-primary" to="/game">
+            <Link className="nes-btn is-primary" to="/game" onClick={restart}>
               Играть еще раз
             </Link>
             <Link className="nes-btn is-warning" to="/">

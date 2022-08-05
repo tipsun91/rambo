@@ -8,7 +8,7 @@ function calcCollisionsEnemie(state, arr, hero) {
       && hero.y >= enemie.y
     ) {
       if (state.gameLoop % enemie.coolDown === 0) {
-        hero.hp -= enemie.damage;
+        hero.hp = +hero.hp - +enemie.damage;
         if (enemie.type === 1) {
           enemie.skin = '/animations/enemie0attack.gif'; // меняем скин врага при ударе первого типа
         }

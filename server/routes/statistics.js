@@ -5,7 +5,6 @@ const { access, AUTHENTICATED } = require('../middlewares/access');
 const gameData = (data) => ({
   userId: data.userId,
   countEnemies: data.countEnemies,
-  countMoney: data.countMoney,
   countDamage: data.countDamage,
   countWaves: data.countWaves,
   timeGame: Math.round(data.timeGame),
@@ -16,7 +15,7 @@ const { sequelize, User, Game } = require('../db/models');
 // Статистика по конкретному пользователю
 router.route('/:id').get(async (req, res) => {
   try {
-    const id = Number(req.params.id);
+    const id = req.session.userId;
     const user = await User.findByPk(id);
     if (!user || !user.id) {
       res.status(404).json({ message: `User with id=${id} not found!` });
@@ -90,14 +89,16 @@ router
   })
   .post(access(AUTHENTICATED), async (req, res) => {
     try {
-      const gameResult = await Game.create(
-        gameData({
-          userId: res.locals.user.id,
-          ...req.body,
-        })
-      );
-      await gameResult.save();
-      if (gameResult.id) {
+      const id = req.session.userId;
+      const game = await Game.create({
+        userId: id,
+        countEnemies: req.body.countEnemies,
+        countMoney: req.body.countMoney,
+        countDamage: req.body.countDamage,
+        timeGame: req.body.timeGame,
+        countWaves: req.body.countWaves,
+      });
+      if (game) {
         res.status(201).json({ message: 'Created!' });
       } else {
         res.status(501).json({ message: 'Can not create!' });

@@ -1,6 +1,7 @@
 # custom
 temporally
 .vscode
+server/uploads
 server/sessions
 server/node_modules
 client/node_modules

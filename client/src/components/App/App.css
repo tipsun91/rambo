@@ -42,3 +42,6 @@
   left: 100%;
   z-index: 2;
 }
+html {
+  cursor: url('../../../public/img/250.png'), auto;
+}
