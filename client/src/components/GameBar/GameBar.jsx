@@ -1,12 +1,20 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './GameBar.css';
+import { sendStartHp } from '../../store/gameReducer/reducer';
 
 function GameBar() {
+  const dispatch = useDispatch();
+  const { startHp } = useSelector((state) => state.game);
   const {
     player, game, gamePlay, enemies,
   } = useSelector((state) => state.game);
+
+  function findNum() {
+    const proportinon = ((player.hp / startHp));
+    return proportinon;
+  }
 
   return (
     <div className="nes-container is-dark with-title gamebar__wrapper">
@@ -25,7 +33,7 @@ function GameBar() {
         <div className="gamebar__center">
           <div
             className="gamebar__progress__hp"
-            style={{ width: `${player.hp}%` }}
+            style={{ width: `${(findNum() * 100)}%` }}
           >
             <p className="gamebar__progress__number">{`${Math.floor(player.hp)}💔`}</p>
           </div>
