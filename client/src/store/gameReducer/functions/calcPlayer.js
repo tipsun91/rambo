@@ -6,32 +6,74 @@ function calcPlayer(state, action) {
   if (action.payload.player.includes('d')) {
     if (state.player.x < (state.display.width - state.player.w)) {
       state.player.x += state.player.speed; // идем вправо
-      state.player.skin = '/animations/hero1move.gif'; // меняем скин при ходьбе
-      state.player.move = 1; // отзеркаливаем скин
+      if (action.payload.cordMouseOver) {
+        if (action.payload.cordMouseOver[0] > state.player.x) {
+          state.player.skin = '/animations/hero1move.gif'; // меняем скин при ходьбе
+          state.player.move = 1; // отзеркаливаем скин
+        } else {
+          state.player.skin = '/animations/hero1move.gif'; // меняем скин при ходьбе
+          state.player.move = -1; // отзеркаливаем скин
+        }
+      } else {
+        state.player.skin = '/animations/hero1move.gif'; // меняем скин при ходьбе
+        state.player.move = -1; // отзеркаливаем скин
+      }
     }
   }
   if (action.payload.player.includes('a')) {
     if (state.player.x > 0) {
       state.player.x -= state.player.speed; // идем влево
-      state.player.skin = '/animations/hero1move.gif'; // меняем скин при ходьбе
-      state.player.move = -1; // отзеркаливаем скин
+      if (action.payload.cordMouseOver) {
+        if (action.payload.cordMouseOver[0] > state.player.x) {
+          state.player.skin = '/animations/hero1move.gif'; // меняем скин при ходьбе
+          state.player.move = -1; // отзеркаливаем скин
+        } else {
+          state.player.skin = '/animations/hero1move.gif'; // меняем скин при ходьбе
+          state.player.move = 1; // отзеркаливаем скин
+        }
+      } else {
+        state.player.skin = '/animations/hero1move.gif'; // меняем скин при ходьбе
+        state.player.move = 1; // отзеркаливаем скин
+      }
     }
   }
   if (action.payload.player.includes('w')) {
     if (state.player.y > 300) {
       state.player.y -= state.player.speed; // идем вверх
+      state.player.skin = '/animations/hero1move.gif'; // меняем скин при ходьбе
+      state.player.move = 1; // отзеркаливаем скин
     }
   }
   if (action.payload.player.includes('s')) {
     if (state.player.y < (state.display.height - state.player.h)) {
       state.player.y += state.player.speed; // идем вниз
+      state.player.skin = '/animations/hero1move.gif'; // меняем скин при ходьбе
+      state.player.move = -1; // отзеркаливаем скин
     }
   }
   if (action.payload.player.includes('stop')) {
-    state.player.skin = '/animations/hero1.gif';
+    if (action.payload.cordMouseOver) {
+      if (action.payload.cordMouseOver[0] > state.player.x) {
+        state.player.skin = '/animations/hero2.gif';
+        state.player.move = 1;
+      } else {
+        state.player.skin = '/animations/hero2.gif';
+        state.player.move = -1;
+      }
+    }
   }
+  // if (action.payload.cordMouseOver) {
+  //   console.log(action.payload.cordMouseOver[0]);
+  // }
 
   if (action.payload.mouseCord.length > 0) {
+    if (action.payload.mouseCord[0] > state.player.x) {
+      state.player.skin = '/animations/hero2.gif';
+      state.player.move = 1;
+    } else {
+      state.player.skin = '/animations/hero2.gif';
+      state.player.move = -1;
+    }
     const [speedX, speedY, g] = calcBulletTrajectory(state, action); // скорость пуль по Х и У
     state.bullets.push({
       id: uuidv4(), // айди пули

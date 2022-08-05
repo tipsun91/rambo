@@ -14,6 +14,7 @@ function ProfileHero() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { player } = useSelector((state) => state.game);
+  console.log('🚀 ProfileHero.jsx ~ line 17 ~ ProfileHero ~ player', player);
 
   useEffect(() => {
     dispatch(getPlayer());
@@ -49,94 +50,94 @@ function ProfileHero() {
         </h1>
         <div className="form__wrapper">
           {player && (
-          <>
-            <span className="span-update">
-              <div className="update">LVL</div>
-              <div className="update">{player.lvl}</div>
-            </span>
-            <span className="span-update">
-              <div className="update">
-                HP:
-                {' '}
-                {Math.floor(player.hp)}
-              </div>
-              {user.money >= 100 ? (
-                <button
-                  onClick={updateHP}
-                  type="button"
-                  className="update btn-2 nes-btn is-primary"
-                >
-                  100 💰
-                </button>
-              ) : (
-                <button
-                  disabled
-                  type="button"
-                  className="update__button btn-2 nes-btn is-disabled"
-                >
-                  нужны деньги
-                </button>
-              )}
-            </span>
-            <span className="span-update">
-              <div className="update">
-                DAMAGE:
-                {' '}
-                {Math.floor(player.damage)}
-              </div>
-              {user.money >= 100 ? (
-                <button
-                  onClick={updateDAMAGE}
-                  type="button"
-                  className="update__button btn-2 nes-btn is-primary"
-                >
-                  100 💰
-                </button>
-              ) : (
-                <button
-                  disabled
-                  type="button"
-                  className="update__button btn-2 nes-btn is-disabled"
-                >
-                  нужны деньги
-                </button>
-              )}
-            </span>
-            <span className="span-update">
-              <div className="update">
-                SPEED:
-                {' '}
-                {Math.floor(player.speed)}
-              </div>
-              {user.money >= 100 && player.speed < 10 && (
-                <button
-                  onClick={() => updateSPEED(player.speed)}
-                  type="button"
-                  className="update__button btn-2 nes-btn is-primary"
-                >
-                  100 💰
-                </button>
-              )}
-              {user.money < 100 && player.speed < 10 && (
-                <button
-                  disabled
-                  type="button"
-                  className="update btn-2 nes-btn is-disabled"
-                >
-                  нужны деньги
-                </button>
-              )}
-              {player.speed >= 10 && (
-              <button
-                disabled
-                type="button"
-                className="update nes-btn is-primary"
-              >
-                Макс
-              </button>
-              )}
-            </span>
-          </>
+            <>
+              <span className="span-update">
+                <div className="update">LVL</div>
+                <div className="update">{player.lvl}</div>
+              </span>
+              <span className="span-update">
+                <div className="update">
+                  HP:
+                  {' '}
+                  {Math.floor(player.hp)}
+                </div>
+                {user.money >= 100 ? (
+                  <button
+                    onClick={updateHP}
+                    type="button"
+                    className="update btn-2 nes-btn is-primary"
+                  >
+                    100 💰
+                  </button>
+                ) : (
+                  <button
+                    disabled
+                    type="button"
+                    className="update__button btn-2 nes-btn is-disabled"
+                  >
+                    нужны деньги
+                  </button>
+                )}
+              </span>
+              <span className="span-update">
+                <div className="update">
+                  DAMAGE:
+                  {' '}
+                  {Math.floor(player.damage)}
+                </div>
+                {user.money >= 100 ? (
+                  <button
+                    onClick={updateDAMAGE}
+                    type="button"
+                    className="update__button btn-2 nes-btn is-primary"
+                  >
+                    100 💰
+                  </button>
+                ) : (
+                  <button
+                    disabled
+                    type="button"
+                    className="update__button btn-2 nes-btn is-disabled"
+                  >
+                    нужны деньги
+                  </button>
+                )}
+              </span>
+              <span className="span-update">
+                <div className="update">
+                  SPEED:
+                  {' '}
+                  {Math.floor(player.speed)}
+                </div>
+                {user.money >= 100 && player.speed < 10 && (
+                  <button
+                    onClick={() => updateSPEED(player.speed)}
+                    type="button"
+                    className="update__button btn-2 nes-btn is-primary"
+                  >
+                    100 💰
+                  </button>
+                )}
+                {user.money < 100 && player.speed < 10 && (
+                  <button
+                    disabled
+                    type="button"
+                    className="update btn-2 nes-btn is-disabled"
+                  >
+                    нужны деньги
+                  </button>
+                )}
+                {player.speed >= 10 && (
+                  <button
+                    disabled
+                    type="button"
+                    className="update nes-btn is-primary"
+                  >
+                    Макс
+                  </button>
+                )}
+              </span>
+            </>
           )}
         </div>
       </div>
@@ -146,7 +147,6 @@ function ProfileHero() {
           &lt;&lt; НАЗАД
         </Link>
       </div>
-
     </>
   );
 }

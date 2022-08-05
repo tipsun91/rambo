@@ -88,9 +88,16 @@ router
   })
   .post(access(AUTHENTICATED), async (req, res) => {
     try {
-      const gameResult = await Game.create(gameData(req.body));
-      await gameResult.save();
-      if (gameResult.id) {
+      const id = req.session.userId;
+      const game = await Game.create({
+        userId: id,
+        countEnemies: req.body.countEnemies,
+        countMoney: req.body.countMoney,
+        countDamage: req.body.countDamage,
+        timeGame: req.body.timeGame,
+        countWaves: req.body.countWaves,
+      });
+      if (game) {
         res.status(201).json({ message: 'Created!' });
       } else {
         res.status(501).json({ message: 'Can not create!' });

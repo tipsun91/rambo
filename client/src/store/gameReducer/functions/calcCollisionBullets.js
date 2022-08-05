@@ -23,7 +23,7 @@ function calcCollisionBullets(state, arr) {
           enemie.skin = '/animations/enemie3deeth.gif';
         }
         if (enemie.hp <= 0) {
-          if (state.player.score % 100) {
+          if (state.player.score % 100 === 0) {
             state.player.lvl += 1;
             state.player.score += 10;
           } else {

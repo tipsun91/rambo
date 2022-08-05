@@ -121,6 +121,7 @@ export const sendStatistic = createAsyncThunk(
           countDamage: statGame.countDamage,
           countWaves: statGame.countWaves,
           timeGame: statGame.timeGame,
+          countMoney: statGame.countMoney,
         }),
         credentials: 'include',
       });
@@ -163,11 +164,27 @@ export const userOneStats = createAsyncThunk(
   },
 );
 
+export const heroOneStats = createAsyncThunk(
+  '/api/hero/getPlayer',
+  async (event, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/api/hero/getPlayer', {
+        method: 'GET',
+      });
+
+      const data = await responce.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const gameSlice = createSlice({
   name: 'game',
   initialState: {
     gamePlay: {
-      waves1: 15, // кол-во мобов
+      waves1: 1, // кол-во мобов
       waves1Count: 0,
       waves2: 15, // кол-во мобов
       waves2Count: 0,
@@ -194,6 +211,7 @@ const gameSlice = createSlice({
     },
     statistic: [],
     oneStatistic: [],
+    heroStats: [],
     enemies: [], // массив врагов
     enemies1: {
       type: 1,
@@ -387,6 +405,14 @@ const gameSlice = createSlice({
     [userOneStats.fulfilled]: (state, action) => {
       state.status = 'resolved';
       state.oneStatistic = action.payload.statistics;
+    },
+    [heroOneStats.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [heroOneStats.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.heroStats = action.payload.player;
     },
   },
 });

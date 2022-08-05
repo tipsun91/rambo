@@ -27,35 +27,38 @@ export default function Map() {
     <BrowserRouter>
       <Routes>
         <Route path="avatar" element={<Avatar />} />
-        {user ? (
-          <>
-            <Route path="/" element={<GameMenu />} />
-            <Route index path="game" element={<App />} />
-            <Route path="profileHero" element={<ProfileHero />} />
-            <Route path="main" element={<Main />} />
-            <Route path="profile" element={<Profile />}>
-              <Route path=":id" element={<Profile />} />
-            </Route>
-            <Route path="rating" element={<Rating />}>
-              <Route path="page/:page" element={<Rating />} />
-            </Route>
-            <Route path="sign">
-              <Route path="out" element={<GameMenu />} />
-              <Route path="in" element={<Signin />} />
-              <Route path="up" element={<Signup />} />
-            </Route>
-            <Route path="chat" element={<Chat />} />
-          </>
-        ) : (
-          <>
-            <Route path="/" element={<GameMenu />} />
-            <Route path="sign">
-              <Route path="in" element={<Signin />} />
-              <Route path="up" element={<Signup />} />
-            </Route>
-            <Route path="*" element={<NoPage />} />
-          </>
-        )}
+        {user
+          ? (
+            <>
+              <Route path="/" element={<GameMenu />} />
+              <Route index path="game" element={<App />} />
+              <Route path="profileHero" element={<ProfileHero />} />
+              <Route path="main" element={<Main />} />
+              <Route path="profile" element={<Profile />}>
+                <Route path=":id" element={<Profile />} />
+              </Route>
+              <Route path="rating" element={<Rating />}>
+                <Route path="page/:page" element={<Rating />} />
+              </Route>
+              <Route path="sign">
+                <Route path="out" element={<GameMenu />} />
+                <Route path="in" element={<Signin />} />
+                <Route path="up" element={<Signup />} />
+              </Route>
+              <Route path="chat" element={<Chat />} />
+            </>
+          )
+          : (
+            <>
+              <Route path="/" element={<GameMenu />} />
+              <Route path="sign">
+                <Route path="in" element={<Signin />} />
+                <Route path="up" element={<Signup />} />
+              </Route>
+              <Route path="*" element={<NoPage />} />
+            </>
+          )}
+
       </Routes>
     </BrowserRouter>
   );

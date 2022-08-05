@@ -4,6 +4,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import muzic from '../../sounds/Sound_15678.mp3';
 import Hero from '../Hero/Hero';
 import GameBar from '../GameBar/GameBar';
 import Bullet from '../Bullet/Bullet';
@@ -22,12 +23,10 @@ import {
   updateBackgroundWaves2,
   updateBackgroundWaves3,
   updatePositionPlayer,
-  deleteAllEnemies,
   deleteAllGolds,
 } from '../../store/gameReducer/reducer';
 
 function App() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const app = useRef();
   const { user } = useSelector((state) => state.user);
@@ -53,6 +52,17 @@ function App() {
   const [timeEnemy, setTimeEnemy] = useState(Date.now());
   const [shoot, setShoot] = useState(false);
   const [cordMouse, setCordMouse] = useState();
+  const [cordMouseOver, setCordMouseOver] = useState();
+
+  useEffect(() => {
+    const mouseOverFunc = (event) => {
+      setCordMouseOver([event.clientX - 36, event.clientY - 35]);
+    };
+    document.addEventListener('mouseover', mouseOverFunc);
+    return () => {
+      document.removeEventListener('mouseover', mouseOverFunc);
+    };
+  }, [cordMouseOver]);
 
   useEffect(() => {
     const mouseClickDown = (event) => {
@@ -115,6 +125,7 @@ function App() {
     document.addEventListener('keyup', function2);
 
     return () => {
+      // document.removeEventListener('mouseover', mouseOverFunc);
       document.removeEventListener('mousedown', mouseClickDown);
       document.removeEventListener('mouseup', mouseClickUp);
       document.removeEventListener('keydown', funtion1);
@@ -128,7 +139,7 @@ function App() {
     const mouseCord = [];
 
     if (shoot) {
-      if (Date.now() - timeBullet > 300) {
+      if (Date.now() - timeBullet > 200) {
         mouseCord.push(cordMouse[0], cordMouse[1]);
         seTimeBullet(Date.now);
       }
@@ -168,11 +179,7 @@ function App() {
     }
     // логика смены волн врагов
     if (playGame === 'play') {
-      if (
-        game.countEnemies === gamePlay.waves1
-        && passageWaves === 1
-        && player.x > 1050
-      ) {
+      if (game.countEnemies === gamePlay.waves1 && passageWaves === 1 && player.x > 1050) {
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
@@ -206,11 +213,10 @@ function App() {
       }
     }
     // главный диспатчэ
-    dispatch(updateFrame({ player: pressedButtons, mouseCord }));
+    dispatch(updateFrame({ player: pressedButtons, mouseCord, cordMouseOver }));
 
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWaves === 2) {
-      // dispatch(deleteAllEnemies());
       dispatch(deleteAllGolds());
       // переходт на вторую локацию
       dispatch(updateBackgroundWaves2());
@@ -223,7 +229,6 @@ function App() {
     }
     // логика для смены локации при прохождении первой волны
     if (playGame === 'waiting' && game.countWaves === 3) {
-      // dispatch(deleteAllEnemies());
       dispatch(deleteAllGolds());
       // переходт на третью локацию
       dispatch(updateBackgroundWaves3());
@@ -264,7 +269,8 @@ function App() {
           countEnemies: game.countEnemies,
           countDamage: game.countDamage,
           countWaves,
-          timeGame: time,
+          timeGame: Math.floor(time),
+          countMoney: game.countMoney,
         }),
       );
       dispatch(sendScoreLvl({ lvl: player.lvl, score: player.score }));
@@ -272,7 +278,7 @@ function App() {
   }, [playGame]);
 
   const restart = () => {
-    setPlayGame('play');
+    window.location.reload();
   };
 
   return (

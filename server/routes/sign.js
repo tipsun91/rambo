@@ -11,8 +11,8 @@ function heroDefaultValues(userId) {
   return {
     userId,
     hp: 100,
-    speed: 1,
-    damage: 10,
+    speed: 3,
+    damage: 8,
     score: 0,
     coolDown: 0,
     lvl: 1,
