@@ -26,7 +26,6 @@ export default function Map() {
   return (
     <BrowserRouter>
       <Routes>
-      <Route path="avatar" element={<Avatar />} />
         {user
           ? (
             <>
@@ -37,6 +36,7 @@ export default function Map() {
               <Route path="profile" element={<Profile />}>
                 <Route path=":id" element={<Profile />} />
               </Route>
+              <Route path="avatar" element={<Avatar />} />
               <Route path="rating" element={<Rating />}>
                 <Route path="page/:page" element={<Rating />} />
               </Route>
