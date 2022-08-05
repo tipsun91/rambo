@@ -13,10 +13,10 @@ import upGameLoop from './functions/upGameLoop';
 import calcGoldCoin from './functions/calcGoldCoin';
 
 export const sendScoreLvl = createAsyncThunk(
-  '/hero/scoreLvl',
+  '/api/hero/scoreLvl',
   async (lvlAndScore, { rejectWithValue }) => {
     try {
-      const responce = await fetch('/hero/scoreLvl', {
+      const responce = await fetch('/api/hero/scoreLvl', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -35,14 +35,15 @@ export const sendScoreLvl = createAsyncThunk(
 );
 
 export const getPlayer = createAsyncThunk(
-  '/hero/getPlayer',
+  '/api/hero/getPlayer',
   async (_, { rejectWithValue }) => {
     try {
-      const responce = await fetch('/hero/getPlayer', {
+      const responce = await fetch('/api/hero/getPlayer', {
         method: 'GET',
         credentials: 'include',
       });
       const data = await responce.json();
+      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -51,10 +52,10 @@ export const getPlayer = createAsyncThunk(
 );
 
 export const updateHeroHp = createAsyncThunk(
-  '/hero/updateHp',
+  '/api/hero/updateHp',
   async (_, { rejectWithValue }) => {
     try {
-      const responce = await fetch('/hero/updateHp', {
+      const responce = await fetch('/api/hero/updateHp', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -69,10 +70,10 @@ export const updateHeroHp = createAsyncThunk(
 );
 
 export const updateHeroDamage = createAsyncThunk(
-  '/hero/updateDamage',
+  '/api/hero/updateDamage',
   async (_, { rejectWithValue }) => {
     try {
-      const responce = await fetch('/hero/updateDamage', {
+      const responce = await fetch('/api/hero/updateDamage', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -87,10 +88,10 @@ export const updateHeroDamage = createAsyncThunk(
 );
 
 export const updateHeroSpeed = createAsyncThunk(
-  '/hero/updateSpeed',
+  '/api/hero/updateSpeed',
   async (speed, { rejectWithValue }) => {
     try {
-      const responce = await fetch('/hero/updateSpeed', {
+      const responce = await fetch('/api/hero/updateSpeed', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -165,7 +166,7 @@ export const userOneStats = createAsyncThunk(
 );
 
 export const heroOneStats = createAsyncThunk(
-  '/api/hero/getPlayer',
+  'heroOneStats',
   async (event, { rejectWithValue }) => {
     try {
       const responce = await fetch('/api/hero/getPlayer', {
@@ -259,7 +260,7 @@ const gameSlice = createSlice({
       h: 350, // ширина
       x: 400, // горизонталь
       y: 50, // вертикаль
-      hp: 2500, // здоровье
+      hp: 1000, // здоровье
       speed: 1,
       damage: 1, // урон
       coolDown: 40, // скорость удара
@@ -376,6 +377,7 @@ const gameSlice = createSlice({
     },
     [getPlayer.fulfilled]: (state, action) => {
       state.status = 'resolved';
+      console.log(1111111111);
       state.player = { ...state.player, ...action.payload.player };
       state.startHp = action.payload.player.hp;
     },
