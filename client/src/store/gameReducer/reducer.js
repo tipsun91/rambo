@@ -147,6 +147,7 @@ export const userOneStats = createAsyncThunk(
 const gameSlice = createSlice({
   name: 'game',
   initialState: {
+    startHp: 0,
     gamePlay: {
       waves1: 15, // кол-во мобов
       waves1Count: 0,
@@ -265,6 +266,9 @@ const gameSlice = createSlice({
     calcEnemiesFlag1: false, // ии врагов
   },
   reducers: {
+    sendStartHp(state) {
+      state.startHp = state.player.hp;
+    },
     deleteAllGolds(state, action) {
       state.golds = [];
     },
@@ -329,6 +333,7 @@ const gameSlice = createSlice({
     [getPlayer.fulfilled]: (state, action) => {
       state.status = 'resolved';
       state.player = { ...state.player, ...action.payload.player };
+      state.startHp = action.payload.player.hp;
     },
     [updateHeroHp.pending]: (state) => {
       state.status = 'loading';
@@ -374,6 +379,7 @@ const gameSlice = createSlice({
 });
 
 export const {
+  sendStartHp,
   display,
   updateFrame,
   updateWaves,
