@@ -21,6 +21,20 @@ export default function Map() {
 
   React.useEffect(() => {
     dispatch(signData());
+
+    // <backgroundSound>
+    const playBgSound = () => {
+      const bgSound = new Audio('/sound/background_athoner.mp3');
+      bgSound.play();
+      bgSound.loop = true;
+    };
+
+    document.addEventListener(
+      'click',
+      playBgSound,
+      { once: true },
+    );
+    // </backgroundSound>
   }, []);
 
   return (
