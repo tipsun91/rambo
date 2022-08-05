@@ -10,6 +10,7 @@ import GameBar from '../GameBar/GameBar';
 import Bullet from '../Bullet/Bullet';
 import Enemy from '../Enemy/Enemy';
 import GoldCoin from '../GoldCoin/GoldCoin';
+import Column from '../Column/Column';
 import './App.css';
 import { sendMoney } from '../../store/userReducer/reducer';
 import {
@@ -139,7 +140,7 @@ function App() {
     const mouseCord = [];
 
     if (shoot) {
-      if (Date.now() - timeBullet > 200) {
+      if (Date.now() - timeBullet > 180) {
         mouseCord.push(cordMouse[0], cordMouse[1]);
         seTimeBullet(Date.now);
       }
@@ -168,7 +169,7 @@ function App() {
       }
     }
     // логика появления врагов
-    if (Date.now() - timeEnemy > 600 && playGame === 'play') {
+    if (Date.now() - timeEnemy > 700 && playGame === 'play') {
       pressedButtons.push('enemy');
       setTimeEnemy(Date.now());
     }
@@ -220,7 +221,7 @@ function App() {
       // меняем позицию героя для прохождения в ворота
       dispatch(updatePositionPlayer());
       // когда анимация смены локации закончилась меням стейт снова на 'play'
-      if (backgroundPositionLeft === -2600) {
+      if (backgroundPositionLeft === -2800) {
         setPlayGame('play');
       }
     }
@@ -232,7 +233,7 @@ function App() {
       // меняем позицию героя для прохождения в ворота
       dispatch(updatePositionPlayer());
       // когда анимация смены локации закончилась меням стейт снова на 'play'
-      if (backgroundPositionLeft === -5600) {
+      if (backgroundPositionLeft === -5800) {
         setPlayGame('play');
       }
     }
@@ -284,6 +285,7 @@ function App() {
           <div>
             <GameBar />
             <Hero />
+            {/* <Column /> */}
             {bullets && bullets.map((el) => <Bullet key={el.id} bullet={el} />)}
             {enemies && enemies.map((el) => <Enemy key={el.id} enemy={el} />)}
             {golds && golds.map((el) => <GoldCoin key={el.id} coin={el} />)}
