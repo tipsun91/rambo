@@ -19,19 +19,29 @@ function GameMenu() {
         {user ? (
           <>
             <li>
-              <Link to="/game" className="lists__items">Начать игру</Link>
+              <Link to="/game" className="lists__items">
+                Начать игру
+              </Link>
             </li>
             <li>
-              <Link to="/chat" className="lists__items">Войти в чат</Link>
+              <Link to="/chat" className="lists__items">
+                Войти в чат
+              </Link>
             </li>
             <li>
-              <Link to="/profile" className="lists__items">Настройки профиля</Link>
+              <Link to="/profile" className="lists__items">
+                Настройки профиля
+              </Link>
             </li>
             <li>
-              <Link to="/profileHero" className="lists__items">Ваш герой</Link>
+              <Link to="/profileHero" className="lists__items">
+                Ваш герой
+              </Link>
             </li>
             <li>
-              <Link to="/rating" className="lists__items">Рейтинг игроков</Link>
+              <Link to="/rating" className="lists__items">
+                Рейтинг игроков
+              </Link>
             </li>
             <li>
               <Link to="/sign/in" onClick={onClick} className="lists__items">
@@ -42,10 +52,14 @@ function GameMenu() {
         ) : (
           <>
             <li>
-              <Link to="/sign/in" className="lists__items">Войти</Link>
+              <Link to="/sign/in" className="lists__items">
+                Войти
+              </Link>
             </li>
             <li>
-              <Link to="/sign/up" className="lists__items">Зарегистрироваться</Link>
+              <Link to="/sign/up" className="lists__items">
+                Зарегистрироваться
+              </Link>
             </li>
           </>
         )}

@@ -61,7 +61,6 @@ export const updateHeroHp = createAsyncThunk(
         },
       });
       const data = await responce.json();
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -113,7 +112,7 @@ export const sendStatistic = createAsyncThunk(
   async (statGame, { rejectWithValue }) => {
     try {
       const responce = await fetch('/api/statistics/', {
-        method: 'PATCH',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -122,6 +121,7 @@ export const sendStatistic = createAsyncThunk(
           countDamage: statGame.countDamage,
           countWaves: statGame.countWaves,
           timeGame: statGame.timeGame,
+          countMoney: statGame.countMoney,
         }),
         credentials: 'include',
       });
@@ -157,7 +157,22 @@ export const userOneStats = createAsyncThunk(
         method: 'GET',
       });
       const data = await responce.json();
-      console.log('🚀 line 139 ~ data', data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const heroOneStats = createAsyncThunk(
+  '/api/hero/getPlayer',
+  async (event, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/api/hero/getPlayer', {
+        method: 'GET',
+      });
+
+      const data = await responce.json();
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -168,6 +183,7 @@ export const userOneStats = createAsyncThunk(
 const gameSlice = createSlice({
   name: 'game',
   initialState: {
+    startHp: 0,
     gamePlay: {
       waves1: 15, // кол-во мобов
       waves1Count: 0,
@@ -196,6 +212,7 @@ const gameSlice = createSlice({
     },
     statistic: [],
     oneStatistic: [],
+    heroStats: [],
     enemies: [], // массив врагов
     enemies1: {
       type: 1,
@@ -293,6 +310,9 @@ const gameSlice = createSlice({
     },
   },
   reducers: {
+    sendStartHp(state) {
+      state.startHp = state.player.hp;
+    },
     deleteAllGolds(state, action) {
       state.golds = [];
     },
@@ -357,6 +377,7 @@ const gameSlice = createSlice({
     [getPlayer.fulfilled]: (state, action) => {
       state.status = 'resolved';
       state.player = { ...state.player, ...action.payload.player };
+      state.startHp = action.payload.player.hp;
     },
     [updateHeroHp.pending]: (state) => {
       state.status = 'loading';
@@ -398,10 +419,19 @@ const gameSlice = createSlice({
       state.status = 'resolved';
       state.oneStatistic = action.payload.statistics;
     },
+    [heroOneStats.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [heroOneStats.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.heroStats = action.payload.player;
+    },
   },
 });
 
 export const {
+  sendStartHp,
   display,
   updateFrame,
   updateWaves,

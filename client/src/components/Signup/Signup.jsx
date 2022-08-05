@@ -9,7 +9,6 @@ export default function Signup() {
   const dispatch = useDispatch();
   const { user, error } = useSelector((state) => state.user);
   const signUpForm = useRef();
-  console.log(error);
 
   const onSubmit = useCallback(
     (event) => {
@@ -20,21 +19,16 @@ export default function Signup() {
     [signUpForm],
   );
 
-  useEffect(
-    () => {
-      if (user && user.id) {
-        navigate('/');
-      }
-    },
-    [user],
-  );
+  useEffect(() => {
+    if (user && user.id) {
+      navigate('/');
+    }
+  }, [user]);
 
   return (
-    <div className="registr-box anim-show-signup nes-container is-rounded is-dark forms">
+    <div className="registr-box anim-show-signup nes-container is-rounded is-dark forms anim-show-singup">
       <h1>
-        <span className="blue">
-          LET&apos;S
-        </span>
+        <span className="blue">LET&apos;S</span>
         {' '}
         <span className="yellow">PLAY!</span>
       </h1>

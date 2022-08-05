@@ -54,8 +54,6 @@ function Chat() {
       .then((data) => setHistory(data));
   }, []);
 
-  console.log(history, '<=======');
-
   const sendMessage = async (event) => {
     event.preventDefault();
     const message = {

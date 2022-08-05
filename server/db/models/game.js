@@ -1,7 +1,7 @@
-'use strict';
 const {
-  Model
+  Model,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Game extends Model {
     /**
@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     countWaves: {
       allowNull: false,
       type: DataTypes.INTEGER,
-    }
+    },
   }, {
     sequelize,
     modelName: 'Game',

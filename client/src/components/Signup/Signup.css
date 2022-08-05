@@ -8,8 +8,8 @@
   left: 25%;
   white-space: nowrap;
   gap: 30px;
-  padding-top: 30px!important;
-  padding-bottom: 30px!important;
+  padding-top: 30px !important;
+  padding-bottom: 30px !important;
 }
 
 .success-box {
@@ -23,11 +23,11 @@
   display: none;
 }
 
-.anim-show-singin {
+.anim-show-singup {
   color: #fff;
   opacity: 0;
   transition: 1s;
-  animation: show 1s 1;
+  animation: show 0.5s 1;
   animation-fill-mode: forwards;
   animation-delay: 0.1s;
 }

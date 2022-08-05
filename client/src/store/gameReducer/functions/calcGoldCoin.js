@@ -13,7 +13,6 @@ function calcGoldCoin(state, arr, hero) {
         1,
       );
     }
-    // console.log('===>', state.game.countMoney);
   });
 }
 

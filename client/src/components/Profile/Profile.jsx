@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { editUser } from '../../store/userReducer/reducer';
-import { userOneStats } from '../../store/gameReducer/reducer';
+import { userOneStats, heroOneStats } from '../../store/gameReducer/reducer';
 import './Profile.css';
 
 // функция преобразования секунд в формат 00:00:00
@@ -15,13 +15,16 @@ export const format = (seconds) => {
 
 export default function Profile() {
   const { user } = useSelector((state) => state.user);
-  const { oneStatistic } = useSelector((state) => state.game);
-  console.log('🚀 oneStatistic', oneStatistic);
+  const { oneStatistic, heroStats } = useSelector((state) => state.game);
   const dispatch = useDispatch();
   const editProfileForm = useRef();
 
   useEffect((event) => {
     dispatch(userOneStats({ event, id: user.id }));
+  }, []);
+
+  useEffect((event) => {
+    dispatch(heroOneStats(event));
   }, []);
 
   const onSubmit = useCallback(
@@ -103,13 +106,31 @@ export default function Profile() {
           <thead>
             <tr>
               <th>
-                <h1>Игр сыграно</h1>
+                <h1>Уровень</h1>
               </th>
               <th>
-                <h1>Время в игре</h1>
+                <h1>Очки</h1>
               </th>
               <th>
                 <h1>Золото</h1>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{heroStats.lvl}</td>
+              <td>{heroStats.score}</td>
+              {oneStatistic.map((el) => (
+                <td>{el['Game.countMoney']}</td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
+        <table className="container__profile">
+          <thead>
+            <tr>
+              <th>
+                <h1>Время в игре</h1>
               </th>
               <th>
                 <h1>Убито врагов</h1>
@@ -120,15 +141,15 @@ export default function Profile() {
             </tr>
           </thead>
           <tbody>
-            {oneStatistic.map((o) => (
-              <tr>
-                <td>{o['Game.countGames']}</td>
-                <td>{format(o['Game.timeGame'])}</td>
-                <td>{o['Game.countMoney']}</td>
-                <td>{o['Game.countEnemies']}</td>
-                <td>{o['Game.countDamage']}</td>
-              </tr>
-            ))}
+            <tr>
+              {oneStatistic.map((el) => (
+                <>
+                  <td>{format(el['Game.timeGame'])}</td>
+                  <td>{el['Game.countEnemies']}</td>
+                  <td>{el['Game.countDamage']}</td>
+                </>
+              ))}
+            </tr>
           </tbody>
         </table>
         <div className="score-box-profile">

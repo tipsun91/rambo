@@ -10,6 +10,7 @@ routerHero.route('/getPlayer')
           userId: id,
         },
       });
+      console.log("🚀 ~ file: hero.js ~ line 14 ~ .get ~ hero", hero)
       res.send({ player: hero });
     } catch (error) {
       console.log(error.message);
@@ -18,7 +19,6 @@ routerHero.route('/getPlayer')
 
 routerHero.route('/scoreLvl')
   .put(async (req, res) => {
-    console.log(req.body);
     try {
       const id = req.session.userId;
       await Hero.update({ lvl: req.body.lvl, score: req.body.score }, {
