@@ -38,6 +38,7 @@ function App() {
     backgroundPositionLeft,
     golds,
     gamePlay,
+    startHp,
   } = useSelector((state) => state.game);
   const [passageWaves, setPassageWaves] = useState(1);
   const [countWaves, setCountWaves] = useState(1);
