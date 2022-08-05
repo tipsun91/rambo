@@ -263,7 +263,8 @@ function App() {
           countEnemies: game.countEnemies,
           countDamage: game.countDamage,
           countWaves,
-          timeGame: time,
+          timeGame: Math.floor(time),
+          countMoney: game.countMoney,
         }),
       );
       dispatch(sendScoreLvl({ lvl: player.lvl, score: player.score }));

@@ -113,7 +113,7 @@ export const sendStatistic = createAsyncThunk(
   async (statGame, { rejectWithValue }) => {
     try {
       const responce = await fetch('/api/statistics/', {
-        method: 'PATCH',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -122,6 +122,7 @@ export const sendStatistic = createAsyncThunk(
           countDamage: statGame.countDamage,
           countWaves: statGame.countWaves,
           timeGame: statGame.timeGame,
+          countMoney: statGame.countMoney,
         }),
         credentials: 'include',
       });
