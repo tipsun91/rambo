@@ -83,7 +83,6 @@ router
 
       res.status(200).json({ statistics });
     } catch (e) {
-      console.log('🚀 ~ file: statistics.js ~ line 88 ~ .get ~ e', e);
       res.status(502).json({ message: e.message });
     }
   })

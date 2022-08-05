@@ -61,7 +61,6 @@ export const updateHeroHp = createAsyncThunk(
         },
       });
       const data = await responce.json();
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -158,7 +157,22 @@ export const userOneStats = createAsyncThunk(
         method: 'GET',
       });
       const data = await responce.json();
-      console.log('🚀 line 139 ~ data', data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const heroOneStats = createAsyncThunk(
+  '/api/hero/getPlayer',
+  async (event, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/api/hero/getPlayer', {
+        method: 'GET',
+      });
+
+      const data = await responce.json();
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -198,6 +212,7 @@ const gameSlice = createSlice({
     },
     statistic: [],
     oneStatistic: [],
+    heroStats: [],
     enemies: [], // массив врагов
     enemies1: {
       type: 1,
@@ -395,6 +410,14 @@ const gameSlice = createSlice({
     [userOneStats.fulfilled]: (state, action) => {
       state.status = 'resolved';
       state.oneStatistic = action.payload.statistics;
+    },
+    [heroOneStats.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [heroOneStats.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.heroStats = action.payload.player;
     },
   },
 });
