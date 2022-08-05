@@ -14,7 +14,6 @@ function ProfileHero() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { player } = useSelector((state) => state.game);
-  console.log(player.damage);
 
   useEffect(() => {
     dispatch(getPlayer());
@@ -35,20 +34,21 @@ function ProfileHero() {
   }
 
   function updateSPEED(speed) {
-    dispatch(updateHeroSpeed(speed));
-    if (user.money > 100 && player.speed >= 10) {
+    if (user.money >= 100 && player.speed < 10) {
+      dispatch(updateHeroSpeed(speed));
       dispatch(buy());
     }
   }
   return (
-    <div className="nes-container is-rounded is-dark profile__wrapper anim-show-profile__hero">
-      <h1>
-        <span className="blue">UPGRADE</span>
-        {' '}
-        <span className="yellow">HERO!</span>
-      </h1>
-      <div className="form__wrapper">
-        {player && (
+    <>
+      <div className="nes-container is-rounded is-dark profile__wrapper anim-show-profile__hero">
+        <h1>
+          <span className="blue">UPGRADE</span>
+          {' '}
+          <span className="yellow">HERO!</span>
+        </h1>
+        <div className="form__wrapper">
+          {player && (
           <>
             <span className="span-update">
               <div className="update">LVL</div>
@@ -58,7 +58,7 @@ function ProfileHero() {
               <div className="update">
                 HP:
                 {' '}
-                {player.hp}
+                {Math.floor(player.hp)}
               </div>
               {user.money >= 100 ? (
                 <button
@@ -82,7 +82,7 @@ function ProfileHero() {
               <div className="update">
                 DAMAGE:
                 {' '}
-                {player.damage}
+                {Math.floor(player.damage)}
               </div>
               {user.money >= 100 ? (
                 <button
@@ -106,9 +106,9 @@ function ProfileHero() {
               <div className="update">
                 SPEED:
                 {' '}
-                {player.speed}
+                {Math.floor(player.speed)}
               </div>
-              {user.money > 100 && player.speed < 10 && (
+              {user.money >= 100 && player.speed < 10 && (
                 <button
                   onClick={() => updateSPEED(player.speed)}
                   type="button"
@@ -121,31 +121,33 @@ function ProfileHero() {
                 <button
                   disabled
                   type="button"
-                  className="update btn-2 nes-btn is-primary"
+                  className="update btn-2 nes-btn is-disabled"
                 >
-                  100 💰
+                  нужны деньги
                 </button>
               )}
               {player.speed >= 10 && (
-                <button
-                  disabled
-                  type="button"
-                  className="update btn-2 nes-btn is-primary"
-                >
-                  Макс
-                </button>
+              <button
+                disabled
+                type="button"
+                className="update nes-btn is-primary"
+              >
+                Макс
+              </button>
               )}
             </span>
-            <div className="score-box-profile">
-              <p className="score-profile" />
-              <Link className="return-profile btn-back" to="/">
-                &lt;&lt; НАЗАД
-              </Link>
-            </div>
           </>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+      <div className="score-box-profile">
+        <p className="score-profile" />
+        <Link className="return-rating btn-back" to="/">
+          &lt;&lt; НАЗАД
+        </Link>
+      </div>
+
+    </>
   );
 }
 

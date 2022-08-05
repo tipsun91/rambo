@@ -5,7 +5,6 @@ const { access, AUTHENTICATED } = require('../middlewares/access');
 const gameData = (data) => ({
   userId: data.userId,
   countEnemies: data.countEnemies,
-  countMoney: data.countMoney,
   countDamage: data.countDamage,
   countWaves: data.countWaves,
   timeGame: Math.round(data.timeGame),
@@ -84,18 +83,12 @@ router
 
       res.status(200).json({ statistics });
     } catch (e) {
-      console.log('🚀 ~ file: statistics.js ~ line 88 ~ .get ~ e', e);
       res.status(502).json({ message: e.message });
     }
   })
   .post(access(AUTHENTICATED), async (req, res) => {
     try {
-      const gameResult = await Game.create(
-        gameData({
-          userId: res.locals.user.id,
-          ...req.body,
-        })
-      );
+      const gameResult = await Game.create(gameData(req.body));
       await gameResult.save();
       if (gameResult.id) {
         res.status(201).json({ message: 'Created!' });

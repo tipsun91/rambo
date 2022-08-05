@@ -16,6 +16,20 @@ routerHero.route('/getPlayer')
     }
   });
 
+routerHero.route('/scoreLvl')
+  .put(async (req, res) => {
+    try {
+      const id = req.session.userId;
+      await Hero.update({ lvl: req.body.lvl, score: req.body.score }, {
+        where: {
+          userId: id,
+        },
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  });
+
 routerHero.route('/updateHp')
   .put(async (req, res) => {
     try {
@@ -31,7 +45,7 @@ routerHero.route('/updateHp')
             userId: id,
           },
         });
-        const update = (+hero.hp * 1.2).toFixed(1);
+        const update = +hero.hp * 1.2;
         await Hero.update({ hp: update }, {
           where: {
             userId: id,
@@ -66,7 +80,7 @@ routerHero.route('/updateDamage')
             userId: id,
           },
         });
-        const update = (+hero.damage * 1.2).toFixed(1);
+        const update = +hero.damage * 1.2;
         await Hero.update({ damage: update }, {
           where: {
             userId: id,

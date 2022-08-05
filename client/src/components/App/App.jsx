@@ -10,11 +10,13 @@ import Bullet from '../Bullet/Bullet';
 import Enemy from '../Enemy/Enemy';
 import GoldCoin from '../GoldCoin/GoldCoin';
 import './App.css';
+import { sendMoney } from '../../store/userReducer/reducer';
 import {
   getPlayer,
   display,
   updateFrame,
   sendStatistic,
+  sendScoreLvl,
   updateWaves,
   updateEnemies,
   updateBackgroundWaves2,
@@ -28,6 +30,7 @@ function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const app = useRef();
+  const { user } = useSelector((state) => state.user);
   const {
     enemies,
     bullets,
@@ -170,7 +173,6 @@ function App() {
         && passageWaves === 1
         && player.x > 1050
       ) {
-        // if (game.countEnemies === 2 && passageWaves === 1) {
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
@@ -186,8 +188,6 @@ function App() {
         && passageWaves === 2
         && player.x > 1050
       ) {
-        // if (game.countEnemies === 4 && passageWaves === 2) {
-
         // меняем стейт для ожидание смены локации
         setPlayGame('waiting');
         // увеличеваем волну
@@ -256,14 +256,18 @@ function App() {
       const time = (+Date.now() - +startTime) / 1000;
       // диспатч для сбора статистики за игру
       dispatch(
+        sendMoney({ gameMoney: game.countMoney, userMoney: user.money }),
+      );
+      dispatch(
         sendStatistic({
+          userId: game.userId,
           countEnemies: game.countEnemies,
-          countMoney: game.countMoney,
           countDamage: game.countDamage,
           countWaves,
           timeGame: time,
         }),
       );
+      dispatch(sendScoreLvl({ lvl: player.lvl, score: player.score }));
     }
   }, [playGame]);
 

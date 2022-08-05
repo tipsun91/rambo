@@ -21,11 +21,22 @@
 }
 
 .btn-back {
-   margin-left: 80px;
+   margin-left: 200px;
+   margin-top: 200px!important;
 }
 
 .messages {
    width: 489px;
+}
+
+.form__chat {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+}
+
+.chat {
+   margin-top: 150px!important;
 }
 
 .anim-show-chat {

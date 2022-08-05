@@ -49,3 +49,11 @@
 .input-section {
   margin-bottom: 20px;
 }
+
+.nes-up {
+  left: 0%!important;
+}
+
+.error_mes {
+  margin-top: 40px;
+}

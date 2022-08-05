@@ -12,6 +12,28 @@ import calcCollisionBullets from './functions/calcCollisionBullets';
 import upGameLoop from './functions/upGameLoop';
 import calcGoldCoin from './functions/calcGoldCoin';
 
+export const sendScoreLvl = createAsyncThunk(
+  '/hero/scoreLvl',
+  async (lvlAndScore, { rejectWithValue }) => {
+    try {
+      const responce = await fetch('/hero/scoreLvl', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          lvl: lvlAndScore.lvl,
+          score: lvlAndScore.score,
+        }),
+      });
+      const data = await responce.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 export const getPlayer = createAsyncThunk(
   '/hero/getPlayer',
   async (_, { rejectWithValue }) => {
@@ -39,7 +61,6 @@ export const updateHeroHp = createAsyncThunk(
         },
       });
       const data = await responce.json();
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -97,7 +118,6 @@ export const sendStatistic = createAsyncThunk(
         },
         body: JSON.stringify({
           countEnemies: statGame.countEnemies,
-          countMoney: statGame.countMoney,
           countDamage: statGame.countDamage,
           countWaves: statGame.countWaves,
           timeGame: statGame.timeGame,
@@ -136,7 +156,6 @@ export const userOneStats = createAsyncThunk(
         method: 'GET',
       });
       const data = await responce.json();
-      console.log('🚀 line 139 ~ data', data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -296,9 +315,9 @@ const gameSlice = createSlice({
     // увеличиваем характеристики врагов
     updateEnemies(state, action) {
       state.enemies.forEach((el) => {
-        el.hp *= 1.2;
-        el.damage *= 1.2;
-        el.coolDown *= 1.2;
+        el.hp = +el.hp * 1.2;
+        el.damage = +el.damage * 1.2;
+        el.coolDown = +el.coolDown * 1.2;
       });
     },
     // записываем координаты экрана юзера
@@ -311,7 +330,6 @@ const gameSlice = createSlice({
       state.game.countWaves += 1;
     },
     updateFrame(state, action) {
-      // console.log(state.player.x);
       upGameLoop(state); // прибовляет 1 каждый цикл;
       calcEnemies(state, state.enemies, state.player); // рассчитывает поведение мобов
       calcPlayer(state, action); // рассчитывает функционал героя, внутри скорость пуль по Х и У
