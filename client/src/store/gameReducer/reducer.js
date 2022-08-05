@@ -186,7 +186,7 @@ const gameSlice = createSlice({
   initialState: {
     startHp: 0,
     gamePlay: {
-      waves1: 1, // кол-во мобов
+      waves1: 15, // кол-во мобов
       waves1Count: 0,
       waves2: 15, // кол-во мобов
       waves2Count: 0,
@@ -369,7 +369,6 @@ const gameSlice = createSlice({
     },
     [getPlayer.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      console.log(1111111111);
       state.player = { ...state.player, ...action.payload.player };
       state.startHp = action.payload.player.hp;
     },
