@@ -9,6 +9,9 @@
   width: 100%;
   height: 100%; 
   position: relative;
+  background-position: -5800px center;
+  display: flex;
+  margin: auto auto;
 }
 
 .App {
@@ -43,5 +46,5 @@
   z-index: 2;
 }
 html {
-  cursor: url('../../../public/img/250.png'), auto;
+  cursor: url('../../../public/img/251.png'), auto;
 }

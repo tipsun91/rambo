@@ -40,6 +40,7 @@ export default function Map() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="avatar" element={<Avatar />} />
         {user
           ? (
             <>
