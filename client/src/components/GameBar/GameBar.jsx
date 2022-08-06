@@ -21,14 +21,17 @@ function GameBar() {
       <div className="gamebar">
         <div className="gamebar__left">
           <p className="gamebar__progress__damage__number">
-            damage:
+            hero hp:
+            {Math.floor(player.hp)}
+          </p>
+          <p className="gamebar__progress__damage__number">
+            hero damage:
             {Math.floor(player.damage)}
           </p>
           <p className="gamebar__progress__damage__number">
-            speed:
+            hero speed:
             {player.speed}
           </p>
-          <p className="gamebar__progress__enemies__number">{`enemies: ${game.countEnemies}`}</p>
         </div>
         <div className="gamebar__center">
           <div
