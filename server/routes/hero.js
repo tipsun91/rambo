@@ -10,7 +10,6 @@ routerHero.route('/getPlayer')
           userId: id,
         },
       });
-      console.log("🚀 ~ file: hero.js ~ line 14 ~ .get ~ hero", hero)
       res.send({ player: hero });
     } catch (error) {
       console.log(error.message);

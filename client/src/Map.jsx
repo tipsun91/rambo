@@ -21,12 +21,25 @@ export default function Map() {
 
   React.useEffect(() => {
     dispatch(signData());
+
+    // <backgroundSound>
+    const playBgSound = () => {
+      const bgSound = new Audio('/sound/background_athoner.mp3');
+      bgSound.play();
+      bgSound.loop = true;
+    };
+
+    document.addEventListener(
+      'click',
+      playBgSound,
+      { once: true },
+    );
+    // </backgroundSound>
   }, []);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="avatar" element={<Avatar />} />
         {user
           ? (
             <>
@@ -37,6 +50,7 @@ export default function Map() {
               <Route path="profile" element={<Profile />}>
                 <Route path=":id" element={<Profile />} />
               </Route>
+              <Route path="avatar" element={<Avatar />} />
               <Route path="rating" element={<Rating />}>
                 <Route path="page/:page" element={<Rating />} />
               </Route>

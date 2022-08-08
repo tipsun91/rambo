@@ -6,7 +6,7 @@ const { User } = require('../db/models');
 const { access, AUTHENTICATED } = require('../middlewares/access');
 
 router.route('/')
-  .post(/* access(AUTHENTICATED),  */async (req, res) => {
+  .post(access(AUTHENTICATED), async (req, res) => {
     const storage = Multer.diskStorage({
       destination: function(req, file, cb) {
           cb(null, path.resolve('uploads/'));
