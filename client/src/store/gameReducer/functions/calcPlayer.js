@@ -207,7 +207,7 @@ function calcPlayer(state, action) {
       state.enemies.push({
         id: uuidv4(),
         type: 4,
-        x: state.display.width + 50,
+        x: -50,
         y: 100, // вертикаль
         w: state.enemies4.w, // высота
         h: state.enemies4.h, // ширина

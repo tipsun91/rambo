@@ -186,11 +186,11 @@ const gameSlice = createSlice({
   initialState: {
     startHp: 0,
     gamePlay: {
-      waves1: 15, // кол-во мобов
+      waves1: 7, // кол-во мобов
       waves1Count: 0,
-      waves2: 15, // кол-во мобов
+      waves2: 7, // кол-во мобов
       waves2Count: 0,
-      waves3: 15, // кол-во мобов
+      waves3: 7, // кол-во мобов
       waves3Count: 0,
       boss: 1,
       bossCount: 0,
@@ -234,10 +234,10 @@ const gameSlice = createSlice({
       h: 180, // ширина
       x: 600, // горизонталь
       y: 45, // вертикаль
-      hp: 100, // здоровье
+      hp: 80, // здоровье
       speed: 4, // скорость
-      damage: 1, // урон
-      coolDown: 20, // скорость удара
+      damage: 0.8, // урон
+      coolDown: 30, // скорость удара
       skin: '/animations/enemie1move.gif',
       move: 1,
     },
@@ -247,9 +247,9 @@ const gameSlice = createSlice({
       h: 200, // ширина
       x: 600, // горизонталь
       y: 30, // вертикаль
-      hp: 100, // здоровье
+      hp: 140, // здоровье
       speed: 4,
-      damage: 2, // урон
+      damage: 0.5, // урон
       coolDown: 30, // скорость удара
       skin: '/animations/enemie2move.gif',
       move: 1,
@@ -260,10 +260,10 @@ const gameSlice = createSlice({
       h: 350, // ширина
       x: 400, // горизонталь
       y: 50, // вертикаль
-      hp: 500, // здоровье
-      speed: 2,
-      damage: 5, // урон
-      coolDown: 30, // скорость удара
+      hp: 1000, // здоровье
+      speed: 1,
+      damage: 1, // урон
+      coolDown: 40, // скорость удара
       skin: '/animations/enemie3move.gif',
       move: 1,
     },
@@ -302,6 +302,13 @@ const gameSlice = createSlice({
     backgroundPositionLeft: 0, // начальные координаты локации
     calcEnemiesFlag: false, // ии врагов
     calcEnemiesFlag1: false, // ии врагов
+    column: {
+      x: 600,
+      y: 200,
+      h: 300,
+      w: 300,
+      skin: '/img/column1.png',
+    },
   },
   reducers: {
     sendStartHp(state) {
@@ -325,13 +332,14 @@ const gameSlice = createSlice({
     },
     // передвигаем бэкграунд при прохождении первой волны
     updateBackgroundWaves2(state, action) {
-      if (state.backgroundPositionLeft > -2600) {
+      if (state.backgroundPositionLeft > -2800) {
         state.backgroundPositionLeft -= 10;
+        state.column.x -= 10;
       }
     },
     // передвигаем бэкграунд при прохождении второй волны
     updateBackgroundWaves3(state, action) {
-      if (state.backgroundPositionLeft > -5600) {
+      if (state.backgroundPositionLeft > -5800) {
         state.backgroundPositionLeft -= 10;
       }
     },

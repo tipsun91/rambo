@@ -7,6 +7,7 @@ body {
 
 body {
   background-image: url('../../../public/img/bg__all.jpeg');
+  width: 100%;
   /* background-size: contain; */
   font-family: 'Press Start 2P', sans-serif;
 }
