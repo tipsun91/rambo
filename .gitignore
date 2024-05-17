@@ -1,14 +1,11 @@
 # custom
 temporally
 .vscode
+server/uploads
 server/sessions
 server/node_modules
 client/node_modules
 client/build
-*package-lock.json
-
-# custom
-.vscode
 *package-lock.json
 
 # <client>
