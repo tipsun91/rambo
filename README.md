@@ -7,4 +7,4 @@ npm run db-up
 Удалить БД можно с помощью команды:
 npm run db-down
 
-Поиграть можно по ссылке: https://rambo.onrender.com
+Поиграть можно по ссылке: https://rambo-n2vg.onrender.com
